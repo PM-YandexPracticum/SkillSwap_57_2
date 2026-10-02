@@ -1,0 +1,29 @@
+.checkbox {
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox_default {
+  border: 1px solid #000;
+}
+
+.checkbox_opened,
+.checkbox_checked {
+  background-color: #abd27a;
+  color: #fff;
+}
+
+.checkbox_opened span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.checkbox_checked span {
+  font-size: 16px;
+  line-height: 1;
+}
