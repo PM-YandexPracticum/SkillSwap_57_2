@@ -1,6 +1,7 @@
 .group {
   display: flex;
   flex-direction: column;
+
   /* Отступ между радиокнопками */
   gap: 12px;
   font-family: var(--font-family), sans-serif;
