@@ -1,0 +1,20 @@
+.logoLink {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.logo {
+  min-width: 40px;
+  min-height: 40px;
+  padding-inline-end: 12px;
+}
+
+.title {
+  font-family: Jost, sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -1.1%;
+  line-height: 32px;
+  color: #253017;
+}
