@@ -1,0 +1,80 @@
+.group {
+  display: flex;
+  flex-direction: column;
+
+  /* Отступ между радиокнопками */
+  gap: 12px;
+  font-family: var(--font-family), sans-serif;
+}
+
+/* Обертка одной радиокнопки (label) */
+.radioLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+/* Скрывается нативный input */
+.hiddenInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Кастомный кружок */
+.customRadio {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.4px solid #508826;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Внутренняя точка */
+.customRadio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #508826;
+  transform: scale(0); /* Скрыта по умолчанию */
+}
+
+/* Состояние "выбрано" */
+.checked {
+  border-color: #508826;
+}
+
+.checked::after {
+  transform: scale(1);
+}
+
+/* Эффект при наведении */
+.radioLabel:hover .customRadio {
+  border-color: #3d661c;
+}
+
+/* Фокус для доступности */
+.hiddenInput:focus-visible + .customRadio {
+  outline: 2px solid #508826;
+  outline-offset: 2px;
+}
+
+/* Текст радиокнопки */
+.labelText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
