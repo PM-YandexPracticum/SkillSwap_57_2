@@ -25,10 +25,9 @@
 }
 
 .selectarrow {
-  color: #69735d;
-  font-size: 20px;
-  line-height: 1;
-  transform: translateY(-6px);
+  width: 16px;
+  height: 8px;
+  object-fit: contain;
 }
 
 .selecterror {

@@ -1,4 +1,5 @@
 import './Select.css'
+import arrowIcon from '../../../assets/images/arrow.svg'
 
 interface SelectOption {
   value: string
@@ -28,7 +29,7 @@ export function Select({
 
       <div className="select" style={{ width }}>
         <span className="selectplaceholder">{placeholder}</span>
-        <span className="selectarrow">⌄</span>
+        <img className="selectarrow" src={arrowIcon} alt='' />
       </div>
 
       {error && <span className="selecterror">{error}</span>}
