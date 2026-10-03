@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import moonImg from '../../../assets/images/moon.svg'
-import sunImg from '../../../assets/images/sun.svg'
+import moonImg from '../../assets/images/moon.svg'
+import sunImg from '../../assets/images/sun.svg'
 import styles from './ThemeButton.module.css'
 
 export const ThemeButton = () => {
