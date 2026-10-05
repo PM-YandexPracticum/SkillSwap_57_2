@@ -1,5 +1,5 @@
 import './Select.css'
-import arrowIcon from '../../assets/arrow.svg'
+import arrowIcon from '../../assets/images/chevron-down.svg'
 
 interface SelectOption {
   value: string
@@ -17,9 +17,9 @@ interface SelectProps {
 
 export function Select({
   label,
-  options, //логика выбора нужна будет при интеграции 
+  // options, //логика выбора нужна будет при интеграции
   placeholder,
-  multiple = false, //логика выбора нужна будет при интеграции 
+  // multiple = false, //логика выбора нужна будет при интеграции
   error,
   width,
 }: SelectProps) {
