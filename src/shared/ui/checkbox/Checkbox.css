@@ -1,23 +1,36 @@
+.checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
 .checkbox {
   width: 24px;
   height: 24px;
   box-sizing: border-box;
+  border: 1px solid transparent;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .checkbox_default {
-  border: 1px solid #000;
+  border-color: #000;
 }
 
 .checkbox_opened,
 .checkbox_checked {
-  color: #fff;
+  border-color: transparent;
 }
 
-.checkbox__icon {
+.checkboxicon {
   width: 20px;
   height: 20px;
+}
+
+.checkboxtext {
+  cursor: pointer;
 }
