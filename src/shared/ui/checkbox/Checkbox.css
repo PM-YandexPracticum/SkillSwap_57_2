@@ -17,15 +17,6 @@
   flex-shrink: 0;
 }
 
-.checkbox_default {
-  border-color: #000;
-}
-
-.checkbox_opened,
-.checkbox_checked {
-  border-color: transparent;
-}
-
 .checkboxicon {
   width: 20px;
   height: 20px;

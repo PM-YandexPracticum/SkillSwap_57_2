@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import checkIcon from '../../assets/check.svg'
 import dashIcon from '../../assets/dash.svg'
+import defaultIcon from '../../assets/default.svg'
 import './Checkbox.css'
 
 type CheckboxState = 'default' | 'opened' | 'checked'
@@ -26,17 +27,12 @@ export const Checkbox = ({ state, text, mode }: CheckboxProps) => {
 
   return (
     <label className="checkbox-wrapper">
-      <span
-        className={`checkbox checkbox_${currentState}`}
-        onClick={handleClick}
-      >
-        {currentState === 'opened' && (
-          <img className="checkboxicon" src={dashIcon} alt="" />
-        )}
+      <span className={`checkbox checkbox_${currentState}`} onClick={handleClick}>
+        {currentState === 'default' && <img className="checkboxicon" src={defaultIcon} alt="" />}
 
-        {currentState === 'checked' && (
-          <img className="checkboxicon" src={checkIcon} alt="" />
-        )}
+        {currentState === 'opened' && <img className="checkboxicon" src={dashIcon} alt="" />}
+
+        {currentState === 'checked' && <img className="checkboxicon" src={checkIcon} alt="" />}
       </span>
 
       <span className="checkbox__text" onClick={handleClick}>
