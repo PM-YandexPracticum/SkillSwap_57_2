@@ -12,6 +12,7 @@ export const skills = [
     id: 'business',
     title: 'Бизнес и карьера',
     icon: <BriefcaseIcon />,
+    color: '#eee7f7',
     skills: [
       { id: 'team_management', title: 'Управление командой' },
       { id: 'marketing', title: 'Маркетинг и реклама' },
@@ -27,6 +28,7 @@ export const skills = [
     id: 'creation',
     title: 'Творчество и искусство',
     icon: <PaletteIcon />,
+    color: '#f7e7f2',
     skills: [
       { id: 'painting', title: 'Рисование и иллюстрация' },
       { id: 'photography', title: 'Фотография' },
@@ -42,6 +44,7 @@ export const skills = [
     id: 'languages',
     title: 'Иностранные языки',
     icon: <GlobeIcon />,
+    color: '#ebe5c5',
     skills: [
       { id: 'english', title: 'Английский' },
       { id: 'french', title: 'Французский' },
@@ -56,6 +59,7 @@ export const skills = [
     id: 'education',
     title: 'Образование и развитие',
     icon: <BookIcon />,
+    color: '#e7f2f6',
     skills: [
       { id: 'personal_development', title: 'Личностное развитие' },
       { id: 'learning_skills', title: 'Навыки обучения' },
@@ -69,6 +73,7 @@ export const skills = [
     id: 'home',
     title: 'Дом и уют',
     icon: <HomeIcon />,
+    color: '#f7ebe5',
     skills: [
       { id: 'cleaning_organization', title: 'Уборка и организация' },
       { id: 'home_finance', title: 'Домашние финансы' },
@@ -82,6 +87,7 @@ export const skills = [
     id: 'health',
     title: 'Здоровье и лайфстайл',
     icon: <LeafIcon />,
+    color: '#e9f7e7',
     skills: [
       { id: 'yoga_meditation', title: 'Йога и медитация' },
       { id: 'nutrition', title: 'Питание и ЗОЖ' },

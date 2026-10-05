@@ -9,7 +9,7 @@ function SkillsList() {
         <SkillCategoryGroup
           key={category.id}
           icon={category.icon}
-          color="#eee7f7"
+          color={category.color}
           title={category.title}
           skillArray={category.skills}
         />
