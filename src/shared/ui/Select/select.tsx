@@ -1,5 +1,5 @@
 import './Select.css'
-import arrowIcon from '../../../assets/images/arrow.svg'
+import arrowIcon from '../../assets/arrow.svg'
 
 interface SelectOption {
   value: string
