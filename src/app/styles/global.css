@@ -1,4 +1,6 @@
 /* ─── CSS Custom Properties ─────────────────────────────── */
+@import url('../../shared/assets/fonts/fonts.css');
+
 :root {
   /* Colors */
   --color-primary: #6366f1;
@@ -28,6 +30,36 @@
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
+
+  /* Шрифты из макета */
+  --font-heading: 'Jost', sans-serif;
+  --font-base: 'Roboto', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* H1 */
+  --font-size-h1: 32px;
+  --line-height-h1: 40px;
+
+  /* H2 */
+  --font-size-h2: 24px;
+  --line-height-h2: 32px;
+
+  /* H3 */
+  --font-size-h3: 20px;
+  --line-height-h3: 24px;
+
+  /* H4 */
+  --font-size-h4: 16px;
+  --line-height-h4: 24px;
+
+  /* Body */
+  --font-size-body: 16px;
+  --line-height-body: 24px;
+
+  /* Caption */
+  --font-size-caption: 12px;
+  --line-height-caption: 16px;
 
   /* Borders */
   --radius-sm: 4px;

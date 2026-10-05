@@ -1,0 +1,35 @@
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selectlabel {
+  color: #000;
+}
+
+.select {
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 16px;
+  border: 1px solid #69735d;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.selectplaceholder {
+  color: #69735d;
+}
+
+.selectarrow {
+  width: 16px;
+  height: 8px;
+  object-fit: contain;
+}
+
+.selecterror {
+  color: #d32f2f;
+}
