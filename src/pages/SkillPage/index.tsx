@@ -1,3 +1,3 @@
 // TODO: реализовать страницу SkillPage
 
-export { SkillPage } from './ui/SkillPage'
+export { default } from './ui/SkillPage'

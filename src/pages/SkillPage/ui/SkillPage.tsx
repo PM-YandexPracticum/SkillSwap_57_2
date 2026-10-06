@@ -1,7 +1,7 @@
 import SkillsList from '@/shared/ui/SkillsList/SkillsList'
 import styles from './SkillPage.module.css'
 
-export const SkillPage = () => {
+const SkillPage = () => {
   return (
     <main>
       <div className={styles.skillsWrapper}>
@@ -10,3 +10,5 @@ export const SkillPage = () => {
     </main>
   )
 }
+
+export default SkillPage
