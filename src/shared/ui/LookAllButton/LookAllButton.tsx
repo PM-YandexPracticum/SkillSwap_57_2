@@ -1,5 +1,6 @@
 import chevronRight from '../../assets/images/chevron-right.svg'
 import styles from './LookAllButton.module.css'
+import { Button } from '../Button'
 
 interface LookAllButtonProps {
   isExpanded: boolean
@@ -7,18 +8,16 @@ interface LookAllButtonProps {
 }
 
 export const LookAllButton = ({ isExpanded, onClick }: LookAllButtonProps) => (
-  <button
-    className={styles.button}
-    type="button"
-    onClick={onClick}
-    aria-expanded={isExpanded}
-  >
+  <Button
+    variant='tertiary'
+    type='button'
+    onClick={onClick}>
     {isExpanded ? 'Свернуть' : 'Смотреть все'}
     <img
-      className={`${styles.icon} ${isExpanded ? styles.iconExpanded : ''}`}
-      src={chevronRight}
-      alt=""
-      aria-hidden="true"
-    />
-  </button>
+       className={`${styles.icon} ${isExpanded ? styles.iconExpanded : ''}`}
+       src={chevronRight}
+       alt=""
+       aria-hidden="true"
+     />
+  </Button>
 )
