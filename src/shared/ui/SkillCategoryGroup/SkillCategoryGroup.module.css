@@ -1,0 +1,67 @@
+.wrapper {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  width: 1136px;
+  max-width: calc(100vw - 72px);
+  padding: 60px;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #69735d;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 8%);
+}
+
+.container {
+  width: 100%;
+  max-width: 488px;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+}
+
+.iconRound {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--second-family);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 117%;
+  letter-spacing: -0.01em;
+  color: #253017;
+}
+
+.skillList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  color: #253017;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
