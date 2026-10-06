@@ -1,8 +1,8 @@
 import { SkillCategoryGroup } from '@/shared/ui/SkillCategoryGroup/SkillCategoryGroup'
 import styles from './SkillsList.module.css'
-import { skills } from '@/shared/ui/SkillsList/model/Skills'
+import { skills } from '@/shared/ui/SkillsList/model/SkillGroupList'
 
-function SkillsList() {
+function SkillCategoryGroupList() {
   return (
     <div className={styles.grid}>
       {skills.map((category) => (
@@ -18,4 +18,4 @@ function SkillsList() {
   )
 }
 
-export default SkillsList
+export default SkillCategoryGroupList

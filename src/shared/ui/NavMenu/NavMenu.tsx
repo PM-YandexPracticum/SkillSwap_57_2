@@ -1,5 +1,5 @@
 import { useClickOutside } from '@/shared/hooks/useClickOutside'
-import SkillsList from '@/shared/ui/SkillsList/SkillsList'
+import SkillCategoryGroupList from '@/shared/ui/SkillsList/SillCategoryGroupList'
 import { useCallback, useRef, useState } from 'react'
 import styles from './NavMenu.module.css'
 import arrow from '@/shared/assets/images/arrow.svg'
@@ -35,7 +35,7 @@ export const NavMenu = () => {
 
           {isOpen && (
             <div className={styles.dropdown}>
-              <SkillsList />
+              <SkillCategoryGroupList />
             </div>
           )}
         </li>

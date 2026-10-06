@@ -1,4 +1,4 @@
-import SkillsList from '@/shared/ui/SkillsList/SkillsList'
+import SkillsList from '@/shared/ui/SkillsList/SillCategoryGroupList'
 import styles from './SkillPage.module.css'
 
 const SkillPage = () => {
