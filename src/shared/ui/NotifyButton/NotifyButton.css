@@ -1,0 +1,25 @@
+.notify-button {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notify-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.notify-button__dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px !important;
+  height: 12px !important;
+}
