@@ -66,7 +66,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <div
         className={[
           styles.root,
-          variant === 'search' ? styles.rootSearch : '',
+          variant === 'search' ? styles['root-search'] : '',
           className,
         ]
           .filter(Boolean)
@@ -81,9 +81,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <div
           className={[
             styles.control,
-            variant === 'search' ? styles.controlSearch : '',
-            error ? styles.controlError : '',
-            disabled ? styles.controlDisabled : '',
+            variant === 'search' ? styles['control-search'] : '',
+            error ? styles['control-error'] : '',
+            disabled ? styles['control-disabled'] : '',
           ]
             .filter(Boolean)
             .join(' ')}
@@ -108,7 +108,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {(endIcon || isPassword) &&
             (hasEndAction ? (
               <button
-                className={styles.iconButton}
+                className={styles['icon-button']}
                 type="button"
                 onClick={handleEndAction}
                 disabled={disabled}
