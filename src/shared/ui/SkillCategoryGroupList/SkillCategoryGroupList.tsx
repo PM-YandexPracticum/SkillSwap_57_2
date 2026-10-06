@@ -1,6 +1,6 @@
 import { SkillCategoryGroup } from '@/shared/ui/SkillCategoryGroup/SkillCategoryGroup'
 import styles from './SkillsList.module.css'
-import { skills } from '@/shared/ui/SkillsList/model/SkillGroupList'
+import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 
 function SkillCategoryGroupList() {
   return (

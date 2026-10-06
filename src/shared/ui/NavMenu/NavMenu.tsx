@@ -1,5 +1,5 @@
 import { useClickOutside } from '@/shared/hooks/useClickOutside'
-import SkillCategoryGroupList from '@/shared/ui/SkillsList/SillCategoryGroupList'
+import SkillCategoryGroupList from '@/shared/ui/SkillCategoryGroupList/SkillCategoryGroupList'
 import { useCallback, useRef, useState } from 'react'
 import styles from './NavMenu.module.css'
 import arrow from '@/shared/assets/images/arrow.svg'
