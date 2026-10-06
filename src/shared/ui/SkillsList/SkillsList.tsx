@@ -1,10 +1,10 @@
-import SkillCategoryGroup from '@/shared/ui/SkillCategoryGroup/SkillCategoryGroup'
+import { SkillCategoryGroup } from '@/shared/ui/SkillCategoryGroup/SkillCategoryGroup'
 import styles from './SkillsList.module.css'
-import { skills } from '@/shared/ui/SkillCategoryGroup/model/Skills'
+import { skills } from '@/shared/ui/SkillsList/model/Skills'
 
 function SkillsList() {
   return (
-    <div className={styles.container}>
+    <div className={styles.grid}>
       {skills.map((category) => (
         <SkillCategoryGroup
           key={category.id}

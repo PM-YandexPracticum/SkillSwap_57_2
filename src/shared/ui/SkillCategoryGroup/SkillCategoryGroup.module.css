@@ -1,3 +1,24 @@
+.wrapper {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 100;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+
+  width: 1136px;
+  max-width: calc(100vw - 72px);
+  padding: 60px;
+
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #69735d;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
 .container {
   width: 100%;
   max-width: 488px;

@@ -14,7 +14,7 @@ export interface SkillCategoryGroupProps {
   skillArray: readonly Skill[]
 }
 
-function SkillCategoryGroup({ icon, color, title, skillArray }: SkillCategoryGroupProps) {
+export const SkillCategoryGroup = ({ icon, color, title, skillArray }: SkillCategoryGroupProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.iconRound} style={{ backgroundColor: color }}>
@@ -33,5 +33,3 @@ function SkillCategoryGroup({ icon, color, title, skillArray }: SkillCategoryGro
     </div>
   )
 }
-
-export default SkillCategoryGroup
