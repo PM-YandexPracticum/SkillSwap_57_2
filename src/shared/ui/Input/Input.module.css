@@ -1,0 +1,134 @@
+.root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rootSearch {
+  gap: 0;
+}
+
+.label {
+  color: #26351f;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.control {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  padding: 12px 20px;
+  border: 1px solid #69735d;
+  border-radius: 12px;
+  background-color: #ffffff;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.controlSearch {
+  min-height: 48px;
+  gap: 8px;
+  padding: 12px;
+  border-color: transparent;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.controlSearch:focus-within {
+  border-color: #abd27a;
+}
+
+.control:focus-within {
+  border-color: #6f9e52;
+  box-shadow: 0 0 0 1px #6f9e52;
+}
+
+.controlError,
+.controlError:focus-within {
+  border-color: #bf3920;
+  box-shadow: none;
+}
+
+.controlDisabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  background-color: #f2f3f0;
+}
+
+.input {
+  min-width: 0;
+  flex: 1;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #26351f;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.input::placeholder {
+  color: #748168;
+  opacity: 1;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.icon,
+.iconButton {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  color: #26351f;
+}
+
+.icon > svg,
+.icon > img,
+.iconButton > svg,
+.iconButton > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.iconButton {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+}
+
+.iconButton:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid #6f9e52;
+  outline-offset: 2px;
+}
+
+.iconButton:disabled {
+  cursor: not-allowed;
+}
+
+.hint,
+.error {
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.hint {
+  color: #26351f;
+}
+
+.error {
+  color: #bf3920;
+  font-size: 12px;
+  line-height: 1.25;
+}
