@@ -1,0 +1,27 @@
+.title {
+  font-family: var(--font-heading);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.H1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+  letter-spacing: -1px;
+}
+
+.H2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+}
+
+.H3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+}
+
+.H4 {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  letter-spacing: 0.5px;
+}
