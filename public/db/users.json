@@ -10,8 +10,8 @@
     "birthDate": "1994-04-06",
     "createDate": "2025-01-01T11:07:00",
     "likesCount": 150,
-    "teach": ["music"],
-    "learn": ["english", "fitness", "photography", "cooking"]
+    "teach": ["skill_1"],
+    "learn": ["skill_2 ", "skill_3", "skill_4", "skill_5"]
   },
 
   {
@@ -25,8 +25,8 @@
     "birthDate": "2001-07-11",
     "createDate": "2025-01-04T14:14:00",
     "likesCount": 64,
-    "teach": ["photography"],
-    "learn": ["english", "fitness", "painting", "learning_skills"]
+    "teach": ["skill_4"],
+    "learn": ["skill_2 ", "skill_3", "skill_6", "skill_7"]
   },
   {
     "id": "user_3",
@@ -39,8 +39,8 @@
     "birthDate": "1990-10-16",
     "createDate": "2025-01-07T17:21:00",
     "likesCount": 100,
-    "teach": ["entrepreneurship"],
-    "learn": ["english", "french", "cooking", "work_life_balance"]
+    "teach": ["skill_8"],
+    "learn": ["skill_2 ", "skill_9", "skill_5", "skill_10"]
   },
 
   {
@@ -54,8 +54,8 @@
     "birthDate": "1997-01-21",
     "createDate": "2024-01-10T08:28:00",
     "likesCount": 76,
-    "teach": ["painting"],
-    "learn": ["decor_diy", "personal_development", "cooking", "cleaning_organization"]
+    "teach": ["skill_6"],
+    "learn": ["skill_11", "skill_12", "skill_5", "skill_13"]
   },
   {
     "id": "user_5",
@@ -68,8 +68,8 @@
     "birthDate": "2004-04-26",
     "createDate": "2023-01-13T11:35:00",
     "likesCount": 30,
-    "teach": ["time_management"],
-    "learn": ["personal_brand", "speed_reading", "repair", "fitness"]
+    "teach": ["skill_14"],
+    "learn": ["skill_15", "skill_16", "skill_18", "skill_3"]
   },
   {
     "id": "user_6",
@@ -82,8 +82,8 @@
     "birthDate": "1993-07-04",
     "createDate": "2026-01-16T14:42:00",
     "likesCount": 87,
-    "teach": ["houseplants"],
-    "learn": ["home_finance", "repair", "photography", "german"]
+    "teach": ["skill_17"],
+    "learn": ["skill_20", "skill_18", "skill_4", "skill_19"]
   },
   {
     "id": "user_7",
@@ -96,8 +96,8 @@
     "birthDate": "2000-10-09",
     "createDate": "2024-01-19T17:49:00",
     "likesCount": 93,
-    "teach": ["sales"],
-    "learn": ["english", "fitness", "coaching", "time_management"]
+    "teach": ["skill_21"],
+    "learn": ["skill_2 ", "skill_3", "skill_22", "skill_14"]
   },
   {
     "id": "user_8",
@@ -110,8 +110,8 @@
     "birthDate": "1989-01-14",
     "createDate": "2025-01-22T08:56:00",
     "likesCount": 95,
-    "teach": ["creative_writing"],
-    "learn": ["english", "marketing", "acting", "photography"]
+    "teach": ["skill_23"],
+    "learn": ["skill_2 ", "skill_24", "skill_25", "skill_4"]
   },
   {
     "id": "user_9",
@@ -124,8 +124,8 @@
     "birthDate": "1996-04-19",
     "createDate": "2025-01-25T11:03:00",
     "likesCount": 109,
-    "teach": ["fitness"],
-    "learn": ["nutrition", "english", "cooking", "photography"]
+    "teach": ["skill_3"],
+    "learn": ["skill_26", "skill_2 ", "skill_5", "skill_4"]
   },
   {
     "id": "user_10",
@@ -138,8 +138,8 @@
     "birthDate": "2003-07-24",
     "createDate": "2024-01-28T14:10:00",
     "likesCount": 118,
-    "teach": ["cooking"],
-    "learn": ["home_finance", "time_management", "fitness", "painting"]
+    "teach": ["skill_5"],
+    "learn": ["skill_20", "skill_14", "skill_3", "skill_6"]
   },
   {
     "id": "user_11",
@@ -152,8 +152,8 @@
     "birthDate": "1992-10-02",
     "createDate": "2025-01-31T17:17:00",
     "likesCount": 119,
-    "teach": ["mindfulness"],
-    "learn": ["marketing", "sales", "english", "photography"]
+    "teach": ["skill_27"],
+    "learn": ["skill_24", "skill_21", "skill_2 ", "skill_4"]
   },
   {
     "id": "user_12",
@@ -166,8 +166,8 @@
     "birthDate": "1999-01-07",
     "createDate": "2024-02-03T08:24:00",
     "likesCount": 128,
-    "teach": ["decor_diy"],
-    "learn": ["spanish", "french", "photography", "music"]
+    "teach": ["skill_11"],
+    "learn": ["skill_28", "skill_9", "skill_4", "skill_1"]
   },
   {
     "id": "user_13",
@@ -180,8 +180,8 @@
     "birthDate": "1988-04-12",
     "createDate": "2026-02-06T11:31:00",
     "likesCount": 132,
-    "teach": ["team_management"],
-    "learn": ["decor_diy", "home_finance", "cooking", "houseplants"]
+    "teach": ["skill_29"],
+    "learn": ["skill_11", "skill_20", "skill_5", "skill_17"]
   },
   {
     "id": "user_14",
@@ -194,8 +194,8 @@
     "birthDate": "1995-07-17",
     "createDate": "2025-02-09T14:38:00",
     "likesCount": 142,
-    "teach": ["music"],
-    "learn": ["yoga_meditation", "personal_development", "english", "nutrition"]
+    "teach": ["skill_1"],
+    "learn": ["skill_35", "skill_12", "skill_2 ", "skill_26"]
   },
   {
     "id": "user_15",
@@ -208,8 +208,8 @@
     "birthDate": "2002-10-22",
     "createDate": "2024-02-12T17:45:00",
     "likesCount": 150,
-    "teach": ["photography"],
-    "learn": ["video_editing", "music", "acting", "creative_writing"]
+    "teach": ["skill_4"],
+    "learn": ["skill_32", "skill_1", "skill_25", "skill_23"]
   },
   {
     "id": "user_16",
@@ -222,8 +222,8 @@
     "birthDate": "1991-01-27",
     "createDate": "2025-02-15T08:52:00",
     "likesCount": 154,
-    "teach": ["coaching"],
-    "learn": ["personal_development", "teaching_skills", "english", "time_management"]
+    "teach": ["skill_22"],
+    "learn": ["skill_12", "teaching_skills", "skill_2 ", "skill_14"]
   },
   {
     "id": "user_17",
@@ -236,8 +236,8 @@
     "birthDate": "1998-04-05",
     "createDate": "2026-02-18T11:59:00",
     "likesCount": 167,
-    "teach": ["mental_health"],
-    "learn": ["marketing", "sales", "project_management", "english"]
+    "teach": ["skill_40"],
+    "learn": ["skill_24", "skill_21", "skill_30", "skill_2 "]
   },
   {
     "id": "user_18",
@@ -250,8 +250,8 @@
     "birthDate": "1987-07-10",
     "createDate": "2025-02-21T14:06:00",
     "likesCount": 176,
-    "teach": ["cooking"],
-    "learn": ["painting", "houseplants", "photography", "sleep_recovery"]
+    "teach": ["skill_5"],
+    "learn": ["skill_6", "skill_17", "skill_4", "skill_34"]
   },
   {
     "id": "user_19",
@@ -264,8 +264,8 @@
     "birthDate": "1994-10-15",
     "createDate": "2024-02-24T17:13:00",
     "likesCount": 178,
-    "teach": ["sales"],
-    "learn": ["coaching", "project_management", "english", "fitness"]
+    "teach": ["skill_21"],
+    "learn": ["skill_22", "skill_30", "skill_2 ", "skill_3"]
   },
   {
     "id": "user_20",
@@ -278,8 +278,8 @@
     "birthDate": "2001-01-20",
     "createDate": "2024-02-27T08:20:00",
     "likesCount": 184,
-    "teach": ["photography"],
-    "learn": ["painting", "video_editing", "english", "music"]
+    "teach": ["skill_4"],
+    "learn": ["skill_6", "skill_32", "skill_2 ", "skill_1"]
   },
   {
     "id": "user_21",
@@ -292,8 +292,8 @@
     "birthDate": "1990-04-25",
     "createDate": "2025-03-02T11:27:00",
     "likesCount": 196,
-    "teach": ["home_finance"],
-    "learn": ["time_management", "entrepreneurship", "english", "cooking"]
+    "teach": ["skill_20"],
+    "learn": ["skill_14", "skill_8", "skill_2 ", "skill_5"]
   },
   {
     "id": "user_22",
@@ -306,8 +306,8 @@
     "birthDate": "1997-07-03",
     "createDate": "2025-03-05T14:34:00",
     "likesCount": 207,
-    "teach": ["acting"],
-    "learn": ["music", "fitness", "english", "photography"]
+    "teach": ["skill_25"],
+    "learn": ["skill_1", "skill_3", "skill_2 ", "skill_4"]
   },
   {
     "id": "user_23",
@@ -320,8 +320,8 @@
     "birthDate": "2004-10-08",
     "createDate": "2026-03-08T17:41:00",
     "likesCount": 215,
-    "teach": ["marketing"],
-    "learn": ["personal_brand", "sales", "english", "photography"]
+    "teach": ["skill_24"],
+    "learn": ["skill_15", "skill_21", "skill_2 ", "skill_4"]
   },
   {
     "id": "user_24",
@@ -334,8 +334,8 @@
     "birthDate": "1993-01-13",
     "createDate": "2025-03-11T08:48:00",
     "likesCount": 221,
-    "teach": ["yoga_meditation"],
-    "learn": ["nutrition", "mindfulness", "english", "cooking"]
+    "teach": ["skill_35"],
+    "learn": ["skill_26", "skill_27", "skill_2 ", "skill_5"]
   },
   {
     "id": "user_25",
@@ -348,8 +348,8 @@
     "birthDate": "2000-04-18",
     "createDate": "2025-03-14T11:55:00",
     "likesCount": 226,
-    "teach": ["german"],
-    "learn": ["english", "spanish", "japanese", "photography"]
+    "teach": ["skill_19"],
+    "learn": ["skill_2 ", "skill_28", "skill_36", "skill_4"]
   },
   {
     "id": "user_26",
@@ -362,8 +362,8 @@
     "birthDate": "1989-07-23",
     "createDate": "2025-03-17T14:02:00",
     "likesCount": 234,
-    "teach": ["speed_reading"],
-    "learn": ["learning_skills", "creative_writing", "english", "mindfulness"]
+    "teach": ["skill_16"],
+    "learn": ["skill_7", "skill_23", "skill_2 ", "skill_27"]
   },
   {
     "id": "user_27",
@@ -376,8 +376,8 @@
     "birthDate": "1996-10-01",
     "createDate": "2025-03-20T17:09:00",
     "likesCount": 244,
-    "teach": ["project_management"],
-    "learn": ["team_management", "english", "fitness", "project_management"]
+    "teach": ["skill_30"],
+    "learn": ["skill_29", "skill_2 ", "skill_3", "skill_30"]
   },
   {
     "id": "user_28",
@@ -390,8 +390,8 @@
     "birthDate": "2003-01-06",
     "createDate": "2026-03-23T08:16:00",
     "likesCount": 249,
-    "teach": ["music"],
-    "learn": ["video_editing", "english", "acting", "photography"]
+    "teach": ["skill_1"],
+    "learn": ["skill_32", "skill_2 ", "skill_25", "skill_4"]
   },
   {
     "id": "user_29",
@@ -404,8 +404,8 @@
     "birthDate": "1992-04-11",
     "createDate": "2025-03-26T11:23:00",
     "likesCount": 267,
-    "teach": ["art_therapy"],
-    "learn": ["personal_brand", "english", "coaching", "time_management"]
+    "teach": ["skill_40"],
+    "learn": ["skill_15", "skill_2 ", "skill_22", "skill_14"]
   },
   {
     "id": "user_30",
@@ -418,8 +418,8 @@
     "birthDate": "1999-07-16",
     "createDate": "2024-03-29T14:30:00",
     "likesCount": 268,
-    "teach": ["fitness"],
-    "learn": ["nutrition", "houseplants", "photography", "english"]
+    "teach": ["skill_3"],
+    "learn": ["skill_26", "skill_17", "skill_4", "skill_2 "]
   },
   {
     "id": "user_31",
@@ -432,8 +432,8 @@
     "birthDate": "1988-10-21",
     "createDate": "2025-04-01T17:37:00",
     "likesCount": 274,
-    "teach": ["photography"],
-    "learn": ["english", "japanese", "chinese", "marketing"]
+    "teach": ["skill_4"],
+    "learn": ["skill_2 ", "skill_36", "skill_37", "skill_24"]
   },
   {
     "id": "user_32",
@@ -446,8 +446,8 @@
     "birthDate": "1995-01-26",
     "createDate": "2025-04-04T08:44:00",
     "likesCount": 301,
-    "teach": ["yoga_meditation"],
-    "learn": ["storage", "home_finance", "time_management", "cooking"]
+    "teach": ["skill_35"],
+    "learn": ["skill_38", "skill_20", "skill_14", "skill_5"]
   },
   {
     "id": "user_33",
@@ -460,8 +460,8 @@
     "birthDate": "2002-04-04",
     "createDate": "2026-04-07T11:51:00",
     "likesCount": 312,
-    "teach": ["exam_preparation"],
-    "learn": ["nutrition", "sleep_recovery", "japanese", "cooking"]
+    "teach": ["skill_39"],
+    "learn": ["skill_26", "skill_34", "skill_36", "skill_5"]
   },
   {
     "id": "user_34",
@@ -474,8 +474,8 @@
     "birthDate": "1991-07-09",
     "createDate": "2025-04-10T14:58:00",
     "likesCount": 333,
-    "teach": ["french"],
-    "learn": ["english", "french", "music", "photography"]
+    "teach": ["skill_9"],
+    "learn": ["skill_2 ", "skill_9", "skill_1", "skill_4"]
   },
   {
     "id": "user_35",
@@ -488,8 +488,8 @@
     "birthDate": "1998-10-14",
     "createDate": "2024-04-13T17:05:00",
     "likesCount": 341,
-    "teach": ["video_editing"],
-    "learn": ["music", "english", "photography", "acting"]
+    "teach": ["skill_32"],
+    "learn": ["skill_1", "skill_2 ", "skill_4", "skill_25"]
   },
   {
     "id": "user_36",
@@ -502,8 +502,8 @@
     "birthDate": "1987-01-19",
     "createDate": "2025-04-16T08:12:00",
     "likesCount": 356,
-    "teach": ["resume_interview"],
-    "learn": ["houseplants", "music", "english", "cleaning_organization"]
+    "teach": ["skill_33"],
+    "learn": ["skill_17", "skill_1", "skill_2 ", "skill_13"]
   },
   {
     "id": "user_37",
@@ -516,8 +516,8 @@
     "birthDate": "1994-04-24",
     "createDate": "2025-04-19T11:19:00",
     "likesCount": 387,
-    "teach": ["creative_writing"],
-    "learn": ["photography", "music", "english", "decor_diy"]
+    "teach": ["skill_23"],
+    "learn": ["skill_4", "skill_1", "skill_2 ", "skill_11"]
   },
   {
     "id": "user_38",
@@ -530,8 +530,8 @@
     "birthDate": "2001-07-02",
     "createDate": "2025-04-22T14:26:00",
     "likesCount": 389,
-    "teach": ["painting"],
-    "learn": ["marketing", "project_management", "sales", "english"]
+    "teach": ["skill_6"],
+    "learn": ["skill_24", "skill_30", "skill_21", "skill_2 "]
   },
   {
     "id": "user_39",
@@ -544,8 +544,8 @@
     "birthDate": "1990-10-07",
     "createDate": "2025-04-25T17:33:00",
     "likesCount": 399,
-    "teach": ["entrepreneurship"],
-    "learn": ["mindfulness", "time_management", "english", "cooking"]
+    "teach": ["skill_8"],
+    "learn": ["skill_27", "skill_14", "skill_2 ", "skill_5"]
   },
   {
     "id": "user_40",
@@ -558,8 +558,8 @@
     "birthDate": "1997-01-12",
     "createDate": "2025-04-28T08:40:00",
     "likesCount": 421,
-    "teach": ["personal_development"],
-    "learn": ["english", "project_management", "time_management", "cognitive_techniques"]
+    "teach": ["skill_12"],
+    "learn": ["skill_2 ", "skill_30", "skill_14", "skill_31"]
   },
   {
     "id": "user_41",
@@ -572,8 +572,8 @@
     "birthDate": "2004-04-17",
     "createDate": "2026-05-01T11:47:00",
     "likesCount": 447,
-    "teach": ["learning_skills"],
-    "learn": ["video_editing", "painting", "english", "creative_writing"]
+    "teach": ["skill_7"],
+    "learn": ["skill_32", "skill_6", "skill_2 ", "skill_23"]
   },
   {
     "id": "user_42",
@@ -586,8 +586,8 @@
     "birthDate": "1993-07-22",
     "createDate": "2025-05-04T14:54:00",
     "likesCount": 459,
-    "teach": ["houseplants"],
-    "learn": ["cleaning_organization", "repair", "home_finance", "cooking"]
+    "teach": ["skill_17"],
+    "learn": ["skill_13", "skill_18", "skill_20", "skill_5"]
   },
   {
     "id": "user_43",
@@ -600,8 +600,8 @@
     "birthDate": "2000-10-27",
     "createDate": "2025-05-07T17:01:00",
     "likesCount": 504,
-    "teach": ["marketing"],
-    "learn": ["english", "french", "music", "photography"]
+    "teach": ["skill_24"],
+    "learn": ["skill_2 ", "skill_9", "skill_1", "skill_4"]
   },
   {
     "id": "user_44",
@@ -614,8 +614,8 @@
     "birthDate": "1989-01-05",
     "createDate": "2025-05-10T08:08:00",
     "likesCount": 518,
-    "teach": ["spanish"],
-    "learn": ["project_management", "team_management", "fitness", "english"]
+    "teach": ["skill_28"],
+    "learn": ["skill_30", "skill_29", "skill_3", "skill_2 "]
   },
   {
     "id": "user_45",
@@ -628,8 +628,8 @@
     "birthDate": "1996-04-10",
     "createDate": "2025-05-13T11:15:00",
     "likesCount": 552,
-    "teach": ["time_management"],
-    "learn": ["fitness", "sleep_recovery", "cooking", "yoga_meditation"]
+    "teach": ["skill_14"],
+    "learn": ["skill_3", "skill_34", "skill_5", "skill_35"]
   },
   {
     "id": "user_46",
@@ -642,8 +642,8 @@
     "birthDate": "2003-07-15",
     "createDate": "2026-05-16T14:22:00",
     "likesCount": 615,
-    "teach": ["english"],
-    "learn": ["japanese", "chinese", "spanish", "french"]
+    "teach": ["skill_2 "],
+    "learn": ["skill_36", "skill_37", "skill_28", "skill_9"]
   },
   {
     "id": "user_47",
@@ -656,8 +656,8 @@
     "birthDate": "1992-10-20",
     "createDate": "2025-05-19T17:29:00",
     "likesCount": 681,
-    "teach": ["team_management"],
-    "learn": ["personal_brand", "time_management", "english", "coaching"]
+    "teach": ["skill_29"],
+    "learn": ["skill_15", "skill_14", "skill_2 ", "skill_22"]
   },
   {
     "id": "user_48",
@@ -670,8 +670,8 @@
     "birthDate": "1999-01-25",
     "createDate": "2025-05-22T08:36:00",
     "likesCount": 728,
-    "teach": ["decor_diy"],
-    "learn": ["video_editing", "english", "photography", "acting"]
+    "teach": ["skill_11"],
+    "learn": ["skill_32", "skill_2 ", "skill_4", "skill_25"]
   },
   {
     "id": "user_49",
@@ -684,8 +684,8 @@
     "birthDate": "1988-04-03",
     "createDate": "2026-05-25T11:43:00",
     "likesCount": 82,
-    "teach": ["music"],
-    "learn": ["mindfulness", "time_management", "english", "cooking"]
+    "teach": ["skill_1"],
+    "learn": ["skill_27", "skill_14", "skill_2 ", "skill_5"]
   },
   {
     "id": "user_50",
@@ -698,7 +698,7 @@
     "birthDate": "1995-07-08",
     "createDate": "2025-05-28T14:50:00",
     "likesCount": 238,
-    "teach": ["work_life_balance"],
-    "learn": ["english", "fitness", "photography", "cooking"]
+    "teach": ["skill_10"],
+    "learn": ["skill_2 ", "skill_3", "skill_4", "skill_5"]
   }
 ]
