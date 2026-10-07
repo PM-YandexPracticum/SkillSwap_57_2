@@ -1,0 +1,12 @@
+.skill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-family: var(--font-base);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-caption);
+  letter-spacing: 0.02em;
+  color: #253017;
+  border-radius: 20px;
+}
