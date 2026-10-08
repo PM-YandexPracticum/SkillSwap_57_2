@@ -1,0 +1,33 @@
+.button {
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  height: auto;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #253017;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #f7f8f5;
+}
+
+.button:focus-visible {
+  outline: 2px solid #508826;
+  outline-offset: 2px;
+}
+
+.label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
