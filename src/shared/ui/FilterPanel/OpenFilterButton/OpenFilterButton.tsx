@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import chevronDownIcon from '@/shared/assets/images/chevron-down.svg'
 import chevronUpIcon from '@/shared/assets/images/chevron-up.svg'
+import { Button } from '@/shared/ui/Button'
 import styles from './OpenFilterButton.module.css'
 
 export interface OpenFilterButtonProps
@@ -19,10 +20,11 @@ export function OpenFilterButton({
   const buttonClassName = [styles.button, className].filter(Boolean).join(' ')
 
   return (
-    <button
+    <Button
       {...props}
       className={buttonClassName}
       type={type}
+      variant="tertiary"
       aria-expanded={isOpen}
     >
       <span>{isOpen ? 'Скрыть' : children}</span>
@@ -32,6 +34,6 @@ export function OpenFilterButton({
         alt=""
         aria-hidden="true"
       />
-    </button>
+    </Button>
   )
 }
