@@ -1,80 +1,674 @@
 [
   {
-    "id": "business",
-    "title": "Бизнес и карьера",
-    "skills": [
-      { "id": "team_management", "title": "Управление командой" },
-      { "id": "marketing", "title": "Маркетинг и реклама" },
-      { "id": "sales", "title": "Продажи и переговоры" },
-      { "id": "personal_brand", "title": "Личный бренд" },
-      { "id": "resume_interview", "title": "Резюме и собеседование" },
-      { "id": "time_management", "title": "Тайм-менеджмент" },
-      { "id": "project_management", "title": "Проектное управление" },
-      { "id": "entrepreneurship", "title": "Предпринимательство" }
+    "id": "skill_1",
+    "title": "Игра на барабанах",
+    "category": "Творчество и искусство",
+    "subcategory": "Музыка и звук",
+    "description": "Привет! Я играю на барабанах уже больше 10 лет — от репетиций в гараже до выступлений на сцене с живыми группами. Научу основам техники (и как не отбить себе пальцы), играть любимые ритмы и разбирать песни, импровизировать и звучать уверенно даже без партитуры",
+    "images": [
+      "https://loremflickr.com/800/600/drums?lock=11",
+      "https://loremflickr.com/800/600/drums?lock=12",
+      "https://loremflickr.com/800/600/drums?lock=13",
+      "https://loremflickr.com/800/600/drums?lock=14",
+      "https://loremflickr.com/800/600/drums?lock=15",
+      "https://loremflickr.com/800/600/drums?lock=16",
+      "https://loremflickr.com/800/600/drums?lock=17"
     ]
   },
   {
-    "id": "creation",
-    "title": "Творчество и искусство",
-    "skills": [
-      { "id": "painting", "title": "Рисование и иллюстрация" },
-      { "id": "photography", "title": "Фотография" },
-      { "id": "video_editing", "title": "Видеомонтаж" },
-      { "id": "music", "title": "Музыка и звук" },
-      { "id": "acting", "title": "Актёрское мастерство" },
-      { "id": "creative_writing", "title": "Креативное письмо" },
-      { "id": "art_therapy", "title": "Арт-терапия" },
-      { "id": "decor_diy", "title": "Декор и DIY" }
+    "id": "skill_2",
+    "title": "Управление небольшой командой",
+    "category": "Бизнес и карьера",
+    "subcategory": "Управление командой",
+    "description": "Привет! Уже 6 лет руковожу командой из 8 человек. Помогу выстроить понятные процессы, ставить задачи так, чтобы их поняли с первого раза, и проводить встречи без лишней воды.",
+    "images": [
+      "https://loremflickr.com/800/600/team,meeting?lock=21",
+      "https://loremflickr.com/800/600/team,meeting?lock=22",
+      "https://loremflickr.com/800/600/team,meeting?lock=23",
+      "https://loremflickr.com/800/600/team,meeting?lock=24",
+      "https://loremflickr.com/800/600/team,meeting?lock=25",
+      "https://loremflickr.com/800/600/team,meeting?lock=26",
+      "https://loremflickr.com/800/600/team,meeting?lock=27"
     ]
   },
   {
-    "id": "languages",
-    "title": "Иностранные языки",
-    "skills": [
-      { "id": "english", "title": "Английский" },
-      { "id": "french", "title": "Французский" },
-      { "id": "spanish", "title": "Испанский" },
-      { "id": "german", "title": "Немецкий" },
-      { "id": "chinese", "title": "Китайский" },
-      { "id": "japanese", "title": "Японский" },
-      { "id": "exam_preparation", "title": "Подготовка к экзаменам (IELTS, TOEFL)" }
+    "id": "skill_3",
+    "title": "Запуск рекламы в соцсетях",
+    "category": "Бизнес и карьера",
+    "subcategory": "Маркетинг и реклама",
+    "description": "Привет! Запускаю рекламу для малого бизнеса и знаю, как не слить бюджет. Покажу, как выбрать аудиторию, сделать цепляющий креатив и считать результат.",
+    "images": [
+      "https://loremflickr.com/800/600/marketing,social?lock=31",
+      "https://loremflickr.com/800/600/marketing,social?lock=32",
+      "https://loremflickr.com/800/600/marketing,social?lock=33",
+      "https://loremflickr.com/800/600/marketing,social?lock=34",
+      "https://loremflickr.com/800/600/marketing,social?lock=35",
+      "https://loremflickr.com/800/600/marketing,social?lock=36",
+      "https://loremflickr.com/800/600/marketing,social?lock=37"
     ]
   },
   {
-    "id": "education",
-    "title": "Образование и развитие",
-    "skills": [
-      { "id": "personal_development", "title": "Личностное развитие" },
-      { "id": "learning_skills", "title": "Навыки обучения" },
-      { "id": "cognitive_techniques", "title": "Когнитивные техники" },
-      { "id": "speed_reading", "title": "Скорочтение" },
-      { "id": "teaching_skills", "title": "Навыки преподавания" },
-      { "id": "coaching", "title": "Коучинг" }
+    "id": "skill_4",
+    "title": "Переговоры и продажи",
+    "category": "Бизнес и карьера",
+    "subcategory": "Продажи и переговоры",
+    "description": "Привет! Много лет работаю в продажах. Научу готовиться к переговорам, слышать клиента, работать с возражениями и спокойно договариваться о цене.",
+    "images": [
+      "https://loremflickr.com/800/600/negotiation,handshake?lock=41",
+      "https://loremflickr.com/800/600/negotiation,handshake?lock=42",
+      "https://loremflickr.com/800/600/negotiation,handshake?lock=43",
+      "https://loremflickr.com/800/600/negotiation,handshake?lock=44",
+      "https://loremflickr.com/800/600/negotiation,handshake?lock=45",
+      "https://loremflickr.com/800/600/negotiation,handshake?lock=46",
+      "https://loremflickr.com/800/600/negotiation,handshake?lock=47"
     ]
   },
   {
-    "id": "home",
-    "title": "Дом и уют",
-    "skills": [
-      { "id": "cleaning_organization", "title": "Уборка и организация" },
-      { "id": "home_finance", "title": "Домашние финансы" },
-      { "id": "cooking", "title": "Приготовление еды" },
-      { "id": "houseplants", "title": "Домашние растения" },
-      { "id": "repair", "title": "Ремонт" },
-      { "id": "storage", "title": "Хранение вещей" }
+    "id": "skill_5",
+    "title": "Создание личного бренда",
+    "category": "Бизнес и карьера",
+    "subcategory": "Личный бренд",
+    "description": "Привет! Помогу рассказать о себе так, чтобы вас запомнили. Разберём вашу сильную сторону, оформим профиль и придумаем, о чём писать.",
+    "images": [
+      "https://loremflickr.com/800/600/portrait,smile?lock=51",
+      "https://loremflickr.com/800/600/portrait,smile?lock=52",
+      "https://loremflickr.com/800/600/portrait,smile?lock=53",
+      "https://loremflickr.com/800/600/portrait,smile?lock=54",
+      "https://loremflickr.com/800/600/portrait,smile?lock=55",
+      "https://loremflickr.com/800/600/portrait,smile?lock=56",
+      "https://loremflickr.com/800/600/portrait,smile?lock=57"
     ]
   },
   {
-    "id": "health",
-    "title": "Здоровье и лайфстайл",
-    "skills": [
-      { "id": "yoga_meditation", "title": "Йога и медитация" },
-      { "id": "nutrition", "title": "Питание и ЗОЖ" },
-      { "id": "mental_health", "title": "Ментальное здоровье" },
-      { "id": "mindfulness", "title": "Осознанность" },
-      { "id": "fitness", "title": "Физические тренировки" },
-      { "id": "sleep_recovery", "title": "Сон и восстановление" },
-      { "id": "work_life_balance", "title": "Баланс жизни и работы" }
+    "id": "skill_6",
+    "title": "Резюме и собеседования",
+    "category": "Бизнес и карьера",
+    "subcategory": "Резюме и собеседование",
+    "description": "Привет! Работала в HR и просмотрела тысячи резюме. Помогу собрать резюме без воды и потренируюсь с вами отвечать на трудные вопросы на собеседовании.",
+    "images": [
+      "https://loremflickr.com/800/600/interview,resume?lock=61",
+      "https://loremflickr.com/800/600/interview,resume?lock=62",
+      "https://loremflickr.com/800/600/interview,resume?lock=63",
+      "https://loremflickr.com/800/600/interview,resume?lock=64",
+      "https://loremflickr.com/800/600/interview,resume?lock=65",
+      "https://loremflickr.com/800/600/interview,resume?lock=66",
+      "https://loremflickr.com/800/600/interview,resume?lock=67"
+    ]
+  },
+  {
+    "id": "skill_7",
+    "title": "Тайм-менеджмент",
+    "category": "Бизнес и карьера",
+    "subcategory": "Тайм-менеджмент",
+    "description": "Привет! Умею успевать работу, учёбу и жизнь. Покажу простые приёмы планирования, приоритеты и как перестать откладывать дела на потом.",
+    "images": [
+      "https://loremflickr.com/800/600/planner,clock?lock=71",
+      "https://loremflickr.com/800/600/planner,clock?lock=72",
+      "https://loremflickr.com/800/600/planner,clock?lock=73",
+      "https://loremflickr.com/800/600/planner,clock?lock=74",
+      "https://loremflickr.com/800/600/planner,clock?lock=75",
+      "https://loremflickr.com/800/600/planner,clock?lock=76",
+      "https://loremflickr.com/800/600/planner,clock?lock=77"
+    ]
+  },
+  {
+    "id": "skill_8",
+    "title": "Управление проектами",
+    "category": "Бизнес и карьера",
+    "subcategory": "Проектное управление",
+    "description": "Привет! Веду IT-проекты по гибким методикам. Научу разбивать большую цель на задачи, строить план, оценивать сроки и держать всех в курсе.",
+    "images": [
+      "https://loremflickr.com/800/600/project,whiteboard?lock=81",
+      "https://loremflickr.com/800/600/project,whiteboard?lock=82",
+      "https://loremflickr.com/800/600/project,whiteboard?lock=83",
+      "https://loremflickr.com/800/600/project,whiteboard?lock=84",
+      "https://loremflickr.com/800/600/project,whiteboard?lock=85",
+      "https://loremflickr.com/800/600/project,whiteboard?lock=86",
+      "https://loremflickr.com/800/600/project,whiteboard?lock=87"
+    ]
+  },
+  {
+    "id": "skill_9",
+    "title": "Запуск своего дела",
+    "category": "Бизнес и карьера",
+    "subcategory": "Предпринимательство",
+    "description": "Привет! Запустил три небольших проекта, один из них вырос в стабильный бизнес. Расскажу, как проверить идею, посчитать первые цифры и не бояться первого шага.",
+    "images": [
+      "https://loremflickr.com/800/600/startup,office?lock=91",
+      "https://loremflickr.com/800/600/startup,office?lock=92",
+      "https://loremflickr.com/800/600/startup,office?lock=93",
+      "https://loremflickr.com/800/600/startup,office?lock=94",
+      "https://loremflickr.com/800/600/startup,office?lock=95",
+      "https://loremflickr.com/800/600/startup,office?lock=96",
+      "https://loremflickr.com/800/600/startup,office?lock=97"
+    ]
+  },
+  {
+    "id": "skill_10",
+    "title": "Рисование и иллюстрация",
+    "category": "Творчество и искусство",
+    "subcategory": "Рисование и иллюстрация",
+    "description": "Привет! Рисую иллюстрации для книг и соцсетей. Научу строить композицию, работать со светом и цветом и находить свой стиль, даже если вы никогда не держали карандаш.",
+    "images": [
+      "https://loremflickr.com/800/600/drawing,illustration?lock=101",
+      "https://loremflickr.com/800/600/drawing,illustration?lock=102",
+      "https://loremflickr.com/800/600/drawing,illustration?lock=103",
+      "https://loremflickr.com/800/600/drawing,illustration?lock=104",
+      "https://loremflickr.com/800/600/drawing,illustration?lock=105",
+      "https://loremflickr.com/800/600/drawing,illustration?lock=106",
+      "https://loremflickr.com/800/600/drawing,illustration?lock=107"
+    ]
+  },
+  {
+    "id": "skill_11",
+    "title": "Фотография",
+    "category": "Творчество и искусство",
+    "subcategory": "Фотография",
+    "description": "Привет! Снимаю людей и города уже 8 лет. Покажу, как выбрать кадр, поймать свет и обработать фото так, чтобы оно выглядело естественно.",
+    "images": [
+      "https://loremflickr.com/800/600/photography,camera?lock=111",
+      "https://loremflickr.com/800/600/photography,camera?lock=112",
+      "https://loremflickr.com/800/600/photography,camera?lock=113",
+      "https://loremflickr.com/800/600/photography,camera?lock=114",
+      "https://loremflickr.com/800/600/photography,camera?lock=115",
+      "https://loremflickr.com/800/600/photography,camera?lock=116",
+      "https://loremflickr.com/800/600/photography,camera?lock=117"
+    ]
+  },
+  {
+    "id": "skill_12",
+    "title": "Видеомонтаж",
+    "category": "Творчество и искусство",
+    "subcategory": "Видеомонтаж",
+    "description": "Привет! Монтирую ролики для блогеров и компаний. Научу собирать видео из кусочков, добавлять музыку и титры и делать так, чтобы зритель досмотрел до конца.",
+    "images": [
+      "https://loremflickr.com/800/600/video,editing?lock=121",
+      "https://loremflickr.com/800/600/video,editing?lock=122",
+      "https://loremflickr.com/800/600/video,editing?lock=123",
+      "https://loremflickr.com/800/600/video,editing?lock=124",
+      "https://loremflickr.com/800/600/video,editing?lock=125",
+      "https://loremflickr.com/800/600/video,editing?lock=126",
+      "https://loremflickr.com/800/600/video,editing?lock=127"
+    ]
+  },
+  {
+    "id": "skill_13",
+    "title": "Актёрское мастерство",
+    "category": "Творчество и искусство",
+    "subcategory": "Актёрское мастерство",
+    "description": "Привет! Играла в любительском театре и вела мастер-классы. Помогу снять зажимы, поработать с голосом и телом и увереннее чувствовать себя на публике.",
+    "images": [
+      "https://loremflickr.com/800/600/acting,theater?lock=131",
+      "https://loremflickr.com/800/600/acting,theater?lock=132",
+      "https://loremflickr.com/800/600/acting,theater?lock=133",
+      "https://loremflickr.com/800/600/acting,theater?lock=134",
+      "https://loremflickr.com/800/600/acting,theater?lock=135",
+      "https://loremflickr.com/800/600/acting,theater?lock=136",
+      "https://loremflickr.com/800/600/acting,theater?lock=137"
+    ]
+  },
+  {
+    "id": "skill_14",
+    "title": "Креативное письмо",
+    "category": "Творчество и искусство",
+    "subcategory": "Креативное письмо",
+    "description": "Привет! Пишу рассказы и тексты для блогов. Научу придумывать сюжеты, живых героев и убирать лишнее, чтобы текст читался легко.",
+    "images": [
+      "https://loremflickr.com/800/600/writing,notebook?lock=141",
+      "https://loremflickr.com/800/600/writing,notebook?lock=142",
+      "https://loremflickr.com/800/600/writing,notebook?lock=143",
+      "https://loremflickr.com/800/600/writing,notebook?lock=144",
+      "https://loremflickr.com/800/600/writing,notebook?lock=145",
+      "https://loremflickr.com/800/600/writing,notebook?lock=146",
+      "https://loremflickr.com/800/600/writing,notebook?lock=147"
+    ]
+  },
+  {
+    "id": "skill_15",
+    "title": "Арт-терапия",
+    "category": "Творчество и искусство",
+    "subcategory": "Арт-терапия",
+    "description": "Привет! Использую рисование как способ расслабиться и лучше понять себя. Подойдёт тем, кто не умеет рисовать: здесь важен процесс, а не результат.",
+    "images": [
+      "https://loremflickr.com/800/600/painting,art?lock=151",
+      "https://loremflickr.com/800/600/painting,art?lock=152",
+      "https://loremflickr.com/800/600/painting,art?lock=153",
+      "https://loremflickr.com/800/600/painting,art?lock=154",
+      "https://loremflickr.com/800/600/painting,art?lock=155",
+      "https://loremflickr.com/800/600/painting,art?lock=156",
+      "https://loremflickr.com/800/600/painting,art?lock=157"
+    ]
+  },
+  {
+    "id": "skill_16",
+    "title": "Декор и DIY",
+    "category": "Творчество и искусство",
+    "subcategory": "Декор и DIY",
+    "description": "Привет! Люблю делать вещи для дома своими руками. Покажу, как из простых материалов сделать красивый декор, и помогу выбрать идею под ваш интерьер.",
+    "images": [
+      "https://loremflickr.com/800/600/diy,craft?lock=161",
+      "https://loremflickr.com/800/600/diy,craft?lock=162",
+      "https://loremflickr.com/800/600/diy,craft?lock=163",
+      "https://loremflickr.com/800/600/diy,craft?lock=164",
+      "https://loremflickr.com/800/600/diy,craft?lock=165",
+      "https://loremflickr.com/800/600/diy,craft?lock=166",
+      "https://loremflickr.com/800/600/diy,craft?lock=167"
+    ]
+  },
+  {
+    "id": "skill_17",
+    "title": "Разговорный английский",
+    "category": "Иностранные языки",
+    "subcategory": "Английский",
+    "description": "Привет! Живу в англоязычной среде несколько лет. Помогу разговориться, понимать речь на слух и перестать бояться ошибок.",
+    "images": [
+      "https://loremflickr.com/800/600/english,book?lock=171",
+      "https://loremflickr.com/800/600/english,book?lock=172",
+      "https://loremflickr.com/800/600/english,book?lock=173",
+      "https://loremflickr.com/800/600/english,book?lock=174",
+      "https://loremflickr.com/800/600/english,book?lock=175",
+      "https://loremflickr.com/800/600/english,book?lock=176",
+      "https://loremflickr.com/800/600/english,book?lock=177"
+    ]
+  },
+  {
+    "id": "skill_18",
+    "title": "Французский для начинающих",
+    "category": "Иностранные языки",
+    "subcategory": "Французский",
+    "description": "Привет! Изучаю французский с детства и жила в Лионе. Научу читать, произносить непростые звуки и составлять первые фразы для путешествий.",
+    "images": [
+      "https://loremflickr.com/800/600/paris,french?lock=181",
+      "https://loremflickr.com/800/600/paris,french?lock=182",
+      "https://loremflickr.com/800/600/paris,french?lock=183",
+      "https://loremflickr.com/800/600/paris,french?lock=184",
+      "https://loremflickr.com/800/600/paris,french?lock=185",
+      "https://loremflickr.com/800/600/paris,french?lock=186",
+      "https://loremflickr.com/800/600/paris,french?lock=187"
+    ]
+  },
+  {
+    "id": "skill_19",
+    "title": "Испанский язык",
+    "category": "Иностранные языки",
+    "subcategory": "Испанский",
+    "description": "Привет! Говорю по-испански свободно, у меня друзья из Испании и Мексики. Помогу заговорить с первых занятий, разберём живые разговорные фразы.",
+    "images": [
+      "https://loremflickr.com/800/600/madrid,spain?lock=191",
+      "https://loremflickr.com/800/600/madrid,spain?lock=192",
+      "https://loremflickr.com/800/600/madrid,spain?lock=193",
+      "https://loremflickr.com/800/600/madrid,spain?lock=194",
+      "https://loremflickr.com/800/600/madrid,spain?lock=195",
+      "https://loremflickr.com/800/600/madrid,spain?lock=196",
+      "https://loremflickr.com/800/600/madrid,spain?lock=197"
+    ]
+  },
+  {
+    "id": "skill_20",
+    "title": "Немецкий язык",
+    "category": "Иностранные языки",
+    "subcategory": "Немецкий",
+    "description": "Привет! Учился и работал в Германии. Объясню грамматику простыми словами, поработаем над произношением и разговорной речью.",
+    "images": [
+      "https://loremflickr.com/800/600/berlin,germany?lock=201",
+      "https://loremflickr.com/800/600/berlin,germany?lock=202",
+      "https://loremflickr.com/800/600/berlin,germany?lock=203",
+      "https://loremflickr.com/800/600/berlin,germany?lock=204",
+      "https://loremflickr.com/800/600/berlin,germany?lock=205",
+      "https://loremflickr.com/800/600/berlin,germany?lock=206",
+      "https://loremflickr.com/800/600/berlin,germany?lock=207"
+    ]
+  },
+  {
+    "id": "skill_21",
+    "title": "Китайский язык",
+    "category": "Иностранные языки",
+    "subcategory": "Китайский",
+    "description": "Привет! Учу китайский 5 лет и бывала в Китае. Научу основам иероглифов, тонам и фразам для повседневных ситуаций.",
+    "images": [
+      "https://loremflickr.com/800/600/beijing,china?lock=211",
+      "https://loremflickr.com/800/600/beijing,china?lock=212",
+      "https://loremflickr.com/800/600/beijing,china?lock=213",
+      "https://loremflickr.com/800/600/beijing,china?lock=214",
+      "https://loremflickr.com/800/600/beijing,china?lock=215",
+      "https://loremflickr.com/800/600/beijing,china?lock=216",
+      "https://loremflickr.com/800/600/beijing,china?lock=217"
+    ]
+  },
+  {
+    "id": "skill_22",
+    "title": "Японский язык",
+    "category": "Иностранные языки",
+    "subcategory": "Японский",
+    "description": "Привет! Увлечена Японией и японским языком. Начнём с хираганы и катаканы, разберём базовые фразы и немного поговорим о культуре.",
+    "images": [
+      "https://loremflickr.com/800/600/tokyo,japan?lock=221",
+      "https://loremflickr.com/800/600/tokyo,japan?lock=222",
+      "https://loremflickr.com/800/600/tokyo,japan?lock=223",
+      "https://loremflickr.com/800/600/tokyo,japan?lock=224",
+      "https://loremflickr.com/800/600/tokyo,japan?lock=225",
+      "https://loremflickr.com/800/600/tokyo,japan?lock=226",
+      "https://loremflickr.com/800/600/tokyo,japan?lock=227"
+    ]
+  },
+  {
+    "id": "skill_23",
+    "title": "Подготовка к IELTS и TOEFL",
+    "category": "Иностранные языки",
+    "subcategory": "Подготовка к экзаменам (IELTS, TOEFL)",
+    "description": "Привет! Сдала IELTS на высокий балл. Разберём формат экзамена, потренируем все четыре части и составим план подготовки под ваш срок.",
+    "images": [
+      "https://loremflickr.com/800/600/exam,study?lock=231",
+      "https://loremflickr.com/800/600/exam,study?lock=232",
+      "https://loremflickr.com/800/600/exam,study?lock=233",
+      "https://loremflickr.com/800/600/exam,study?lock=234",
+      "https://loremflickr.com/800/600/exam,study?lock=235",
+      "https://loremflickr.com/800/600/exam,study?lock=236",
+      "https://loremflickr.com/800/600/exam,study?lock=237"
+    ]
+  },
+  {
+    "id": "skill_24",
+    "title": "Личностное развитие",
+    "category": "Образование и развитие",
+    "subcategory": "Личностное развитие",
+    "description": "Привет! Много читаю и практикую способы лучше понимать себя. Помогу поставить цели, найти опору и не бросать начатое.",
+    "images": [
+      "https://loremflickr.com/800/600/journal,notebook?lock=241",
+      "https://loremflickr.com/800/600/journal,notebook?lock=242",
+      "https://loremflickr.com/800/600/journal,notebook?lock=243",
+      "https://loremflickr.com/800/600/journal,notebook?lock=244",
+      "https://loremflickr.com/800/600/journal,notebook?lock=245",
+      "https://loremflickr.com/800/600/journal,notebook?lock=246",
+      "https://loremflickr.com/800/600/journal,notebook?lock=247"
+    ]
+  },
+  {
+    "id": "skill_25",
+    "title": "Как учиться эффективно",
+    "category": "Образование и развитие",
+    "subcategory": "Навыки обучения",
+    "description": "Привет! Умею быстро осваивать новое. Покажу, как строить план обучения, закреплять материал и не выгорать на длинной дистанции.",
+    "images": [
+      "https://loremflickr.com/800/600/student,study?lock=251",
+      "https://loremflickr.com/800/600/student,study?lock=252",
+      "https://loremflickr.com/800/600/student,study?lock=253",
+      "https://loremflickr.com/800/600/student,study?lock=254",
+      "https://loremflickr.com/800/600/student,study?lock=255",
+      "https://loremflickr.com/800/600/student,study?lock=256",
+      "https://loremflickr.com/800/600/student,study?lock=257"
+    ]
+  },
+  {
+    "id": "skill_26",
+    "title": "Когнитивные техники",
+    "category": "Образование и развитие",
+    "subcategory": "Когнитивные техники",
+    "description": "Привет! Увлекаюсь тем, как работает мышление. Научу приёмам концентрации, запоминания и ясного рассуждения для работы и учёбы.",
+    "images": [
+      "https://loremflickr.com/800/600/brain,puzzle?lock=261",
+      "https://loremflickr.com/800/600/brain,puzzle?lock=262",
+      "https://loremflickr.com/800/600/brain,puzzle?lock=263",
+      "https://loremflickr.com/800/600/brain,puzzle?lock=264",
+      "https://loremflickr.com/800/600/brain,puzzle?lock=265",
+      "https://loremflickr.com/800/600/brain,puzzle?lock=266",
+      "https://loremflickr.com/800/600/brain,puzzle?lock=267"
+    ]
+  },
+  {
+    "id": "skill_27",
+    "title": "Скорочтение",
+    "category": "Образование и развитие",
+    "subcategory": "Скорочтение",
+    "description": "Привет! Читаю в несколько раз быстрее обычного и понимаю прочитанное. Покажу упражнения, которые ускорят чтение без потери смысла.",
+    "images": [
+      "https://loremflickr.com/800/600/reading,book?lock=271",
+      "https://loremflickr.com/800/600/reading,book?lock=272",
+      "https://loremflickr.com/800/600/reading,book?lock=273",
+      "https://loremflickr.com/800/600/reading,book?lock=274",
+      "https://loremflickr.com/800/600/reading,book?lock=275",
+      "https://loremflickr.com/800/600/reading,book?lock=276",
+      "https://loremflickr.com/800/600/reading,book?lock=277"
+    ]
+  },
+  {
+    "id": "skill_28",
+    "title": "Навыки преподавания",
+    "category": "Образование и развитие",
+    "subcategory": "Навыки преподавания",
+    "description": "Привет! Преподаю уже много лет. Научу объяснять сложное просто, строить занятие и удерживать внимание учеников.",
+    "images": [
+      "https://loremflickr.com/800/600/teacher,classroom?lock=281",
+      "https://loremflickr.com/800/600/teacher,classroom?lock=282",
+      "https://loremflickr.com/800/600/teacher,classroom?lock=283",
+      "https://loremflickr.com/800/600/teacher,classroom?lock=284",
+      "https://loremflickr.com/800/600/teacher,classroom?lock=285",
+      "https://loremflickr.com/800/600/teacher,classroom?lock=286",
+      "https://loremflickr.com/800/600/teacher,classroom?lock=287"
+    ]
+  },
+  {
+    "id": "skill_29",
+    "title": "Коучинг",
+    "category": "Образование и развитие",
+    "subcategory": "Коучинг",
+    "description": "Привет! Прошла обучение коучингу и работаю с запросами на карьеру и баланс. Помогу задать правильные вопросы себе и найти свои решения.",
+    "images": [
+      "https://loremflickr.com/800/600/coaching,conversation?lock=291",
+      "https://loremflickr.com/800/600/coaching,conversation?lock=292",
+      "https://loremflickr.com/800/600/coaching,conversation?lock=293",
+      "https://loremflickr.com/800/600/coaching,conversation?lock=294",
+      "https://loremflickr.com/800/600/coaching,conversation?lock=295",
+      "https://loremflickr.com/800/600/coaching,conversation?lock=296",
+      "https://loremflickr.com/800/600/coaching,conversation?lock=297"
+    ]
+  },
+  {
+    "id": "skill_30",
+    "title": "Уборка и организация пространства",
+    "category": "Дом и уют",
+    "subcategory": "Уборка и организация",
+    "description": "Привет! Умею быстро наводить порядок и сохранять его. Научу простым системам, которые экономят время, и помогу расхламить квартиру.",
+    "images": [
+      "https://loremflickr.com/800/600/cleaning,tidy?lock=301",
+      "https://loremflickr.com/800/600/cleaning,tidy?lock=302",
+      "https://loremflickr.com/800/600/cleaning,tidy?lock=303",
+      "https://loremflickr.com/800/600/cleaning,tidy?lock=304",
+      "https://loremflickr.com/800/600/cleaning,tidy?lock=305",
+      "https://loremflickr.com/800/600/cleaning,tidy?lock=306",
+      "https://loremflickr.com/800/600/cleaning,tidy?lock=307"
+    ]
+  },
+  {
+    "id": "skill_31",
+    "title": "Домашние финансы",
+    "category": "Дом и уют",
+    "subcategory": "Домашние финансы",
+    "description": "Привет! Веду семейный бюджет много лет. Покажу, как учитывать расходы, копить без стресса и составить финансовый план.",
+    "images": [
+      "https://loremflickr.com/800/600/finance,calculator?lock=311",
+      "https://loremflickr.com/800/600/finance,calculator?lock=312",
+      "https://loremflickr.com/800/600/finance,calculator?lock=313",
+      "https://loremflickr.com/800/600/finance,calculator?lock=314",
+      "https://loremflickr.com/800/600/finance,calculator?lock=315",
+      "https://loremflickr.com/800/600/finance,calculator?lock=316",
+      "https://loremflickr.com/800/600/finance,calculator?lock=317"
+    ]
+  },
+  {
+    "id": "skill_32",
+    "title": "Приготовление еды",
+    "category": "Дом и уют",
+    "subcategory": "Приготовление еды",
+    "description": "Привет! Люблю готовить простые и вкусные блюда. Научу основам техники, заготовкам на неделю и тому, как не бояться экспериментов на кухне.",
+    "images": [
+      "https://loremflickr.com/800/600/cooking,kitchen?lock=321",
+      "https://loremflickr.com/800/600/cooking,kitchen?lock=322",
+      "https://loremflickr.com/800/600/cooking,kitchen?lock=323",
+      "https://loremflickr.com/800/600/cooking,kitchen?lock=324",
+      "https://loremflickr.com/800/600/cooking,kitchen?lock=325",
+      "https://loremflickr.com/800/600/cooking,kitchen?lock=326",
+      "https://loremflickr.com/800/600/cooking,kitchen?lock=327"
+    ]
+  },
+  {
+    "id": "skill_33",
+    "title": "Уход за домашними растениями",
+    "category": "Дом и уют",
+    "subcategory": "Домашние растения",
+    "description": "Привет! В моей квартире больше 40 растений. Расскажу, как выбрать растение под ваш свет, как правильно поливать и что делать, если оно заболело.",
+    "images": [
+      "https://loremflickr.com/800/600/houseplants,plants?lock=331",
+      "https://loremflickr.com/800/600/houseplants,plants?lock=332",
+      "https://loremflickr.com/800/600/houseplants,plants?lock=333",
+      "https://loremflickr.com/800/600/houseplants,plants?lock=334",
+      "https://loremflickr.com/800/600/houseplants,plants?lock=335",
+      "https://loremflickr.com/800/600/houseplants,plants?lock=336",
+      "https://loremflickr.com/800/600/houseplants,plants?lock=337"
+    ]
+  },
+  {
+    "id": "skill_34",
+    "title": "Мелкий ремонт",
+    "category": "Дом и уют",
+    "subcategory": "Ремонт",
+    "description": "Привет! Привык всё чинить сам. Покажу, как повесить полку, поменять розетку и справиться с мелкими поломками без вызова мастера.",
+    "images": [
+      "https://loremflickr.com/800/600/tools,repair?lock=341",
+      "https://loremflickr.com/800/600/tools,repair?lock=342",
+      "https://loremflickr.com/800/600/tools,repair?lock=343",
+      "https://loremflickr.com/800/600/tools,repair?lock=344",
+      "https://loremflickr.com/800/600/tools,repair?lock=345",
+      "https://loremflickr.com/800/600/tools,repair?lock=346",
+      "https://loremflickr.com/800/600/tools,repair?lock=347"
+    ]
+  },
+  {
+    "id": "skill_35",
+    "title": "Хранение вещей",
+    "category": "Дом и уют",
+    "subcategory": "Хранение вещей",
+    "description": "Привет! Придумываю, как уместить много вещей в маленьком пространстве. Помогу организовать шкафы, кладовку и сезонное хранение.",
+    "images": [
+      "https://loremflickr.com/800/600/storage,shelves?lock=351",
+      "https://loremflickr.com/800/600/storage,shelves?lock=352",
+      "https://loremflickr.com/800/600/storage,shelves?lock=353",
+      "https://loremflickr.com/800/600/storage,shelves?lock=354",
+      "https://loremflickr.com/800/600/storage,shelves?lock=355",
+      "https://loremflickr.com/800/600/storage,shelves?lock=356",
+      "https://loremflickr.com/800/600/storage,shelves?lock=357"
+    ]
+  },
+  {
+    "id": "skill_36",
+    "title": "Йога и медитация",
+    "category": "Здоровье и лайфстайл",
+    "subcategory": "Йога и медитация",
+    "description": "Привет! Практикую йогу и медитацию 7 лет. Покажу мягкие упражнения для начинающих и дыхательные техники, которые помогают расслабиться.",
+    "images": [
+      "https://loremflickr.com/800/600/yoga?lock=361",
+      "https://loremflickr.com/800/600/yoga?lock=362",
+      "https://loremflickr.com/800/600/yoga?lock=363",
+      "https://loremflickr.com/800/600/yoga?lock=364",
+      "https://loremflickr.com/800/600/yoga?lock=365",
+      "https://loremflickr.com/800/600/yoga?lock=366",
+      "https://loremflickr.com/800/600/yoga?lock=367"
+    ]
+  },
+  {
+    "id": "skill_37",
+    "title": "Здоровое питание",
+    "category": "Здоровье и лайфстайл",
+    "subcategory": "Питание и ЗОЖ",
+    "description": "Привет! Интересуюсь осознанным питанием. Помогу составить сбалансированный рацион без жёстких запретов и научу разбирать составы продуктов.",
+    "images": [
+      "https://loremflickr.com/800/600/healthy,food?lock=371",
+      "https://loremflickr.com/800/600/healthy,food?lock=372",
+      "https://loremflickr.com/800/600/healthy,food?lock=373",
+      "https://loremflickr.com/800/600/healthy,food?lock=374",
+      "https://loremflickr.com/800/600/healthy,food?lock=375",
+      "https://loremflickr.com/800/600/healthy,food?lock=376",
+      "https://loremflickr.com/800/600/healthy,food?lock=377"
+    ]
+  },
+  {
+    "id": "skill_38",
+    "title": "Забота о ментальном здоровье",
+    "category": "Здоровье и лайфстайл",
+    "subcategory": "Ментальное здоровье",
+    "description": "Привет! Расскажу о простых привычках, которые поддерживают эмоциональное равновесие: как справляться со стрессом и отдыхать по-настоящему.",
+    "images": [
+      "https://loremflickr.com/800/600/relax,nature?lock=381",
+      "https://loremflickr.com/800/600/relax,nature?lock=382",
+      "https://loremflickr.com/800/600/relax,nature?lock=383",
+      "https://loremflickr.com/800/600/relax,nature?lock=384",
+      "https://loremflickr.com/800/600/relax,nature?lock=385",
+      "https://loremflickr.com/800/600/relax,nature?lock=386",
+      "https://loremflickr.com/800/600/relax,nature?lock=387"
+    ]
+  },
+  {
+    "id": "skill_39",
+    "title": "Практики осознанности",
+    "category": "Здоровье и лайфстайл",
+    "subcategory": "Осознанность",
+    "description": "Привет! Использую практики осознанности в повседневной жизни. Научу замечать момент, снижать тревожность и лучше концентрироваться.",
+    "images": [
+      "https://loremflickr.com/800/600/mindfulness,calm?lock=391",
+      "https://loremflickr.com/800/600/mindfulness,calm?lock=392",
+      "https://loremflickr.com/800/600/mindfulness,calm?lock=393",
+      "https://loremflickr.com/800/600/mindfulness,calm?lock=394",
+      "https://loremflickr.com/800/600/mindfulness,calm?lock=395",
+      "https://loremflickr.com/800/600/mindfulness,calm?lock=396",
+      "https://loremflickr.com/800/600/mindfulness,calm?lock=397"
+    ]
+  },
+  {
+    "id": "skill_40",
+    "title": "Физические тренировки",
+    "category": "Здоровье и лайфстайл",
+    "subcategory": "Физические тренировки",
+    "description": "Привет! Тренируюсь уже много лет. Помогу составить программу под вашу цель, поставить технику упражнений и начать без травм.",
+    "images": [
+      "https://loremflickr.com/800/600/fitness,workout?lock=401",
+      "https://loremflickr.com/800/600/fitness,workout?lock=402",
+      "https://loremflickr.com/800/600/fitness,workout?lock=403",
+      "https://loremflickr.com/800/600/fitness,workout?lock=404",
+      "https://loremflickr.com/800/600/fitness,workout?lock=405",
+      "https://loremflickr.com/800/600/fitness,workout?lock=406",
+      "https://loremflickr.com/800/600/fitness,workout?lock=407"
+    ]
+  },
+  {
+    "id": "skill_41",
+    "title": "Здоровый сон и восстановление",
+    "category": "Здоровье и лайфстайл",
+    "subcategory": "Сон и восстановление",
+    "description": "Привет! Разбираюсь в том, как улучшить качество сна. Расскажу про режим, вечерние ритуалы и способы быстрее восстанавливаться.",
+    "images": [
+      "https://loremflickr.com/800/600/sleep,bedroom?lock=411",
+      "https://loremflickr.com/800/600/sleep,bedroom?lock=412",
+      "https://loremflickr.com/800/600/sleep,bedroom?lock=413",
+      "https://loremflickr.com/800/600/sleep,bedroom?lock=414",
+      "https://loremflickr.com/800/600/sleep,bedroom?lock=415",
+      "https://loremflickr.com/800/600/sleep,bedroom?lock=416",
+      "https://loremflickr.com/800/600/sleep,bedroom?lock=417"
+    ]
+  },
+  {
+    "id": "skill_42",
+    "title": "Баланс жизни и работы",
+    "category": "Здоровье и лайфстайл",
+    "subcategory": "Баланс жизни и работы",
+    "description": "Привет! Знаю, как это — работать без выходных. Помогу выстроить границы, найти время на себя и не терять энергию.",
+    "images": [
+      "https://loremflickr.com/800/600/balance,stones?lock=421",
+      "https://loremflickr.com/800/600/balance,stones?lock=422",
+      "https://loremflickr.com/800/600/balance,stones?lock=423",
+      "https://loremflickr.com/800/600/balance,stones?lock=424",
+      "https://loremflickr.com/800/600/balance,stones?lock=425",
+      "https://loremflickr.com/800/600/balance,stones?lock=426",
+      "https://loremflickr.com/800/600/balance,stones?lock=427"
     ]
   }
 ]
