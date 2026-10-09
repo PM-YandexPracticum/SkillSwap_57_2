@@ -25,6 +25,7 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  gap: 32px;
 }
 
 .left > :first-child {
@@ -33,15 +34,6 @@
 
 .left > :nth-child(2) {
   margin-right: 24px;
-}
-
-.left > button {
-  height: 24px;
-  padding: 0;
-}
-
-.skillsButton {
-  gap: 8px;
 }
 
 .search {
