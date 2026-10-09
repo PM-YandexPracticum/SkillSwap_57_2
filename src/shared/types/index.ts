@@ -1,16 +1,11 @@
 // ─── Skill ───────────────────────────────────────────────
-export type SkillType = 'teach' | 'learn'
-
 export interface Skill {
   id: string
   title: string
-  description: string
-  type: SkillType
   category: string
-  tags: string[]
-  imageUrl: string | null
-  authorId: string
-  createdAt: string
+  subcategory: string
+  description: string
+  images: string[]
 }
 
 // ─── User ────────────────────────────────────────────────
@@ -18,8 +13,22 @@ export interface User {
   id: string
   name: string
   email: string
-  avatarUrl: string | null
+  avatar: string | null
+  aboutMe: string
+  gender: 'male' | 'female'
+  city: string
+  birthDate: string
   createdAt: string
+  likesCount: number
+  teach: string[]
+  learn: string[]
+  likesCard: string[]
+}
+
+// ─── City ────────────────────────────────────────────────
+export interface City {
+  id: string
+  title: string
 }
 
 // ─── Request ─────────────────────────────────────────────
