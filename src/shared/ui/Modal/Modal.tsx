@@ -12,10 +12,19 @@ export function Modal({ children, onClose, onOverlayClick }: ModalProps) {
   useEffect(() => {
     document.body.style.overflow = 'hidden'
 
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+
     return () => {
       document.body.style.overflow = ''
+      document.removeEventListener('keydown', handleEscape)
     }
-  }, [])
+  }, [onClose])
 
   const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {

@@ -2,21 +2,15 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: rgba(142, 142, 142, 0.6);
+  background-color: rgb(142 142 142 / 60%);
   backdrop-filter: blur(4px);
 }
 
 .modal {
   max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 48px);
-
-  overflow-y: auto;
-
   background-color: #fff;
   border-radius: 12px;
 }
