@@ -1,0 +1,48 @@
+.filter {
+  width: 100%;
+  max-width: 282px;
+  padding: 24px 30px 28px;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #253017;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.list {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list > div {
+  width: fit-content;
+}
+
+.message,
+.error {
+  font-family: var(--font-base);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.message {
+  color: #69735d;
+}
+
+.error {
+  color: #bf3920;
+}
