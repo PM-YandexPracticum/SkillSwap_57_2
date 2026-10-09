@@ -1,0 +1,53 @@
+.root {
+  display: grid;
+  width: 100%;
+  gap: 8px;
+}
+
+.providerButton {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  padding: 8px 16px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  color: #222;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+
+.providerButton:hover:not(:disabled) {
+  border-color: #aeb4ba;
+  background-color: #f8f9fa;
+  color: #222;
+}
+
+.providerButton:focus-visible {
+  outline: 2px solid #4d8d20;
+  outline-offset: 2px;
+}
+
+.icon {
+  position: absolute;
+  left: 16px;
+  width: 18px;
+  height: 18px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #666;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.divider::before,
+.divider::after {
+  height: 1px;
+  flex: 1;
+  background-color: #d9d9d9;
+  content: '';
+}
