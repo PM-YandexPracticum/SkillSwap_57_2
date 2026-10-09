@@ -8,10 +8,11 @@
     "gender": "male",
     "city": "moscow",
     "birthDate": "1994-04-06",
-    "createDate": "2025-01-01T11:07:00",
+    "createdAt": "2025-01-01T11:07:00",
     "likesCount": 150,
     "teach": ["skill_1"],
-    "learn": ["skill_2 ", "skill_3", "skill_4", "skill_5"]
+    "learn": ["skill_2", "skill_3", "skill_4", "skill_5"],
+    "likesCard": ["user_7", "user_12", "user_23", "user_41"]
   },
 
   {
@@ -23,10 +24,11 @@
     "gender": "female",
     "city": "saint-petersburg",
     "birthDate": "2001-07-11",
-    "createDate": "2025-01-04T14:14:00",
+    "createdAt": "2025-01-04T14:14:00",
     "likesCount": 64,
     "teach": ["skill_4"],
-    "learn": ["skill_2 ", "skill_3", "skill_6", "skill_7"]
+    "learn": ["skill_2", "skill_3", "skill_6", "skill_7"],
+    "likesCard": ["user_1", "user_18", "user_35"]
   },
   {
     "id": "user_3",
@@ -37,10 +39,11 @@
     "gender": "male",
     "city": "moscow",
     "birthDate": "1990-10-16",
-    "createDate": "2025-01-07T17:21:00",
+    "createdAt": "2025-01-07T17:21:00",
     "likesCount": 100,
     "teach": ["skill_8"],
-    "learn": ["skill_2 ", "skill_9", "skill_5", "skill_10"]
+    "learn": ["skill_2", "skill_9", "skill_5", "skill_10"],
+    "likesCard": ["user_9", "user_14", "user_27", "user_46", "user_50"]
   },
 
   {
@@ -52,10 +55,11 @@
     "gender": "female",
     "city": "khabarovsk",
     "birthDate": "1997-01-21",
-    "createDate": "2024-01-10T08:28:00",
+    "createdAt": "2024-01-10T08:28:00",
     "likesCount": 76,
     "teach": ["skill_6"],
-    "learn": ["skill_11", "skill_12", "skill_5", "skill_13"]
+    "learn": ["skill_11", "skill_12", "skill_5", "skill_13"],
+    "likesCard": []
   },
   {
     "id": "user_5",
@@ -66,10 +70,11 @@
     "gender": "male",
     "city": "novosibirsk",
     "birthDate": "2004-04-26",
-    "createDate": "2023-01-13T11:35:00",
+    "createdAt": "2023-01-13T11:35:00",
     "likesCount": 30,
     "teach": ["skill_14"],
-    "learn": ["skill_15", "skill_16", "skill_18", "skill_3"]
+    "learn": ["skill_15", "skill_16", "skill_18", "skill_3"],
+    "likesCard": ["user_2", "user_11", "user_19", "user_32", "user_44"]
   },
   {
     "id": "user_6",
@@ -80,10 +85,11 @@
     "gender": "female",
     "city": "yekaterinburg",
     "birthDate": "1993-07-04",
-    "createDate": "2026-01-16T14:42:00",
+    "createdAt": "2026-01-16T14:42:00",
     "likesCount": 87,
     "teach": ["skill_17"],
-    "learn": ["skill_20", "skill_18", "skill_4", "skill_19"]
+    "learn": ["skill_20", "skill_18", "skill_4", "skill_19"],
+    "likesCard": ["user_3", "user_8"]
   },
   {
     "id": "user_7",
@@ -94,10 +100,11 @@
     "gender": "male",
     "city": "samara",
     "birthDate": "2000-10-09",
-    "createDate": "2024-01-19T17:49:00",
+    "createdAt": "2024-01-19T17:49:00",
     "likesCount": 93,
     "teach": ["skill_21"],
-    "learn": ["skill_2 ", "skill_3", "skill_22", "skill_14"]
+    "learn": ["skill_2", "skill_3", "skill_22", "skill_14"],
+    "likesCard": ["user_16", "user_25", "user_39", "user_48"]
   },
   {
     "id": "user_8",
@@ -108,10 +115,11 @@
     "gender": "female",
     "city": "nizhny-novgorod",
     "birthDate": "1989-01-14",
-    "createDate": "2025-01-22T08:56:00",
+    "createdAt": "2025-01-22T08:56:00",
     "likesCount": 95,
     "teach": ["skill_23"],
-    "learn": ["skill_2 ", "skill_24", "skill_25", "skill_4"]
+    "learn": ["skill_2", "skill_24", "skill_25", "skill_4"],
+    "likesCard": ["user_4", "user_13", "user_21", "user_37", "user_49"]
   },
   {
     "id": "user_9",
@@ -122,10 +130,11 @@
     "gender": "male",
     "city": "chelyabinsk",
     "birthDate": "1996-04-19",
-    "createDate": "2025-01-25T11:03:00",
+    "createdAt": "2025-01-25T11:03:00",
     "likesCount": 109,
     "teach": ["skill_3"],
-    "learn": ["skill_26", "skill_2 ", "skill_5", "skill_4"]
+    "learn": ["skill_26", "skill_2", "skill_5", "skill_4"],
+    "likesCard": ["user_5"]
   },
   {
     "id": "user_10",
@@ -136,10 +145,11 @@
     "gender": "female",
     "city": "moscow",
     "birthDate": "2003-07-24",
-    "createDate": "2024-01-28T14:10:00",
+    "createdAt": "2024-01-28T14:10:00",
     "likesCount": 118,
     "teach": ["skill_5"],
-    "learn": ["skill_20", "skill_14", "skill_3", "skill_6"]
+    "learn": ["skill_20", "skill_14", "skill_3", "skill_6"],
+    "likesCard": ["user_6", "user_17", "user_28", "user_42"]
   },
   {
     "id": "user_11",
@@ -150,10 +160,11 @@
     "gender": "male",
     "city": "ufa",
     "birthDate": "1992-10-02",
-    "createDate": "2025-01-31T17:17:00",
+    "createdAt": "2025-01-31T17:17:00",
     "likesCount": 119,
     "teach": ["skill_27"],
-    "learn": ["skill_24", "skill_21", "skill_2 ", "skill_4"]
+    "learn": ["skill_24", "skill_21", "skill_2", "skill_4"],
+    "likesCard": ["user_1", "user_9", "user_22"]
   },
   {
     "id": "user_12",
@@ -164,10 +175,11 @@
     "gender": "female",
     "city": "omsk",
     "birthDate": "1999-01-07",
-    "createDate": "2024-02-03T08:24:00",
+    "createdAt": "2024-02-03T08:24:00",
     "likesCount": 128,
     "teach": ["skill_11"],
-    "learn": ["skill_28", "skill_9", "skill_4", "skill_1"]
+    "learn": ["skill_28", "skill_9", "skill_4", "skill_1"],
+    "likesCard": ["user_3", "user_15", "user_31", "user_47"]
   },
   {
     "id": "user_13",
@@ -178,10 +190,11 @@
     "gender": "male",
     "city": "chelyabinsk",
     "birthDate": "1988-04-12",
-    "createDate": "2026-02-06T11:31:00",
+    "createdAt": "2026-02-06T11:31:00",
     "likesCount": 132,
     "teach": ["skill_29"],
-    "learn": ["skill_11", "skill_20", "skill_5", "skill_17"]
+    "learn": ["skill_11", "skill_20", "skill_5", "skill_17"],
+    "likesCard": ["user_2", "user_18", "user_29"]
   },
   {
     "id": "user_14",
@@ -192,10 +205,11 @@
     "gender": "female",
     "city": "voronezh",
     "birthDate": "1995-07-17",
-    "createDate": "2025-02-09T14:38:00",
+    "createdAt": "2025-02-09T14:38:00",
     "likesCount": 142,
     "teach": ["skill_1"],
-    "learn": ["skill_35", "skill_12", "skill_2 ", "skill_26"]
+    "learn": ["skill_35", "skill_12", "skill_2", "skill_26"],
+    "likesCard": ["user_7", "user_20", "user_34", "user_45"]
   },
   {
     "id": "user_15",
@@ -206,10 +220,11 @@
     "gender": "male",
     "city": "perm",
     "birthDate": "2002-10-22",
-    "createDate": "2024-02-12T17:45:00",
+    "createdAt": "2024-02-12T17:45:00",
     "likesCount": 150,
     "teach": ["skill_4"],
-    "learn": ["skill_32", "skill_1", "skill_25", "skill_23"]
+    "learn": ["skill_32", "skill_1", "skill_25", "skill_23"],
+    "likesCard": ["user_4", "user_11", "user_26", "user_38", "user_50"]
   },
   {
     "id": "user_16",
@@ -220,10 +235,11 @@
     "gender": "female",
     "city": "volgograd",
     "birthDate": "1991-01-27",
-    "createDate": "2025-02-15T08:52:00",
+    "createdAt": "2025-02-15T08:52:00",
     "likesCount": 154,
     "teach": ["skill_22"],
-    "learn": ["skill_12", "teaching_skills", "skill_2 ", "skill_14"]
+    "learn": ["skill_12", "teaching_skills", "skill_2", "skill_14"],
+    "likesCard": ["user_5", "user_12"]
   },
   {
     "id": "user_17",
@@ -234,10 +250,11 @@
     "gender": "male",
     "city": "saratov",
     "birthDate": "1998-04-05",
-    "createDate": "2026-02-18T11:59:00",
+    "createdAt": "2026-02-18T11:59:00",
     "likesCount": 167,
     "teach": ["skill_40"],
-    "learn": ["skill_24", "skill_21", "skill_30", "skill_2 "]
+    "learn": ["skill_24", "skill_21", "skill_30", "skill_2"],
+    "likesCard": ["user_8", "user_19", "user_33"]
   },
   {
     "id": "user_18",
@@ -248,10 +265,11 @@
     "gender": "female",
     "city": "tyumen",
     "birthDate": "1987-07-10",
-    "createDate": "2025-02-21T14:06:00",
+    "createdAt": "2025-02-21T14:06:00",
     "likesCount": 176,
     "teach": ["skill_5"],
-    "learn": ["skill_6", "skill_17", "skill_4", "skill_34"]
+    "learn": ["skill_6", "skill_17", "skill_4", "skill_34"],
+    "likesCard": ["user_6", "user_14", "user_24", "user_40"]
   },
   {
     "id": "user_19",
@@ -262,10 +280,11 @@
     "gender": "male",
     "city": "irkutsk",
     "birthDate": "1994-10-15",
-    "createDate": "2024-02-24T17:13:00",
+    "createdAt": "2024-02-24T17:13:00",
     "likesCount": 178,
     "teach": ["skill_21"],
-    "learn": ["skill_22", "skill_30", "skill_2 ", "skill_3"]
+    "learn": ["skill_22", "skill_30", "skill_2", "skill_3"],
+    "likesCard": ["user_10", "user_21", "user_36"]
   },
   {
     "id": "user_20",
@@ -276,10 +295,11 @@
     "gender": "female",
     "city": "khabarovsk",
     "birthDate": "2001-01-20",
-    "createDate": "2024-02-27T08:20:00",
+    "createdAt": "2024-02-27T08:20:00",
     "likesCount": 184,
     "teach": ["skill_4"],
-    "learn": ["skill_6", "skill_32", "skill_2 ", "skill_1"]
+    "learn": ["skill_6", "skill_32", "skill_2", "skill_1"],
+    "likesCard": ["user_1", "user_13", "user_27", "user_43"]
   },
   {
     "id": "user_21",
@@ -290,10 +310,11 @@
     "gender": "male",
     "city": "yaroslavl",
     "birthDate": "1990-04-25",
-    "createDate": "2025-03-02T11:27:00",
+    "createdAt": "2025-03-02T11:27:00",
     "likesCount": 196,
     "teach": ["skill_20"],
-    "learn": ["skill_14", "skill_8", "skill_2 ", "skill_5"]
+    "learn": ["skill_14", "skill_8", "skill_2", "skill_5"],
+    "likesCard": ["user_3", "user_16", "user_30"]
   },
   {
     "id": "user_22",
@@ -304,10 +325,11 @@
     "gender": "female",
     "city": "saint-petersburg",
     "birthDate": "1997-07-03",
-    "createDate": "2025-03-05T14:34:00",
+    "createdAt": "2025-03-05T14:34:00",
     "likesCount": 207,
     "teach": ["skill_25"],
-    "learn": ["skill_1", "skill_3", "skill_2 ", "skill_4"]
+    "learn": ["skill_1", "skill_3", "skill_2", "skill_4"],
+    "likesCard": ["user_9", "user_25", "user_41", "user_48"]
   },
   {
     "id": "user_23",
@@ -318,10 +340,11 @@
     "gender": "male",
     "city": "moscow",
     "birthDate": "2004-10-08",
-    "createDate": "2026-03-08T17:41:00",
+    "createdAt": "2026-03-08T17:41:00",
     "likesCount": 215,
     "teach": ["skill_24"],
-    "learn": ["skill_15", "skill_21", "skill_2 ", "skill_4"]
+    "learn": ["skill_15", "skill_21", "skill_2", "skill_4"],
+    "likesCard": ["user_2", "user_17", "user_32"]
   },
   {
     "id": "user_24",
@@ -332,10 +355,11 @@
     "gender": "female",
     "city": "perm",
     "birthDate": "1993-01-13",
-    "createDate": "2025-03-11T08:48:00",
+    "createdAt": "2025-03-11T08:48:00",
     "likesCount": 221,
     "teach": ["skill_35"],
-    "learn": ["skill_26", "skill_27", "skill_2 ", "skill_5"]
+    "learn": ["skill_26", "skill_27", "skill_2", "skill_5"],
+    "likesCard": ["user_4", "user_15", "user_28", "user_39"]
   },
   {
     "id": "user_25",
@@ -346,10 +370,11 @@
     "gender": "male",
     "city": "yekaterinburg",
     "birthDate": "2000-04-18",
-    "createDate": "2025-03-14T11:55:00",
+    "createdAt": "2025-03-14T11:55:00",
     "likesCount": 226,
     "teach": ["skill_19"],
-    "learn": ["skill_2 ", "skill_28", "skill_36", "skill_4"]
+    "learn": ["skill_2", "skill_28", "skill_36", "skill_4"],
+    "likesCard": ["user_7", "user_18"]
   },
   {
     "id": "user_26",
@@ -360,10 +385,11 @@
     "gender": "female",
     "city": "moscow",
     "birthDate": "1989-07-23",
-    "createDate": "2025-03-17T14:02:00",
+    "createdAt": "2025-03-17T14:02:00",
     "likesCount": 234,
     "teach": ["skill_16"],
-    "learn": ["skill_7", "skill_23", "skill_2 ", "skill_27"]
+    "learn": ["skill_7", "skill_23", "skill_2", "skill_27"],
+    "likesCard": ["user_5", "user_20", "user_35", "user_46"]
   },
   {
     "id": "user_27",
@@ -374,10 +400,11 @@
     "gender": "male",
     "city": "saint-petersburg",
     "birthDate": "1996-10-01",
-    "createDate": "2025-03-20T17:09:00",
+    "createdAt": "2025-03-20T17:09:00",
     "likesCount": 244,
     "teach": ["skill_30"],
-    "learn": ["skill_29", "skill_2 ", "skill_3", "skill_30"]
+    "learn": ["skill_29", "skill_2", "skill_3", "skill_30"],
+    "likesCard": ["user_11", "user_23", "user_37"]
   },
   {
     "id": "user_28",
@@ -388,10 +415,11 @@
     "gender": "female",
     "city": "kazan",
     "birthDate": "2003-01-06",
-    "createDate": "2026-03-23T08:16:00",
+    "createdAt": "2026-03-23T08:16:00",
     "likesCount": 249,
     "teach": ["skill_1"],
-    "learn": ["skill_32", "skill_2 ", "skill_25", "skill_4"]
+    "learn": ["skill_32", "skill_2", "skill_25", "skill_4"],
+    "likesCard": ["user_1", "user_14", "user_29", "user_44"]
   },
   {
     "id": "user_29",
@@ -402,10 +430,11 @@
     "gender": "male",
     "city": "novosibirsk",
     "birthDate": "1992-04-11",
-    "createDate": "2025-03-26T11:23:00",
+    "createdAt": "2025-03-26T11:23:00",
     "likesCount": 267,
     "teach": ["skill_40"],
-    "learn": ["skill_15", "skill_2 ", "skill_22", "skill_14"]
+    "learn": ["skill_15", "skill_2", "skill_22", "skill_14"],
+    "likesCard": ["user_6", "user_22", "user_34"]
   },
   {
     "id": "user_30",
@@ -416,10 +445,11 @@
     "gender": "female",
     "city": "krasnodar",
     "birthDate": "1999-07-16",
-    "createDate": "2024-03-29T14:30:00",
+    "createdAt": "2024-03-29T14:30:00",
     "likesCount": 268,
     "teach": ["skill_3"],
-    "learn": ["skill_26", "skill_17", "skill_4", "skill_2 "]
+    "learn": ["skill_26", "skill_17", "skill_4", "skill_2"],
+    "likesCard": ["user_8", "user_19", "user_42", "user_49"]
   },
   {
     "id": "user_31",
@@ -430,10 +460,11 @@
     "gender": "male",
     "city": "moscow",
     "birthDate": "1988-10-21",
-    "createDate": "2025-04-01T17:37:00",
+    "createdAt": "2025-04-01T17:37:00",
     "likesCount": 274,
     "teach": ["skill_4"],
-    "learn": ["skill_2 ", "skill_36", "skill_37", "skill_24"]
+    "learn": ["skill_2", "skill_36", "skill_37", "skill_24"],
+    "likesCard": ["user_3", "user_12", "user_26"]
   },
   {
     "id": "user_32",
@@ -444,10 +475,11 @@
     "gender": "female",
     "city": "volgograd",
     "birthDate": "1995-01-26",
-    "createDate": "2025-04-04T08:44:00",
+    "createdAt": "2025-04-04T08:44:00",
     "likesCount": 301,
     "teach": ["skill_35"],
-    "learn": ["skill_38", "skill_20", "skill_14", "skill_5"]
+    "learn": ["skill_38", "skill_20", "skill_14", "skill_5"],
+    "likesCard": ["user_10", "user_24", "user_38", "user_47"]
   },
   {
     "id": "user_33",
@@ -458,10 +490,11 @@
     "gender": "male",
     "city": "ufa",
     "birthDate": "2002-04-04",
-    "createDate": "2026-04-07T11:51:00",
+    "createdAt": "2026-04-07T11:51:00",
     "likesCount": 312,
     "teach": ["skill_39"],
-    "learn": ["skill_26", "skill_34", "skill_36", "skill_5"]
+    "learn": ["skill_26", "skill_34", "skill_36", "skill_5"],
+    "likesCard": ["user_2", "user_16", "user_31"]
   },
   {
     "id": "user_34",
@@ -472,10 +505,11 @@
     "gender": "female",
     "city": "saint-petersburg",
     "birthDate": "1991-07-09",
-    "createDate": "2025-04-10T14:58:00",
+    "createdAt": "2025-04-10T14:58:00",
     "likesCount": 333,
     "teach": ["skill_9"],
-    "learn": ["skill_2 ", "skill_9", "skill_1", "skill_4"]
+    "learn": ["skill_2", "skill_9", "skill_1", "skill_4"],
+    "likesCard": ["user_5", "user_21", "user_40", "user_50"]
   },
   {
     "id": "user_35",
@@ -486,10 +520,11 @@
     "gender": "male",
     "city": "voronezh",
     "birthDate": "1998-10-14",
-    "createDate": "2024-04-13T17:05:00",
+    "createdAt": "2024-04-13T17:05:00",
     "likesCount": 341,
     "teach": ["skill_32"],
-    "learn": ["skill_1", "skill_2 ", "skill_4", "skill_25"]
+    "learn": ["skill_1", "skill_2", "skill_4", "skill_25"],
+    "likesCard": ["user_9", "user_18", "user_27"]
   },
   {
     "id": "user_36",
@@ -500,10 +535,11 @@
     "gender": "female",
     "city": "omsk",
     "birthDate": "1987-01-19",
-    "createDate": "2025-04-16T08:12:00",
+    "createdAt": "2025-04-16T08:12:00",
     "likesCount": 356,
     "teach": ["skill_33"],
-    "learn": ["skill_17", "skill_1", "skill_2 ", "skill_13"]
+    "learn": ["skill_17", "skill_1", "skill_2", "skill_13"],
+    "likesCard": ["user_4", "user_13", "user_33", "user_45"]
   },
   {
     "id": "user_37",
@@ -514,10 +550,11 @@
     "gender": "male",
     "city": "tyumen",
     "birthDate": "1994-04-24",
-    "createDate": "2025-04-19T11:19:00",
+    "createdAt": "2025-04-19T11:19:00",
     "likesCount": 387,
     "teach": ["skill_23"],
-    "learn": ["skill_4", "skill_1", "skill_2 ", "skill_11"]
+    "learn": ["skill_4", "skill_1", "skill_2", "skill_11"],
+    "likesCard": ["user_1", "user_20", "user_30"]
   },
   {
     "id": "user_38",
@@ -528,10 +565,11 @@
     "gender": "female",
     "city": "moscow",
     "birthDate": "2001-07-02",
-    "createDate": "2025-04-22T14:26:00",
+    "createdAt": "2025-04-22T14:26:00",
     "likesCount": 389,
     "teach": ["skill_6"],
-    "learn": ["skill_24", "skill_30", "skill_21", "skill_2 "]
+    "learn": ["skill_24", "skill_30", "skill_21", "skill_2"],
+    "likesCard": ["user_6", "user_15", "user_25", "user_43"]
   },
   {
     "id": "user_39",
@@ -542,10 +580,11 @@
     "gender": "male",
     "city": "kazan",
     "birthDate": "1990-10-07",
-    "createDate": "2025-04-25T17:33:00",
+    "createdAt": "2025-04-25T17:33:00",
     "likesCount": 399,
     "teach": ["skill_8"],
-    "learn": ["skill_27", "skill_14", "skill_2 ", "skill_5"]
+    "learn": ["skill_27", "skill_14", "skill_2", "skill_5"],
+    "likesCard": ["user_10", "user_22"]
   },
   {
     "id": "user_40",
@@ -556,10 +595,11 @@
     "gender": "female",
     "city": "novosibirsk",
     "birthDate": "1997-01-12",
-    "createDate": "2025-04-28T08:40:00",
+    "createdAt": "2025-04-28T08:40:00",
     "likesCount": 421,
     "teach": ["skill_12"],
-    "learn": ["skill_2 ", "skill_30", "skill_14", "skill_31"]
+    "learn": ["skill_2", "skill_30", "skill_14", "skill_31"],
+    "likesCard": ["user_7", "user_17", "user_29", "user_48"]
   },
   {
     "id": "user_41",
@@ -570,10 +610,11 @@
     "gender": "male",
     "city": "saint-petersburg",
     "birthDate": "2004-04-17",
-    "createDate": "2026-05-01T11:47:00",
+    "createdAt": "2026-05-01T11:47:00",
     "likesCount": 447,
     "teach": ["skill_7"],
-    "learn": ["skill_32", "skill_6", "skill_2 ", "skill_23"]
+    "learn": ["skill_32", "skill_6", "skill_2", "skill_23"],
+    "likesCard": ["user_3", "user_19", "user_36"]
   },
   {
     "id": "user_42",
@@ -584,10 +625,11 @@
     "gender": "female",
     "city": "saratov",
     "birthDate": "1993-07-22",
-    "createDate": "2025-05-04T14:54:00",
+    "createdAt": "2025-05-04T14:54:00",
     "likesCount": 459,
     "teach": ["skill_17"],
-    "learn": ["skill_13", "skill_18", "skill_20", "skill_5"]
+    "learn": ["skill_13", "skill_18", "skill_20", "skill_5"],
+    "likesCard": ["user_11", "user_24", "user_32", "user_46"]
   },
   {
     "id": "user_43",
@@ -598,10 +640,11 @@
     "gender": "male",
     "city": "krasnoyarsk",
     "birthDate": "2000-10-27",
-    "createDate": "2025-05-07T17:01:00",
+    "createdAt": "2025-05-07T17:01:00",
     "likesCount": 504,
     "teach": ["skill_24"],
-    "learn": ["skill_2 ", "skill_9", "skill_1", "skill_4"]
+    "learn": ["skill_2", "skill_9", "skill_1", "skill_4"],
+    "likesCard": ["user_2", "user_14", "user_28"]
   },
   {
     "id": "user_44",
@@ -612,10 +655,11 @@
     "gender": "female",
     "city": "krasnodar",
     "birthDate": "1989-01-05",
-    "createDate": "2025-05-10T08:08:00",
+    "createdAt": "2025-05-10T08:08:00",
     "likesCount": 518,
     "teach": ["skill_28"],
-    "learn": ["skill_30", "skill_29", "skill_3", "skill_2 "]
+    "learn": ["skill_30", "skill_29", "skill_3", "skill_2"],
+    "likesCard": ["user_8", "user_21", "user_35", "user_49"]
   },
   {
     "id": "user_45",
@@ -626,10 +670,11 @@
     "gender": "male",
     "city": "moscow",
     "birthDate": "1996-04-10",
-    "createDate": "2025-05-13T11:15:00",
+    "createdAt": "2025-05-13T11:15:00",
     "likesCount": 552,
     "teach": ["skill_14"],
-    "learn": ["skill_3", "skill_34", "skill_5", "skill_35"]
+    "learn": ["skill_3", "skill_34", "skill_5", "skill_35"],
+    "likesCard": ["user_5", "user_16", "user_30"]
   },
   {
     "id": "user_46",
@@ -640,10 +685,11 @@
     "gender": "female",
     "city": "samara",
     "birthDate": "2003-07-15",
-    "createDate": "2026-05-16T14:22:00",
+    "createdAt": "2026-05-16T14:22:00",
     "likesCount": 615,
-    "teach": ["skill_2 "],
-    "learn": ["skill_36", "skill_37", "skill_28", "skill_9"]
+    "teach": ["skill_2"],
+    "learn": ["skill_36", "skill_37", "skill_28", "skill_9"],
+    "likesCard": ["user_12", "user_23", "user_39", "user_47"]
   },
   {
     "id": "user_47",
@@ -654,10 +700,11 @@
     "gender": "male",
     "city": "yekaterinburg",
     "birthDate": "1992-10-20",
-    "createDate": "2025-05-19T17:29:00",
+    "createdAt": "2025-05-19T17:29:00",
     "likesCount": 681,
     "teach": ["skill_29"],
-    "learn": ["skill_15", "skill_14", "skill_2 ", "skill_22"]
+    "learn": ["skill_15", "skill_14", "skill_2", "skill_22"],
+    "likesCard": ["user_4", "user_18", "user_33"]
   },
   {
     "id": "user_48",
@@ -668,10 +715,11 @@
     "gender": "female",
     "city": "moscow",
     "birthDate": "1999-01-25",
-    "createDate": "2025-05-22T08:36:00",
+    "createdAt": "2025-05-22T08:36:00",
     "likesCount": 728,
     "teach": ["skill_11"],
-    "learn": ["skill_32", "skill_2 ", "skill_4", "skill_25"]
+    "learn": ["skill_32", "skill_2", "skill_4", "skill_25"],
+    "likesCard": ["user_6", "user_26", "user_37", "user_44"]
   },
   {
     "id": "user_49",
@@ -682,10 +730,11 @@
     "gender": "male",
     "city": "saint-petersburg",
     "birthDate": "1988-04-03",
-    "createDate": "2026-05-25T11:43:00",
+    "createdAt": "2026-05-25T11:43:00",
     "likesCount": 82,
     "teach": ["skill_1"],
-    "learn": ["skill_27", "skill_14", "skill_2 ", "skill_5"]
+    "learn": ["skill_27", "skill_14", "skill_2", "skill_5"],
+    "likesCard": ["user_1", "user_15", "user_31"]
   },
   {
     "id": "user_50",
@@ -696,9 +745,10 @@
     "gender": "female",
     "city": "nizhny_novgorod",
     "birthDate": "1995-07-08",
-    "createDate": "2025-05-28T14:50:00",
+    "createdAt": "2025-05-28T14:50:00",
     "likesCount": 238,
     "teach": ["skill_10"],
-    "learn": ["skill_2 ", "skill_3", "skill_4", "skill_5"]
+    "learn": ["skill_2", "skill_3", "skill_4", "skill_5"],
+    "likesCard": ["user_9", "user_20", "user_34", "user_42"]
   }
 ]
