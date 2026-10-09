@@ -52,18 +52,16 @@
   color: #253017;
 }
 
-@media (max-width: 1220px) {
+@media (width <= 1220px) {
   .logoWrapper {
     margin-right: 20px;
   }
 
   .nav {
-    margin-top: 0;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  .list {
+    margin-top: 0;
+    height: 100%;
   }
 }
