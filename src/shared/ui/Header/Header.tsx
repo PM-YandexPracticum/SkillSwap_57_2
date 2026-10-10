@@ -1,7 +1,6 @@
 //import { useState } from 'react'
 import { Logo } from '../logo/logo'
 import { Button } from '../Button/Button'
-import { NavMenu } from '../NavMenu/NavMenu'
 import { Input } from '../Input/Input'
 import { ThemeButton } from '../ThemeButton/ThemeButton'
 import { NotifyButton } from '../NotifyButton/NotifyButton'
@@ -9,6 +8,7 @@ import { LikeButton } from '../LikeButton/LikeButton'
 //import { Avatar } from '../Avatar/Avatar'
 //import { Modal } from '../Modal/Modal'
 //import SkillCategoryGroupList from '../SkillCategoryGroupList/SkillCategoryGroupList'
+import arrowIcon from '../../assets/images/arrow.svg'
 import searchIcon from '../../assets/images/search.svg'
 import styles from './Header.module.scss'
 
@@ -21,7 +21,7 @@ interface HeaderProps {
 export function Header({
   isAuthenticated = false, //когда будет реализована авторизация использовать  isAuthenticated={user.isAuthenticated}
   userName = 'Имя пользователя', //когда будет реализована авторизация использовать  userName={user.name}
-  // avatarUrl, // когда будет реализована авторизация использовать  avatarUrl={user.avatar}
+  avatarUrl, // когда будет реализована авторизация использовать  avatarUrl={user.avatar}
 }: HeaderProps) {
   //После того, как смержен модал
   // const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false)
@@ -45,7 +45,14 @@ export function Header({
         <div className={styles.container}>
           <div className={styles.left}>
             <Logo />
-            <NavMenu />
+
+            <Button variant="tertiary">О проекте</Button>
+
+            <Button variant="tertiary" className={styles.skillsButton}>
+              {/*После того, как смержен модал onClick={handleOpenSkills}*/}
+              Все навыки
+              <img src={arrowIcon} alt="" aria-hidden="true" />
+            </Button>
           </div>
 
           <div className={styles.search}>
