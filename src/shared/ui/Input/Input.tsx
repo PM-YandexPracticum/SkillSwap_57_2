@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {
   forwardRef,
   useId,
@@ -5,19 +6,35 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
 } from 'react';
-import eyeIcon from '@/shared/assets/images/eye.svg';
-import eyeSlashIcon from '@/shared/assets/images/eye-slash.svg';
+import EyeIcon from '@/shared/assets/images/eye.svg?react';
+import EyeSlashIcon from '@/shared/assets/images/eye-slash.svg?react';
 import styles from './Input.module.css';
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+type BaseInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
   label?: string;
   error?: string;
   hint?: string;
   variant?: 'default' | 'search';
   startIcon?: ReactNode;
+};
+
+export type PasswordInputProps = BaseInputProps & {
+  type: 'password';
+  endIcon?: never;
+  onEndIconClick?: never;
+};
+
+type RegularInputType = 'text' | 'email' | 'search';
+
+type RegularInputProps = BaseInputProps & {
+  type?: RegularInputType;
   endIcon?: ReactNode;
   onEndIconClick?: () => void;
-}
+};
+
+export type InputProps = PasswordInputProps | RegularInputProps;
+
+
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -45,16 +62,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const resolvedType = isPassword && isPasswordVisible ? 'text' : type;
-    const hasEndAction = isPassword || Boolean(onEndIconClick);
-
-    const handleEndAction = () => {
-      if (isPassword) {
-        setIsPasswordVisible((currentValue) => !currentValue);
-        return;
-      }
-
-      onEndIconClick?.();
-    };
 
     const describedBy = error
       ? errorId
@@ -62,15 +69,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ? hintId
         : inputProps['aria-describedby'];
 
+    const togglePasswordVisibility = () => {
+      setIsPasswordVisible((currentValue) => !currentValue);
+    };
+
     return (
       <div
-        className={[
+        className={clsx(
           styles.root,
-          variant === 'search' ? styles['root-search'] : '',
+          variant === 'search' && styles['root-search'],
           className,
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        )}
       >
         {label && (
           <label className={styles.label} htmlFor={inputId}>
@@ -79,14 +88,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
 
         <div
-          className={[
+          className={clsx(
             styles.control,
-            variant === 'search' ? styles['control-search'] : '',
-            error ? styles['control-error'] : '',
-            disabled ? styles['control-disabled'] : '',
-          ]
-            .filter(Boolean)
-            .join(' ')}
+            variant === 'search' && styles['control-search'],
+            error && styles['control-error'],
+            disabled && styles['control-disabled'],
+          )}
         >
           {startIcon && (
             <span className={styles.icon} aria-hidden="true">
@@ -105,34 +112,35 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-describedby={describedBy}
           />
 
-          {(endIcon || isPassword) &&
-            (hasEndAction ? (
-              <button
-                className={styles['icon-button']}
-                type="button"
-                onClick={handleEndAction}
-                disabled={disabled}
-                aria-label={
-                  isPassword
-                    ? isPasswordVisible
-                      ? 'Скрыть пароль'
-                      : 'Показать пароль'
-                    : 'Выполнить действие'
-                }
-              >
-                {endIcon ?? (
-                  <img
-                    src={isPasswordVisible ? eyeSlashIcon : eyeIcon}
-                    alt=""
-                    aria-hidden="true"
-                  />
-                )}
-              </button>
-            ) : (
+          {isPassword ? (
+            <button
+              className={styles['icon-button']}
+              type="button"
+              onClick={togglePasswordVisibility}
+              disabled={disabled}
+              aria-label={
+                isPasswordVisible ? 'Скрыть пароль' : 'Показать пароль'
+              }
+            >
+              {isPasswordVisible ? <EyeSlashIcon /> : <EyeIcon />}
+            </button>
+          ) : endIcon && onEndIconClick ? (
+            <button
+              className={styles['icon-button']}
+              type="button"
+              onClick={onEndIconClick}
+              disabled={disabled}
+              aria-label="Выполнить действие"
+            >
+              {endIcon}
+            </button>
+          ) : (
+            endIcon && (
               <span className={styles.icon} aria-hidden="true">
                 {endIcon}
               </span>
-            ))}
+            )
+          )}
         </div>
 
         {error ? (

@@ -1,0 +1,18 @@
+.skillsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skillsList .title {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  color: #253017;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

@@ -1,0 +1,16 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(142 142 142 / 60%);
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  max-width: calc(100vw - 48px);
+  background-color: #fff;
+  border-radius: 12px;
+}
