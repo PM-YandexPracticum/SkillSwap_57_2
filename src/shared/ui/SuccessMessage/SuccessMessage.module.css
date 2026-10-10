@@ -1,0 +1,47 @@
+.successMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 52px;
+  width: 100%;
+  text-align: center;
+}
+
+.illustration {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.successMessage .title {
+  color: #253017;
+}
+
+.description {
+  margin: 0;
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  letter-spacing: 0.02em;
+  color: #253017;
+}
+
+.successMessage .button {
+  width: 100%;
+}
