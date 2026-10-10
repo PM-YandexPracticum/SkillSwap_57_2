@@ -25,7 +25,9 @@
   border: 1px solid #69735d;
   border-radius: 12px;
   background-color: #fff;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .control-search {
@@ -52,10 +54,17 @@
   box-shadow: none;
 }
 
+.control-disabled:focus-within {
+  border-color: #d9ded4;
+  box-shadow: none;
+}
+
 .control-disabled {
   cursor: not-allowed;
-  opacity: 0.55;
   background-color: #f2f3f0;
+  border: 1px solid #d9ded4;
+  box-shadow: none;
+  color: #777f72;
 }
 
 .input {
@@ -78,6 +87,12 @@
 
 .input:disabled {
   cursor: not-allowed;
+  color: #777f72;
+}
+
+.input:disabled::placeholder {
+  color: #777f72;
+  opacity: 1;
 }
 
 .icon,
@@ -89,6 +104,13 @@
   align-items: center;
   justify-content: center;
   color: #26351f;
+}
+
+.control-disabled .icon,
+.control-disabled .icon-button {
+  color: #a4aaa1;
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .icon > svg,
@@ -115,6 +137,7 @@
 
 .icon-button:disabled {
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .hint,
