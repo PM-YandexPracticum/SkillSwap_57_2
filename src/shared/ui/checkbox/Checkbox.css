@@ -17,25 +17,11 @@
   flex-shrink: 0;
 }
 
-.checkbox:focus-visible {
-  outline: 2px solid #508826;
-  outline-offset: 2px;
-}
-
 .checkboxicon {
   width: 20px;
   height: 20px;
 }
 
-.checkbox__text {
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 24px;
-  letter-spacing: 0.02em;
-  vertical-align: middle;
-  color: #253017;
+.checkboxtext {
   cursor: pointer;
-  user-select: none;
 }
