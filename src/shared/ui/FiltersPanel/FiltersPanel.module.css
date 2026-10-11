@@ -1,0 +1,71 @@
+.panel {
+  width: 100%;
+  max-width: 324px;
+  padding: 24px 16px;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #253017;
+  box-shadow: 0 2px 12px rgb(37 48 23 / 4%);
+}
+
+.header {
+  display: flex;
+  min-height: 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.heading {
+  display: flex;
+  flex-shrink: 0;
+  color: #253017;
+  font-weight: 600;
+}
+
+.counter {
+  white-space: pre;
+}
+
+.clearButtonSlot {
+  display: flex;
+  min-width: 102px;
+  height: 24px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.clearButtonSlot button {
+  height: 24px;
+}
+
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.groups > section,
+.groups > div {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.groups h2,
+.groups h3 {
+  color: #253017;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+@media (width <= 480px) {
+  .panel {
+    max-width: none;
+  }
+}
