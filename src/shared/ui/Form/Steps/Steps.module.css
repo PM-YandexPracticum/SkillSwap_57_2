@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.label {
+  margin: 0;
+  color: #253017;
+  font-family: var(--font-heading, 'Jost', sans-serif);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  text-align: center;
+}
+
+.progress {
+  display: flex;
+  width: 100%;
+  max-width: 210px;
+  height: 4px;
+  gap: 16px;
+}
+
+.completedStep,
+.pendingStep {
+  flex: 1;
+  border-radius: 4px;
+}
+
+.completedStep {
+  background-color: #abd27a;
+}
+
+.pendingStep {
+  background-color: #e5e9e2;
+}
