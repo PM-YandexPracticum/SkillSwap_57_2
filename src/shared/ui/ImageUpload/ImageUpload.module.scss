@@ -1,0 +1,177 @@
+.wrapper {
+  width: 100%;
+}
+
+.fileInput {
+  display: none;
+}
+
+.avatarWrapper {
+  width: 54px;
+  height: 54px;
+}
+
+.avatarButton {
+  position: relative;
+  display: block;
+  width: 54px;
+  height: 54px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.avatarButton:focus-visible {
+  outline: 2px solid #508826;
+  outline-offset: 3px;
+}
+
+.userIcon {
+  display: block;
+  width: 54px;
+  height: 54px;
+}
+
+.addUserIcon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.dropZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 96px;
+  box-sizing: border-box;
+  border: 1px dashed #69735d;
+  border-radius: 12px;
+  background-color: #fff;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.dragging {
+  border-color: #508826;
+  background-color: #f3f8ed;
+}
+
+.description {
+  margin: 0;
+  color: #69735d;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 150%;
+  text-align: center;
+}
+
+.selectButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #508826;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  cursor: pointer;
+}
+
+.selectButton img {
+  width: 24px;
+  height: 24px;
+}
+
+.selectButton:hover {
+  color: #3d6a1c;
+}
+
+.selectButton:focus-visible {
+  outline: 2px solid #508826;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.previewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f3f3f3;
+}
+
+.avatarWrapper .preview {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
+.previewImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  color: #253017;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: #e8eee2;
+}
+
+.removeButton:focus-visible {
+  outline: 2px solid #508826;
+  outline-offset: 2px;
+}
+
+.removeIcon {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.error {
+  margin: 8px 0 0;
+  color: #c62828;
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 150%;
+}
