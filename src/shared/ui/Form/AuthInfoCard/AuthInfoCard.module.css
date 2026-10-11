@@ -21,8 +21,8 @@
 
 .illustration {
   display: block;
-  width: 132px;
-  height: 148px;
+  width: 144px;
+  height: 160px;
   object-fit: contain;
   flex: 0 0 auto;
 }
@@ -38,10 +38,6 @@
 .title {
   max-width: 100%;
   color: #253017;
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
   overflow-wrap: anywhere;
 }
 
@@ -50,9 +46,10 @@
   margin: 0;
   color: #253017;
   font-family: var(--font-base);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
-  line-height: 16px;
+  line-height: var(--line-height-body);
+  letter-spacing: 0.02em;
   overflow-wrap: anywhere;
 }
 
