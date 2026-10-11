@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { skillFilterReducer } from '@/shared/ui/FilterPanel/SkillFilter/model/skillFilterSlice'
 import usersReducer from '@/entities/user/model/usersSlice'
 import skillsReducer from '@/entities/skill/model/skillsSlice'
 // Импортируй свои slice'ы здесь по мере их создания:
@@ -9,6 +10,7 @@ export const store = configureStore({
     // auth: authReducer,
     users: usersReducer,
     skills: skillsReducer,
+    skillFilter: skillFilterReducer,
   },
 })
 
