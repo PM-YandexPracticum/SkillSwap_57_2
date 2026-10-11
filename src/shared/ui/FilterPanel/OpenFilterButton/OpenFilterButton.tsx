@@ -6,7 +6,8 @@ import styles from './OpenFilterButton.module.css'
 
 export interface OpenFilterButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> {
-  children: ReactNode
+  /** Подпись кнопки. Если не передана — рендерится только стрелка (без текста). */
+  children?: ReactNode
   isOpen: boolean
 }
 
@@ -27,7 +28,7 @@ export function OpenFilterButton({
       variant="tertiary"
       aria-expanded={isOpen}
     >
-      <span>{isOpen ? 'Скрыть' : children}</span>
+      {children ? <span>{isOpen ? 'Скрыть' : children}</span> : null}
       <img
         className={styles.icon}
         src={isOpen ? chevronUpIcon : chevronDownIcon}
