@@ -1,0 +1,117 @@
+.skillFilter {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 360px;
+  padding: 20px;
+  font-family: var(--font-base);
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.title {
+  color: #253017;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.categoryHeader .categoryTitle {
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+  color: #253017;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.categoryHeader .categoryTitle:hover {
+  color: #253017;
+}
+
+.categoryHeader .categoryTitle:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid #508826;
+  outline-offset: 3px;
+}
+
+.categoryHeader .arrow {
+  flex-shrink: 0;
+}
+
+/* Обёртка анимирует высоту от 0 до содержимого без JS-замеров. */
+.skillsWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.skillsWrap[data-open='true'] {
+  grid-template-rows: 1fr;
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 0 32px;
+  list-style: none;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    padding-top 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.skillsWrap[data-open='true'] .skills {
+  padding-top: 12px;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skillsWrap,
+  .skills {
+    transition: none;
+  }
+}
+
+.skill {
+  display: flex;
+}
+
+.showAll {
+  align-self: flex-start;
+}
