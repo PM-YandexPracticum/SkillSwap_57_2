@@ -93,13 +93,6 @@
   background: #f2f3f0;
 }
 
-.select-option input {
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  accent-color: #69735d;
-}
-
 .selecterror {
   color: #d32f2f;
 }

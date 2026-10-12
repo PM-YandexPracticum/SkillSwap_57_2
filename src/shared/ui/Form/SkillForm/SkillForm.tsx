@@ -28,13 +28,18 @@ export const SkillForm = ({ value, onChange }: SkillFormProps) => {
     onChange?.(nextValue)
   }
 
-  const categoryOptions = skills.map((category) => ({
-    value: category.id,
-    label: category.title,
-  }))
+  const categoryOptions = skills
+    .filter(
+      (category) =>
+        selectedValue.skillIds.length === 0 ||
+        selectedValue.categoryIds.includes(category.id) ||
+        category.skills.some((skill) => selectedValue.skillIds.includes(skill.id)),
+    )
+    .map((category) => ({ value: category.id, label: category.title }))
 
-  const selectedCategories = skills.filter((category) =>
-    selectedValue.categoryIds.includes(category.id),
+  const selectedCategories = skills.filter(
+    (category) =>
+      selectedValue.categoryIds.length === 0 || selectedValue.categoryIds.includes(category.id),
   )
   const skillOptions = selectedCategories.flatMap((category) =>
     category.skills.map((skill) => ({ value: skill.id, label: skill.title })),
@@ -79,7 +84,6 @@ export const SkillForm = ({ value, onChange }: SkillFormProps) => {
         multiple
         value={selectedValue.skillIds}
         onChange={handleSkillsChange}
-        disabled={selectedCategories.length === 0}
       />
     </div>
   )

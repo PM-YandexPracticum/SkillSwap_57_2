@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
 import type { FocusEvent, KeyboardEvent } from 'react'
 import arrowIcon from '@/shared/assets/images/chevron-down.svg'
+import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
 import './select.css'
 
 export interface SelectOption {
@@ -57,7 +58,7 @@ export function Select({
 
   return (
     <div className="select-wrapper" onBlur={handleBlur} onKeyDown={handleKeyDown}>
-      <label className="selectlabel" htmlFor={id}>
+      <label id={`${id}-label`} className="selectlabel" htmlFor={id}>
         {label}
       </label>
       <button
@@ -66,7 +67,7 @@ export function Select({
         className="select"
         style={{ width }}
         disabled={disabled}
-        aria-haspopup="listbox"
+        aria-haspopup={multiple ? undefined : 'listbox'}
         aria-expanded={isOpen}
         aria-controls={`${id}-options`}
         onClick={() => setIsOpen((open) => !open)}
@@ -84,8 +85,8 @@ export function Select({
         <ul
           id={`${id}-options`}
           className="select-options"
-          role="listbox"
-          aria-multiselectable={multiple}
+          role={multiple ? 'group' : 'listbox'}
+          aria-labelledby={`${id}-label`}
         >
           {options.map((option) => {
             const isSelected = selected.includes(option.value)
@@ -93,28 +94,29 @@ export function Select({
               ? selected.filter((item) => item !== option.value)
               : [...selected, option.value]
             return (
-              <li key={option.value}>
-                <button
-                  type="button"
-                  className="select-option"
-                  role="option"
-                  aria-selected={isSelected}
-                  onClick={() => {
-                    change(multiple ? next : option.value)
-                    if (!multiple) setIsOpen(false)
-                  }}
-                >
-                  {multiple && (
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      readOnly
-                      tabIndex={-1}
-                      aria-hidden="true"
-                    />
-                  )}
-                  {option.label}
-                </button>
+              <li key={option.value} role="none">
+                {multiple ? (
+                  <Checkbox
+                    text={option.label}
+                    ariaLabel={option.label}
+                    checked={isSelected}
+                    onChange={() => change(next)}
+                    className="select-option"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className="select-option"
+                    role="option"
+                    aria-selected={isSelected}
+                    onClick={() => {
+                      change(option.value)
+                      setIsOpen(false)
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                )}
               </li>
             )
           })}
