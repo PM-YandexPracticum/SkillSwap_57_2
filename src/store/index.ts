@@ -4,6 +4,7 @@ import usersReducer from '@/entities/user/model/usersSlice'
 import skillsReducer from '@/entities/skill/model/skillsSlice'
 // Импортируй свои slice'ы здесь по мере их создания:
 // import authReducer from '@/features/auth/model/authSlice'
+import citiesReducer from '@/entities/city/model/citiesSlice'
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     users: usersReducer,
     skills: skillsReducer,
     skillFilter: skillFilterReducer,
+    cities: citiesReducer,
   },
 })
 
