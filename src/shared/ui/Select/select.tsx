@@ -1,37 +1,127 @@
-import './Select.css'
-import arrowIcon from '../../assets/images/chevron-down.svg'
+import { useId, useState } from 'react'
+import type { FocusEvent, KeyboardEvent } from 'react'
+import arrowIcon from '@/shared/assets/images/chevron-down.svg'
+import { Checkbox } from '@/shared/ui/checkbox/Checkbox'
+import './select.css'
 
-interface SelectOption {
+export interface SelectOption {
   value: string
   label: string
 }
 
-interface SelectProps {
+export type SelectValue = string | string[]
+
+export interface SelectProps {
   label: string
-  options: SelectOption[]
+  options: readonly SelectOption[]
   placeholder: string
   multiple?: boolean
   error?: string
-  width: number
+  width?: number | string
+  value?: SelectValue
+  onChange?: (value: SelectValue) => void
+  disabled?: boolean
 }
 
 export function Select({
   label,
-  // options, //логика выбора нужна будет при интеграции
+  options,
   placeholder,
-  // multiple = false, //логика выбора нужна будет при интеграции
+  multiple = false,
   error,
-  width,
+  width = '100%',
+  value,
+  onChange,
+  disabled = false,
 }: SelectProps) {
+  const id = useId()
+  const [localValue, setLocalValue] = useState<SelectValue>(multiple ? [] : '')
+  const [isOpen, setIsOpen] = useState(false)
+  const values = value ?? localValue
+  const selected = Array.isArray(values) ? values : values ? [values] : []
+  const selectedLabels = options
+    .filter((option) => selected.includes(option.value))
+    .map((o) => o.label)
+
+  const change = (next: SelectValue) => {
+    if (value === undefined) setLocalValue(next)
+    onChange?.(next)
+  }
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) setIsOpen(false)
+  }
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') setIsOpen(false)
+  }
+
   return (
-    <div className="select-wrapper">
-      <label className="selectlabel">{label}</label>
-
-      <div className="select" style={{ width }}>
-        <span className="selectplaceholder">{placeholder}</span>
-        <img className="selectarrow" src={arrowIcon} alt='' />
-      </div>
-
+    <div className="select-wrapper" onBlur={handleBlur} onKeyDown={handleKeyDown}>
+      <label id={`${id}-label`} className="selectlabel" htmlFor={id}>
+        {label}
+      </label>
+      <button
+        id={id}
+        type="button"
+        className="select"
+        style={{ width }}
+        disabled={disabled}
+        aria-haspopup={multiple ? undefined : 'listbox'}
+        aria-expanded={isOpen}
+        aria-controls={`${id}-options`}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        <span className={selectedLabels.length ? '' : 'selectplaceholder'}>
+          {selectedLabels.length ? selectedLabels.join(', ') : placeholder}
+        </span>
+        <img
+          className={isOpen ? 'selectarrow selectarrow-open' : 'selectarrow'}
+          src={arrowIcon}
+          alt=""
+        />
+      </button>
+      {isOpen && (
+        <ul
+          id={`${id}-options`}
+          className="select-options"
+          role={multiple ? 'group' : 'listbox'}
+          aria-labelledby={`${id}-label`}
+        >
+          {options.map((option) => {
+            const isSelected = selected.includes(option.value)
+            const next = isSelected
+              ? selected.filter((item) => item !== option.value)
+              : [...selected, option.value]
+            return (
+              <li key={option.value} role="none">
+                {multiple ? (
+                  <Checkbox
+                    text={option.label}
+                    ariaLabel={option.label}
+                    checked={isSelected}
+                    onChange={() => change(next)}
+                    className="select-option"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className="select-option"
+                    role="option"
+                    aria-selected={isSelected}
+                    onClick={() => {
+                      change(option.value)
+                      setIsOpen(false)
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      )}
       {error && <span className="selecterror">{error}</span>}
     </div>
   )
