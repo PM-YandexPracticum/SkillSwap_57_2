@@ -1,4 +1,4 @@
-import type { City, User } from '@/shared/types'
+import type { User } from '@/shared/types'
 import { FC } from 'react'
 import { Title } from '../Title'
 import styles from './Person.module.css'
