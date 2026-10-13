@@ -32,7 +32,6 @@ export const ImageCarousel = ({ images, alt = 'Фото навыка' }: ImageCa
 
   if (images.length === 0) return null
 
-  // Превью: следующие по порядку фото после выбранного, максимум THUMBS_COUNT
   const thumbIndexes = Array.from(
     { length: Math.min(THUMBS_COUNT, images.length - 1) },
     (_, offset) => (selectedIndex + 1 + offset) % images.length,
