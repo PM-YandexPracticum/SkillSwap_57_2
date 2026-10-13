@@ -12,6 +12,8 @@ export interface SkillFormValue {
 export interface SkillFormProps {
   value?: SkillFormValue
   onChange?: (value: SkillFormValue) => void
+  skillLabel?: string
+  skillPlaceholder?: string
 }
 
 const EMPTY_VALUE: SkillFormValue = { categoryIds: [], skillIds: [] }
@@ -19,7 +21,12 @@ const EMPTY_VALUE: SkillFormValue = { categoryIds: [], skillIds: [] }
 const toStringArray = (value: SelectValue): string[] =>
   Array.isArray(value) ? value : value ? [value] : []
 
-export const SkillForm = ({ value, onChange }: SkillFormProps) => {
+export const SkillForm = ({
+  value,
+  onChange,
+  skillLabel = 'Навык, которому хотите научиться',
+  skillPlaceholder = 'Выберите навык',
+}: SkillFormProps) => {
   const [internalValue, setInternalValue] = useState<SkillFormValue>(value ?? EMPTY_VALUE)
   const selectedValue = value ?? internalValue
 
@@ -78,9 +85,9 @@ export const SkillForm = ({ value, onChange }: SkillFormProps) => {
         onChange={handleCategoriesChange}
       />
       <Select
-        label="Навык, которому хотите научиться"
+        label={skillLabel}
         options={skillOptions}
-        placeholder="Выберите навык"
+        placeholder={skillPlaceholder}
         multiple
         value={selectedValue.skillIds}
         onChange={handleSkillsChange}

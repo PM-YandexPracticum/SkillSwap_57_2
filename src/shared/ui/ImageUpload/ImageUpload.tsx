@@ -14,11 +14,13 @@ const ACCEPTED_TYPES = ['image/jpeg', 'image/png']
 type ImageUploadProps =
   | {
       variant: 'avatar'
+      onError?: (error: string | null) => void
       value: File | null
       onChange: (file: File | null) => void
     }
   | {
       variant: 'skill'
+      onError?: (error: string | null) => void
       value: File[]
       onChange: (files: File[]) => void
     }
@@ -67,7 +69,11 @@ function ImagePreview({ file, onRemove }: { file: File; onRemove: () => void }) 
 
 export function ImageUpload(props: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setErrorState] = useState<string | null>(null)
+  const setError = (message: string | null) => {
+    setErrorState(message)
+    props.onError?.(message)
+  }
   const [isDragging, setIsDragging] = useState(false)
 
   const isAvatar = props.variant === 'avatar'
