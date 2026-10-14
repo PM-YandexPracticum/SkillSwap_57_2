@@ -1,0 +1,27 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+}
+
+.card .like {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card .button {
+  width: 100%;
+}
