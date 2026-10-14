@@ -1,10 +1,12 @@
 // TODO: реализовать страницу CatalogPage
 
+import { FiltersPanel } from '@/shared/ui/FiltersPanel'
+import styles from './CatalogPage.module.css'
+
 export default function CatalogPage() {
   return (
-    <main>
-      <h1>CatalogPage</h1>
-      <p>Страница в разработке</p>
+    <main className={styles.wrapper}>
+      <FiltersPanel />
     </main>
   )
 }
