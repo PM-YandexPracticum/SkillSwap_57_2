@@ -17,7 +17,7 @@ export const CustomDatePicker = (props: CustomDatePickerProps) => (
       {...props}
       locale={ru}
       dateFormat="dd.MM.yyyy"
-      placeholderText="ДД.ММ.ГГГГ"
+      placeholderText={props.placeholderText ?? 'ДД.ММ.ГГГГ'}
       calendarStartDay={1}
       showIcon
       toggleCalendarOnIconClick
