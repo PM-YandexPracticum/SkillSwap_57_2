@@ -16,11 +16,15 @@ interface HeaderProps {
   isAuthenticated?: boolean
   userName?: string
   avatarUrl?: string
+  searchValue?: string
+  onSearchChange?: (value: string) => void
 }
 
 export function Header({
   isAuthenticated = false, //когда будет реализована авторизация использовать  isAuthenticated={user.isAuthenticated}
   userName = 'Имя пользователя', //когда будет реализована авторизация использовать  userName={user.name}
+  searchValue,
+  onSearchChange,
   // avatarUrl, // когда будет реализована авторизация использовать  avatarUrl={user.avatar}
 }: HeaderProps) {
   //После того, как смержен модал
@@ -51,7 +55,11 @@ export function Header({
           <div className={styles.search}>
             <Input
               variant="search"
+              type="search"
+              aria-label="Поиск навыков"
               placeholder="Искать навык"
+              value={searchValue}
+              onChange={(event) => onSearchChange?.(event.currentTarget.value)}
               startIcon={<img src={searchIcon} alt="" aria-hidden="true" />}
             />
           </div>
