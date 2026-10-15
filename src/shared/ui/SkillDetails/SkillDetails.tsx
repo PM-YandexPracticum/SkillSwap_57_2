@@ -22,6 +22,7 @@ type SkillDetailsProps = {
       variant: 'preview'
       onEdit: () => void
       onDone: () => void
+      isSubmitting?: boolean
     }
   | {
       variant: 'skill'
@@ -62,13 +63,13 @@ export function SkillDetails(props: SkillDetailsProps) {
         <div className={styles.actions}>
           {props.variant === 'preview' ? (
             <>
-              <Button variant="secondary" onClick={props.onEdit}>
+              <Button variant="secondary" onClick={props.onEdit} disabled={props.isSubmitting}>
                 Редактировать
                 <img src={editIcon} alt="" className={styles.editIcon} />
               </Button>
 
-              <Button variant="primary" onClick={props.onDone}>
-                Готово
+              <Button variant="primary" onClick={props.onDone} disabled={props.isSubmitting}>
+                {props.isSubmitting ? 'Сохраняем…' : 'Готово'}
               </Button>
             </>
           ) : (

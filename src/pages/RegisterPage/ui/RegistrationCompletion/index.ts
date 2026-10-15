@@ -1,0 +1,1 @@
+export { RegistrationCompletion } from './RegistrationCompletion'
