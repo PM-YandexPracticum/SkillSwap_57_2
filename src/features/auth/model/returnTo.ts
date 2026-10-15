@@ -10,6 +10,7 @@ export function getReturnTo(state: unknown): string {
   if (pathname.startsWith('//') || /[\\\s?#]/.test(pathname)) return ROUTES.HOME
 
   const url = new URL(pathname, 'https://skillswap.local')
+  if (url.pathname.startsWith('//')) return ROUTES.HOME
   if ([ROUTES.LOGIN, ROUTES.REGISTER].some((path) => url.pathname.replace(/\/+$/, '') === path)) {
     return ROUTES.HOME
   }
