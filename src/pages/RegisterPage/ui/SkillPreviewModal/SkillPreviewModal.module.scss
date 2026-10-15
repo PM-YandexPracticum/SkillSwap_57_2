@@ -1,0 +1,39 @@
+.preview {
+  box-sizing: border-box;
+  width: 1024px;
+  max-width: calc(100vw - 48px);
+  min-height: 532px;
+  padding: 44px 60px 72px;
+}
+
+.header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  color: #253017;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 29px;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: #253017;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@media (width <= 768px) {
+  .preview {
+    width: 100%;
+    min-height: 0;
+    padding: 32px 20px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+}

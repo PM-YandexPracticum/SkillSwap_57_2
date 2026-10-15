@@ -1,21 +1,29 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState, type ChangeEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import authIdea from '@/shared/assets/images/auth-idea.svg'
 import crossIcon from '@/shared/assets/images/cross.svg'
+import { INVALID_CREDENTIALS_MESSAGE, login } from '@/features/auth/model/authSlice'
 import { ROUTES } from '@/shared/lib/constants'
+import { useAppDispatch } from '@/store/hooks'
 import { Button } from '@/shared/ui/Button'
 import { AuthInfoCard } from '@/shared/ui/Form/AuthInfoCard'
 import { CorpsButton } from '@/shared/ui/Form/CorpsButton'
 import { Input } from '@/shared/ui/Input'
 import { Logo } from '@/shared/ui/logo'
-import { INVALID_CREDENTIALS_MESSAGE, mockLogin } from './mockAuth'
 import styles from './LoginPage.module.css'
 
 /** Флаг в localStorage о предыдущем визите на страницу входа. */
 const LOGIN_VISIT_KEY = 'skillswap_login_visited'
 
-/** Простая проверка формата email. */
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const loginSchema = yup.object({
+  email: yup.string().trim().required('Введите email').email('Введите корректный email'),
+  password: yup.string().required('Введите пароль'),
+})
+
+type LoginFormValues = yup.InferType<typeof loginSchema>
 
 const DEFAULT_CARD = {
   title: 'Добро пожаловать в SkillSwap!',
@@ -29,18 +37,29 @@ const RETURNING_CARD = {
 
 export default function LoginPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const dispatch = useAppDispatch()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
   const [hasCredentialsError, setHasCredentialsError] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // «С возвращением» показываем, если поля уже заполняли (isDirty) или
   // если пользователь заходил на страницу раньше (флаг в localStorage).
-  const [isDirty, setIsDirty] = useState(false)
   const [hasVisitedBefore, setHasVisitedBefore] = useState(false)
+
+  // Куда вернуться после входа (по умолчанию — главная).
+  const from =
+    (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? ROUTES.HOME
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors, isDirty, isSubmitting },
+  } = useForm<LoginFormValues>({
+    resolver: yupResolver(loginSchema),
+    defaultValues: { email: '', password: '' },
+  })
 
   useEffect(() => {
     if (localStorage.getItem(LOGIN_VISIT_KEY)) {
@@ -51,65 +70,43 @@ export default function LoginPage() {
   const isReturning = isDirty || hasVisitedBefore
   const card = isReturning ? RETURNING_CARD : DEFAULT_CARD
 
-  const resetErrors = () => {
-    setEmailError('')
-    setPasswordError('')
+  const clearCredentialsError = () => {
+    if (!hasCredentialsError) return
     setHasCredentialsError(false)
+    clearErrors('password')
   }
 
+  const emailField = register('email')
+  const passwordField = register('password')
+
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value)
-    setIsDirty(true)
-    resetErrors()
+    clearCredentialsError()
+    emailField.onChange(event)
   }
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
-    setIsDirty(true)
-    resetErrors()
+    clearCredentialsError()
+    passwordField.onChange(event)
   }
 
-  const validate = () => {
-    const trimmedEmail = email.trim()
-    let isValid = true
-
-    if (!trimmedEmail) {
-      setEmailError('Введите email')
-      isValid = false
-    } else if (!EMAIL_PATTERN.test(trimmedEmail)) {
-      setEmailError('Введите корректный email')
-      isValid = false
-    }
-
-    if (!password) {
-      setPasswordError('Введите пароль')
-      isValid = false
-    }
-
-    return isValid
-  }
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    if (!validate()) return
-
+  const onSubmit = async (values: LoginFormValues) => {
     // Фиксируем визит: при следующем заходе покажем «С возвращением».
     localStorage.setItem(LOGIN_VISIT_KEY, 'true')
     setHasVisitedBefore(true)
 
-    setIsSubmitting(true)
-    try {
-      await mockLogin(email.trim(), password)
-      navigate(ROUTES.HOME)
-    } catch {
-      // Заглушка вернула ошибку авторизации: подсвечиваем оба поля
-      // и показываем сообщение под полем пароля.
-      setHasCredentialsError(true)
-      setPasswordError(INVALID_CREDENTIALS_MESSAGE)
-    } finally {
-      setIsSubmitting(false)
+    const result = await dispatch(login(values))
+
+    if (login.fulfilled.match(result)) {
+      navigate(from, { replace: true })
+      return
     }
+
+    // Неверные данные: подсвечиваем оба поля и показываем сообщение под паролем.
+    setHasCredentialsError(true)
+    setError('password', {
+      type: 'server',
+      message: result.payload ?? INVALID_CREDENTIALS_MESSAGE,
+    })
   }
 
   return (
@@ -124,31 +121,29 @@ export default function LoginPage() {
 
       <div className={styles.container}>
         <section className={styles.formColumn}>
-          <form className={styles.form} onSubmit={handleSubmit} noValidate>
+          <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
             <CorpsButton />
 
             <div className={styles.fields}>
               <Input
+                {...emailField}
                 type="email"
-                name="email"
                 autoComplete="email"
                 placeholder="Email"
                 aria-label="Email"
-                value={email}
-                error={emailError}
+                error={errors.email?.message}
                 className={hasCredentialsError ? styles.credentialsError : undefined}
                 onChange={handleEmailChange}
                 disabled={isSubmitting}
               />
 
               <Input
+                {...passwordField}
                 type="password"
-                name="password"
                 autoComplete="current-password"
                 placeholder="Пароль"
                 aria-label="Пароль"
-                value={password}
-                error={passwordError}
+                error={errors.password?.message}
                 onChange={handlePasswordChange}
                 disabled={isSubmitting}
               />

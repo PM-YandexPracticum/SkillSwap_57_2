@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Skill } from './types'
+import { getRegisteredItems, mergeById } from '@/shared/lib/registrationStorage'
 
 interface SkillsState {
   items: Skill[]
@@ -8,7 +9,7 @@ interface SkillsState {
 }
 
 const initialState: SkillsState = {
-  items: [],
+  items: getRegisteredItems().skills,
   status: 'idle',
   error: null,
 }
@@ -29,7 +30,11 @@ export const fetchSkills = createAsyncThunk<Skill[], void, { rejectValue: string
 const skillsSlice = createSlice({
   name: 'skills',
   initialState,
-  reducers: {},
+  reducers: {
+    addRegisteredSkill: (state, action: PayloadAction<Skill>) => {
+      state.items = mergeById(state.items, [action.payload])
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchSkills.pending, (state) => {
@@ -38,7 +43,7 @@ const skillsSlice = createSlice({
       })
       .addCase(fetchSkills.fulfilled, (state, action: PayloadAction<Skill[]>) => {
         state.status = 'succeeded'
-        state.items = action.payload
+        state.items = mergeById(action.payload, getRegisteredItems().skills)
       })
       .addCase(fetchSkills.rejected, (state, action) => {
         state.status = 'failed'
@@ -47,4 +52,5 @@ const skillsSlice = createSlice({
   },
 })
 
+export const { addRegisteredSkill } = skillsSlice.actions
 export default skillsSlice.reducer
