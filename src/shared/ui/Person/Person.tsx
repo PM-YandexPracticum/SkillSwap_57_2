@@ -20,7 +20,8 @@ export const Person: FC<PersonProps> = ({ user }) => {
       <div className={styles.info}>
         <Title size="H2">{user.name}</Title>
         <p className={styles.details}>
-          {city?.title ?? 'Город не указан'}, {plural(age, 'лет', 'год', 'года')}
+          {city?.title ?? 'Город не указан'}
+          {Number.isFinite(age) && `, ${plural(age, 'лет', 'год', 'года')}`}
         </p>
       </div>
     </div>

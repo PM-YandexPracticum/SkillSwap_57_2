@@ -15,7 +15,7 @@ export interface User {
   email: string
   avatar: string | null
   aboutMe: string
-  gender: 'male' | 'female'
+  gender: 'unspecified' | 'male' | 'female'
   city: string
   birthDate: string
   createdAt: string
