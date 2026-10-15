@@ -1,0 +1,5 @@
+.error {
+  margin: 12px 0 0;
+  color: var(--error-color, #bf3920);
+  overflow-wrap: anywhere;
+}

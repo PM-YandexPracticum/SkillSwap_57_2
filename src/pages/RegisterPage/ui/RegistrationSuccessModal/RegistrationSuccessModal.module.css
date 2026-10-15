@@ -1,0 +1,14 @@
+.content {
+  box-sizing: border-box;
+  width: 568px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100dvh - 48px);
+  padding: 60px;
+  overflow-y: auto;
+}
+
+@media (width <= 480px) {
+  .content {
+    padding: 24px;
+  }
+}

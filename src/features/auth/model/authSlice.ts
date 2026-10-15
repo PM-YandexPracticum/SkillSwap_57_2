@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { AuthUser } from '@/shared/types'
+import { registerUser } from './registerUser'
 import {
   clearAuthUser,
   findMockUser,
@@ -77,6 +78,19 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(registerUser.pending, (state) => {
+        state.status = 'loading'
+        state.error = null
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload.authUser
+        state.status = 'idle'
+        state.error = null
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.status = 'idle'
+        state.error = action.payload ?? 'Не удалось завершить регистрацию'
+      })
       .addCase(login.pending, (state) => {
         state.status = 'loading'
         state.error = null

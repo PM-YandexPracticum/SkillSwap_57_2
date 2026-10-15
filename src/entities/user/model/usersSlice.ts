@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { User } from './types'
+import { getRegisteredItems, mergeById } from '@/shared/lib/registrationStorage'
 
 interface UsersState {
   items: User[]
@@ -8,7 +9,7 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
-  items: [],
+  items: getRegisteredItems().users,
   status: 'idle',
   error: null,
 }
@@ -29,7 +30,11 @@ export const fetchUsers = createAsyncThunk<User[], void, { rejectValue: string }
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    addRegisteredUser: (state, action: PayloadAction<User>) => {
+      state.items = mergeById(state.items, [action.payload])
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -38,7 +43,7 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
         state.status = 'succeeded'
-        state.items = action.payload
+        state.items = mergeById(action.payload, getRegisteredItems().users)
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed'
@@ -47,4 +52,5 @@ const usersSlice = createSlice({
   },
 })
 
+export const { addRegisteredUser } = usersSlice.actions
 export default usersSlice.reducer

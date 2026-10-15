@@ -4,6 +4,7 @@ import { Button } from '@/shared/ui/Button'
 import { Title } from '@/shared/ui/Title'
 import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 import chevronRight from '@/shared/assets/images/chevron-right.svg' // удалить после реализации галлереи
+import editIcon from '@/shared/assets/images/edit.svg'
 
 // import { ImageGallery } from '@/shared/ui/ImageGallery'
 // import { ImageCarousel } from '@/shared/ui/ImageCarousel'
@@ -21,6 +22,7 @@ type SkillDetailsProps = {
       variant: 'preview'
       onEdit: () => void
       onDone: () => void
+      isSubmitting?: boolean
     }
   | {
       variant: 'skill'
@@ -61,12 +63,13 @@ export function SkillDetails(props: SkillDetailsProps) {
         <div className={styles.actions}>
           {props.variant === 'preview' ? (
             <>
-              <Button variant="secondary" onClick={props.onEdit}>
+              <Button variant="secondary" onClick={props.onEdit} disabled={props.isSubmitting}>
                 Редактировать
+                <img src={editIcon} alt="" className={styles.editIcon} />
               </Button>
 
-              <Button variant="primary" onClick={props.onDone}>
-                Готово
+              <Button variant="primary" onClick={props.onDone} disabled={props.isSubmitting}>
+                {props.isSubmitting ? 'Сохраняем…' : 'Готово'}
               </Button>
             </>
           ) : (
@@ -77,8 +80,8 @@ export function SkillDetails(props: SkillDetailsProps) {
         </div>
       </div>
 
-          {/* временная галлерея, заменить после реализации галлереи */}
-      <div className={styles.gallery}>  
+      {/* временная галлерея, заменить после реализации галлереи */}
+      <div className={styles.gallery}>
         {images.length > 0 && (
           <>
             <div className={styles.mainImage}>

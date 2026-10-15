@@ -3,7 +3,7 @@ import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import { generateId } from '@/shared/lib/helpers'
 
 /** Ключ, под которым хранится список зарегистрированных (мок) пользователей. */
-const MOCK_USERS_KEY = 'skillswap_mock_users'
+export const MOCK_USERS_KEY = 'skillswap_mock_users'
 
 /** Тестовый JWT-токен (заглушка вместо реального). */
 export const MOCK_TOKEN = 'token123'
