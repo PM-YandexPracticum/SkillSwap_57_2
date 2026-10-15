@@ -1,0 +1,56 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 556px;
+  padding: 103.5px 60px;
+  border-radius: 12px;
+  background: #fff;
+  color: #253017;
+  font-family: var(--font-base);
+  box-sizing: border-box;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.inputPassword {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tip {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.formError {
+  margin: 0;
+  color: #bf3920;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.nextAuthoStep {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nextButton {
+  width: 100%;
+}
+
+.signIn {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #508826;
+}

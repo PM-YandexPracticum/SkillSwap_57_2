@@ -12,3 +12,8 @@ export async function fetchUserById(id: string): Promise<User | undefined> {
   const users = await fetchUsers()
   return users.find((user) => user.id === id)
 }
+
+export async function isEmailTaken(email: string): Promise<boolean> {
+  const users = await fetchUsers()
+  return users.some((user) => user.email.toLowerCase() === email.trim().toLowerCase())
+}
