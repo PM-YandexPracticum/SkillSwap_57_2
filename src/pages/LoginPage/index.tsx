@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import authIdea from '@/shared/assets/images/auth-idea.svg'
 import crossIcon from '@/shared/assets/images/cross.svg'
 import { INVALID_CREDENTIALS_MESSAGE, login } from '@/features/auth/model/authSlice'
+import { getReturnTo } from '@/features/auth/model/returnTo'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch } from '@/store/hooks'
 import { Button } from '@/shared/ui/Button'
@@ -47,8 +48,7 @@ export default function LoginPage() {
   const [hasVisitedBefore, setHasVisitedBefore] = useState(false)
 
   // Куда вернуться после входа (по умолчанию — главная).
-  const from =
-    (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? ROUTES.HOME
+  const from = getReturnTo(location.state)
 
   const {
     register,
