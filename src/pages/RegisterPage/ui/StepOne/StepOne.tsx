@@ -57,7 +57,7 @@ export function StepOne({ value, onChange, onContinue }: StepOneProps) {
       setPasswordError('Пароль должен содержать не менее 8 знаков')
       hasErrors = true
     } else if (!isPasswordStrong) {
-      setPasswordError('Пароль должен содержать строчные и заглавные буквы, цифру и спецсимвол')
+      setPasswordError('Пароль должен содержать цифры, строчные и заглавные буквы')
       hasErrors = true
     }
 
