@@ -90,7 +90,8 @@ export const registerUser = createAsyncThunk<
           likesCount: 0,
           likesCard: [],
           teach: [skill.id],
-          learn: [...profile.learningSkills.skillIds],
+          learn: [],
+          learningSubcategoryIds: [...profile.learningSkills.skillIds],
         }
         const record: RegistrationRecord = {
           user,

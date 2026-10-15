@@ -30,6 +30,7 @@ function isRecord(value: unknown): value is RegistrationRecord {
     [user.teach, user.learn, user.likesCard, skill.images, value.learningCategoryIds].every(
       isStringArray,
     ) &&
+    (user.learningSubcategoryIds === undefined || isStringArray(user.learningSubcategoryIds)) &&
     isStringArray(user.teach) &&
     typeof skill.id === 'string' &&
     user.teach.includes(skill.id) &&

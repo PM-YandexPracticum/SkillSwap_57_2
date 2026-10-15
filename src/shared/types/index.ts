@@ -22,6 +22,8 @@ export interface User {
   likesCount: number
   teach: string[]
   learn: string[]
+  /** Интересы из регистрации — ID подкатегорий, а не ID конкретных предложений. */
+  learningSubcategoryIds?: string[]
   likesCard: string[]
 }
 
