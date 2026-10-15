@@ -4,6 +4,7 @@ import { Button } from '@/shared/ui/Button'
 import { Title } from '@/shared/ui/Title'
 import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 import chevronRight from '@/shared/assets/images/chevron-right.svg' // удалить после реализации галлереи
+import editIcon from '@/shared/assets/images/edit.svg'
 
 // import { ImageGallery } from '@/shared/ui/ImageGallery'
 // import { ImageCarousel } from '@/shared/ui/ImageCarousel'
@@ -63,6 +64,7 @@ export function SkillDetails(props: SkillDetailsProps) {
             <>
               <Button variant="secondary" onClick={props.onEdit}>
                 Редактировать
+                <img src={editIcon} alt="" className={styles.editIcon} />
               </Button>
 
               <Button variant="primary" onClick={props.onDone}>
@@ -77,8 +79,8 @@ export function SkillDetails(props: SkillDetailsProps) {
         </div>
       </div>
 
-          {/* временная галлерея, заменить после реализации галлереи */}
-      <div className={styles.gallery}>  
+      {/* временная галлерея, заменить после реализации галлереи */}
+      <div className={styles.gallery}>
         {images.length > 0 && (
           <>
             <div className={styles.mainImage}>
