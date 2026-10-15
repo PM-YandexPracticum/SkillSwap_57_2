@@ -1,0 +1,116 @@
+.carousel {
+  width: 100%;
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 40px;
+  color: #253017;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.viewport {
+  overflow: hidden;
+  width: 100%;
+  touch-action: pan-y pinch-zoom;
+}
+
+.container {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.slide {
+  display: flex;
+  flex: 0 0 calc((100% - 72px) / 4);
+  min-width: 0;
+}
+
+.slide > * {
+  width: 100%;
+}
+
+.arrow {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #e9eee5;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #dce7d3;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #253017;
+    outline-offset: 2px;
+  }
+}
+
+.arrowPrev {
+  left: -20px;
+}
+
+.arrowNext {
+  right: -20px;
+}
+
+.chevronRight,
+.chevronLeft {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.chevronLeft {
+  transform: rotate(180deg);
+}
+
+@media (width <= 1024px) {
+  .slide {
+    flex-basis: calc((100% - 48px) / 3);
+  }
+}
+
+@media (width <= 768px) {
+  .slide {
+    flex-basis: calc((100% - 24px) / 2);
+  }
+
+  .title {
+    margin-bottom: 24px;
+  }
+}
+
+@media (width <= 480px) {
+  .slide {
+    flex-basis: 100%;
+  }
+
+  .arrowPrev {
+    left: -12px;
+  }
+
+  .arrowNext {
+    right: -12px;
+  }
+}
