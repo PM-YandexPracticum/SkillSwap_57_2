@@ -20,8 +20,8 @@ export function AppRouter() {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path={ROUTES.HOME} element={<CatalogPage />} />
+            <Route path={ROUTES.SKILL} element={<SkillPage />} />
           </Route>
-          <Route path={ROUTES.SKILL} element={<SkillPage />} />
           <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<LoginPage />} />
