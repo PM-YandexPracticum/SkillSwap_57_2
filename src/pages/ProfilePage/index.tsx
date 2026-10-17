@@ -183,11 +183,7 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.page} style={pageStyle}>
-      <Header
-        isAuthenticated={Boolean(authUser)}
-        userName={personalData?.name ?? authUser?.name ?? 'Имя пользователя'}
-        avatarUrl={personalData?.avatarUrl ?? defaultAvatar}
-      />
+      <Header />
       <main className={styles.main}>
         <div className={styles.content}>
           <ProfileMenu activeSection={activeSection} />
