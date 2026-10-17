@@ -25,7 +25,7 @@ export interface RegisterPayload extends LoginPayload {
   name: string
 }
 
-interface AuthState {
+export interface AuthState {
   user: AuthUser | null
   status: 'idle' | 'loading'
   error: string | null
