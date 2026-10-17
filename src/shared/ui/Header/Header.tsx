@@ -1,4 +1,6 @@
 //import { useState } from 'react'
+import { useAppSelector } from '@/store/hooks'
+import { selectCurrentUser, selectIsAuthenticated } from '@/features/auth/model/authSelectors'
 import { Logo } from '../logo/logo'
 import { Button } from '../Button/Button'
 import { NavMenu } from '../NavMenu/NavMenu'
@@ -13,20 +15,19 @@ import searchIcon from '../../assets/images/search.svg'
 import styles from './Header.module.scss'
 
 interface HeaderProps {
-  isAuthenticated?: boolean
-  userName?: string
   avatarUrl?: string
   searchValue?: string
   onSearchChange?: (value: string) => void
 }
 
-export function Header({
-  isAuthenticated = false, //когда будет реализована авторизация использовать  isAuthenticated={user.isAuthenticated}
-  userName = 'Имя пользователя', //когда будет реализована авторизация использовать  userName={user.name}
-  searchValue,
-  onSearchChange,
-  // avatarUrl, // когда будет реализована авторизация использовать  avatarUrl={user.avatar}
-}: HeaderProps) {
+/** Имя по умолчанию, если пользователь авторизован, но имя ещё не загружено. */
+const DEFAULT_USER_NAME = 'Имя пользователя'
+
+export function Header({ searchValue, onSearchChange }: HeaderProps) {
+  // Данные авторизации берём из стора через общие селекторы.
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+  const user = useAppSelector(selectCurrentUser)
+  const userName = user?.name ?? DEFAULT_USER_NAME
   //После того, как смержен модал
   // const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false)
 
