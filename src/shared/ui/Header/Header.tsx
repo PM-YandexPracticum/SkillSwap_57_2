@@ -1,6 +1,8 @@
-//import { useState } from 'react'
-import { useAppSelector } from '@/store/hooks'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { logout } from '@/features/auth/model/authSlice'
 import { selectCurrentUser, selectIsAuthenticated } from '@/features/auth/model/authSelectors'
+import { ROUTES } from '@/shared/lib/constants'
 import { Logo } from '../logo/logo'
 import { Button } from '../Button/Button'
 import { NavMenu } from '../NavMenu/NavMenu'
@@ -8,14 +10,11 @@ import { Input } from '../Input/Input'
 import { ThemeButton } from '../ThemeButton/ThemeButton'
 import { NotifyButton } from '../NotifyButton/NotifyButton'
 import { LikeButton } from '../LikeButton/LikeButton'
-//import { Avatar } from '../Avatar/Avatar'
-//import { Modal } from '../Modal/Modal'
-//import SkillCategoryGroupList from '../SkillCategoryGroupList/SkillCategoryGroupList'
+import { Avatar } from '../Avatar/Avatar'
 import searchIcon from '../../assets/images/search.svg'
 import styles from './Header.module.scss'
 
 interface HeaderProps {
-  avatarUrl?: string
   searchValue?: string
   onSearchChange?: (value: string) => void
 }
@@ -24,20 +23,28 @@ interface HeaderProps {
 const DEFAULT_USER_NAME = 'Имя пользователя'
 
 export function Header({ searchValue, onSearchChange }: HeaderProps) {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
   // Данные авторизации берём из стора через общие селекторы.
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const user = useAppSelector(selectCurrentUser)
+
+  // В auth-состоянии хранятся только id/имя/email, поэтому аватар ищем в профиле
+  // пользователя (users), сопоставляя запись по id или email.
+  const avatarUrl = useAppSelector((state) => {
+    if (!user) return undefined
+    const profile = state.users.items.find(
+      (item) => item.id === user.id || item.email === user.email,
+    )
+    return profile?.avatar ?? undefined
+  })
+
   const userName = user?.name ?? DEFAULT_USER_NAME
-  //После того, как смержен модал
-  // const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false)
 
-  // const handleOpenSkills = () => {
-  // setIsSkillsModalOpen(true)
-  // }
-
-  // const handleCloseSkills = () => {
-  //  setIsSkillsModalOpen(false)
-  // }
+  const handleLogout = () => {
+    void dispatch(logout())
+  }
 
   return (
     <>
@@ -70,9 +77,13 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
 
             {!isAuthenticated ? (
               <div className={styles.auth}>
-                <Button variant="secondary">Войти</Button>
+                <Button variant="secondary" onClick={() => navigate(ROUTES.LOGIN)}>
+                  Войти
+                </Button>
 
-                <Button variant="primary">Зарегистрироваться</Button>
+                <Button variant="primary" onClick={() => navigate(ROUTES.REGISTER)}>
+                  Зарегистрироваться
+                </Button>
               </div>
             ) : (
               <div className={styles.userActions}>
@@ -81,21 +92,29 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
                 <LikeButton
                   checked={false}
                   onChange={() => {}}
+                  onClick={() => navigate(ROUTES.FAVORITES)}
                   className={styles.likes}
-                  aria-label="Лайки"
+                  aria-label="Избранное"
                 />
 
-                <button className={styles.profile} type="button" aria-label="Профиль пользователя">
+                <button
+                  className={styles.profile}
+                  type="button"
+                  aria-label="Личный кабинет"
+                  onClick={() => navigate(ROUTES.PROFILE)}
+                >
                   <span className={styles.userName}>{userName}</span>
-                  <div className={styles.avatar} aria-hidden="true" />
+                  <Avatar src={avatarUrl} alt={`Аватар пользователя ${userName}`} size="small" />
                 </button>
 
-                {/* После того, как смержен аватар, заменить на
-                <button className={styles.profile} type="button">
-                <span className={styles.userName}>{userName}</span>
-                  <Avatar src={avatarUrl} alt={`Аватар пользователя ${userName}`} size="middle" />
-                </button>
-                */}
+                <Button
+                  variant="secondary"
+                  className={styles.logout}
+                  aria-label="Выйти из аккаунта"
+                  onClick={handleLogout}
+                >
+                  Выйти
+                </Button>
               </div>
             )}
           </div>
