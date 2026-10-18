@@ -12,6 +12,7 @@
   overflow: hidden;
   border-radius: 12px;
 
+  /* stylelint-disable selector-pseudo-class-no-unknown */
   :global(.image-gallery),
   :global(.image-gallery-content),
   :global(.image-gallery-slide-wrapper),
@@ -25,6 +26,7 @@
   :global(.image-gallery-slide) {
     overflow: hidden;
   }
+  /* stylelint-enable selector-pseudo-class-no-unknown */
 }
 
 .mainImage {
