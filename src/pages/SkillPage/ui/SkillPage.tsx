@@ -5,8 +5,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
-import { useLocalStorage } from '@/shared/hooks/useLocalStorage'
-import { LOCAL_STORAGE_KEYS, ROUTES } from '@/shared/lib/constants'
+import {
+  addFavorite,
+  removeFavorite,
+  selectFavoriteIds,
+} from '@/features/favorites/model/favoritesSlice'
+import { ROUTES } from '@/shared/lib/constants'
 import type { Skill } from '@/shared/types'
 import { Card } from '@/shared/ui/Card'
 import { CardCarousel } from '@/shared/ui/CardCarousel'
@@ -46,7 +50,7 @@ const SkillPage = () => {
   const usersStatus = useAppSelector((state) => state.users.status)
   const cities = useAppSelector((state) => state.cities.items)
 
-  const [favorites, setFavorites] = useLocalStorage<string[]>(LOCAL_STORAGE_KEYS.FAVORITES, [])
+  const favoriteIds = useAppSelector(selectFavoriteIds)
 
   // При прямом заходе по URL стор пустой, поэтому справочники загружаем сами.
   useEffect(() => {
@@ -74,12 +78,10 @@ const SkillPage = () => {
   }, [skill, skills, users])
 
   const toggleFavorite = useCallback(
-    (value: string, isLiked: boolean) => {
-      setFavorites((current) =>
-        isLiked ? [...new Set([...current, value])] : current.filter((item) => item !== value),
-      )
+    (skillId: string, isLiked: boolean) => {
+      dispatch(isLiked ? addFavorite(skillId) : removeFavorite(skillId))
     },
-    [setFavorites],
+    [dispatch],
   )
 
   const handleShare = () => {
@@ -145,7 +147,7 @@ const SkillPage = () => {
         <div className={styles.skillColumn}>
           <div className={styles.toolbar}>
             <LikeButton
-              checked={favorites.includes(skill.id)}
+              checked={favoriteIds.includes(skill.id)}
               onChange={(event) => toggleFavorite(skill.id, event.target.checked)}
               aria-label="Добавить в избранное"
             />
@@ -185,8 +187,8 @@ const SkillPage = () => {
               user={cardUser}
               teach={toSkillItems(cardUser.teach, skills)}
               learn={toSkillItems(cardUser.learn, skills)}
-              isLiked={favorites.includes(cardUser.id)}
-              onLikeChange={(isLiked) => toggleFavorite(cardUser.id, isLiked)}
+              isLiked={favoriteIds.includes(similarSkill.id)}
+              onLikeChange={(isLiked) => toggleFavorite(similarSkill.id, isLiked)}
               onDetailsClick={() => navigate(getSkillPath(similarSkill.id))}
             />
           ))}
