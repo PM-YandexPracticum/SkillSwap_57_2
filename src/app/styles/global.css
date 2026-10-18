@@ -5,7 +5,7 @@
   /* Colors */
   --color-primary: #6366f1;
   --color-primary-hover: #4f46e5;
-  --color-bg: #fff;
+  --color-bg: #F9FAF7;
   --color-bg-secondary: #f9fafb;
   --color-text: #111827;
   --color-text-secondary: #6b7280;
@@ -90,7 +90,7 @@
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-base);
   font-size: var(--font-size-base);
   color: var(--color-text);
   background-color: var(--color-bg);

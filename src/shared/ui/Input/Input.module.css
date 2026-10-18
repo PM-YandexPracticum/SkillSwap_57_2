@@ -75,13 +75,16 @@
   outline: 0;
   background: transparent;
   color: #26351f;
-  font: inherit;
+  font-family: var(--font-base);
+  font-weight: 400;
   font-size: 18px;
   line-height: 1.25;
 }
 
 .input::placeholder {
   color: #748168;
+  font-family: var(--font-base);
+  font-weight: 400;
   opacity: 1;
 }
 
