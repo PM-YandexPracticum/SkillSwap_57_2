@@ -15,7 +15,7 @@ export const NavMenu = () => {
   return (
     <nav className={styles.navMenu}>
       <ul className={styles.navList}>
-        <li>О проекте</li>
+        <li className={styles.aboutProject}>О проекте</li>
         <li className={styles.navElemWrapper} ref={wrapperRef}>
           <button
             type="button"
