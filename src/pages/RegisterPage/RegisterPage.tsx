@@ -16,7 +16,6 @@ import crossIcon from '@/shared/assets/images/cross.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/shared/lib/constants'
 import { RegistrationCompletion } from './ui/RegistrationCompletion'
-import { RegistrationData } from '@/features/auth/model/registerUser'
 
 type StepIndex = 1 | 2 | 3
 
@@ -41,7 +40,7 @@ export const RegisterPage: FC = () => {
 
   useEffect(() => {
     dispatch(loadCities())
-  }, [])
+  }, [dispatch])
 
   const handleStepOneContinue = (value: StepOneValue) => {
     setStepOneValue(value)
@@ -66,10 +65,6 @@ export const RegisterPage: FC = () => {
     setCurrentStep((prevStep) => (prevStep - 1) as StepIndex)
   }
 
-  // const handleRegistrationFinished = () => {
-  //   setIsModalOpen(false)
-  // }
-  const registrationData: RegistrationData | null = null
   const cardInfo =
     currentStep === 1
       ? {
