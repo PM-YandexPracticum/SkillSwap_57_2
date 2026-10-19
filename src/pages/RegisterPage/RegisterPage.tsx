@@ -10,11 +10,18 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { initialStepOneValue, StepOne, StepOneValue } from './ui/StepOne'
 import { initialStepThreeValue, StepThree, StepThreeValue } from './ui/StepThree'
+import { Logo } from '@/shared/ui/logo'
+import { Button } from '@/shared/ui/Button'
+import crossIcon from '@/shared/assets/images/cross.svg'
+import { Link } from 'react-router-dom'
+import { ROUTES } from '@/shared/lib/constants'
+import { RegistrationCompletion } from './ui/RegistrationCompletion'
+import { RegistrationData } from '@/features/auth/model/registerUser'
 
 type StepIndex = 1 | 2 | 3
 
 export const RegisterPage: FC = () => {
-  const [currentStep, setCurrentStep] = useState<StepIndex>(3)
+  const [currentStep, setCurrentStep] = useState<StepIndex>(2)
   // 1 шаг
   const [stepOneValue, setStepOneValue] = useState<StepOneValue>(initialStepOneValue)
 
@@ -23,6 +30,8 @@ export const RegisterPage: FC = () => {
 
   // 3 шаг
   const [stepThreeValue, setStepThreeValue] = useState<StepThreeValue>(initialStepThreeValue)
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const dispatch = useAppDispatch()
 
@@ -43,11 +52,22 @@ export const RegisterPage: FC = () => {
 
   const handleStepThreeContinue = (value: StepThreeValue) => {
     setStepThreeValue(value)
+    setIsModalOpen(true)
+  }
+
+  const handleEdit = () => {
+    setIsModalOpen(false)
+    setCurrentStep(3)
   }
 
   const handleStepBack = () => {
     setCurrentStep((prevStep) => (prevStep - 1) as StepIndex)
   }
+
+  // const handleRegistrationFinished = () => {
+  //   setIsModalOpen(false)
+  // }
+  const registrationData: RegistrationData | null = null
   const cardInfo =
     currentStep === 1
       ? {
@@ -59,8 +79,7 @@ export const RegisterPage: FC = () => {
       : currentStep === 2
         ? {
             title: 'Расскажите немного о себе',
-            description:
-              'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена',
+            description: 'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена',
             illustration: authProfile,
           }
         : {
@@ -70,41 +89,71 @@ export const RegisterPage: FC = () => {
           }
 
   return (
-    <main className={styles.registerPage}>
-      <div className={styles.steps}>
-        <Steps currentStep={currentStep}></Steps>
-      </div>
-      <div className={styles.content}>
-        {currentStep === 1 && (
-          <StepOne
-            value={stepOneValue}
-            onChange={setStepOneValue}
-            onContinue={handleStepOneContinue}
+    <>
+      <header className={styles.header}>
+        <Logo />
+        <Link className={styles.closeButton} to={ROUTES.HOME}>
+          <Button variant="tertiary" className={styles.crossButton}>
+            Закрыть <img src={crossIcon} alt="Закрыть"></img>
+          </Button>
+        </Link>
+      </header>
+      <main className={styles.registerPage}>
+        <div className={styles.steps}>
+          <Steps currentStep={currentStep} />
+        </div>
+        <div className={styles.content}>
+          {currentStep === 1 && (
+            <StepOne
+              value={stepOneValue}
+              onChange={setStepOneValue}
+              onContinue={handleStepOneContinue}
+            />
+          )}
+          {currentStep === 2 && (
+            <StepTwo
+              value={stepTwoValue}
+              cities={cities}
+              onChange={setStepTwoValue}
+              onBack={handleStepBack}
+              onContinue={handleStepTwoContinue}
+            ></StepTwo>
+          )}
+          {currentStep === 3 && (
+            <StepThree
+              value={stepThreeValue}
+              onChange={setStepThreeValue}
+              onBack={handleStepBack}
+              onContinue={handleStepThreeContinue}
+            ></StepThree>
+          )}
+          <AuthInfoCard
+            title={cardInfo.title}
+            description={cardInfo.description}
+            illustration={cardInfo.illustration}
           />
-        )}
-        {currentStep === 2 && (
-          <StepTwo
-            value={stepTwoValue}
-            cities={cities}
-            onChange={setStepTwoValue}
-            onBack={handleStepBack}
-            onContinue={handleStepTwoContinue}
-          ></StepTwo>
-        )}
-        {currentStep === 3 && (
-          <StepThree
-            value={stepThreeValue}
-            onChange={setStepThreeValue}
-            onBack={handleStepBack}
-            onContinue={handleStepThreeContinue}
-          ></StepThree>
-        )}
-        <AuthInfoCard
-          title={cardInfo.title}
-          description={cardInfo.description}
-          illustration={cardInfo.illustration}
+        </div>
+      </main>
+      {isModalOpen && (
+        <RegistrationCompletion
+          data={{
+            ...stepOneValue,
+            profile: {
+              ...stepTwoValue,
+              likesSubcategoryIds: stepTwoValue.likes.subcategoryIds,
+            },
+            offer: {
+              ...stepThreeValue,
+              category: stepThreeValue.offer.categoryId,
+              subcategory: stepThreeValue.offer.subcategoryId,
+            },
+          }}
+          onEdit={handleEdit}
+          onFinished={() => {
+            setIsModalOpen(false)
+          }}
         />
-      </div>
-    </main>
+      )}
+    </>
   )
 }

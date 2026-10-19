@@ -6,22 +6,24 @@ import styles from './SkillForm.module.css'
 
 export interface SkillFormValue {
   categoryIds: string[]
-  skillIds: string[]
+  subcategoryIds: string[]
 }
 
 export interface SkillFormProps {
+  multiple?: boolean
   value?: SkillFormValue
   onChange?: (value: SkillFormValue) => void
   skillLabel?: string
   skillPlaceholder?: string
 }
 
-const EMPTY_VALUE: SkillFormValue = { categoryIds: [], skillIds: [] }
+const EMPTY_VALUE: SkillFormValue = { categoryIds: [], subcategoryIds: [] }
 
 const toStringArray = (value: SelectValue): string[] =>
   Array.isArray(value) ? value : value ? [value] : []
 
 export const SkillForm = ({
+  multiple,
   value,
   onChange,
   skillLabel = 'Навык, которому хотите научиться',
@@ -38,9 +40,9 @@ export const SkillForm = ({
   const categoryOptions = skills
     .filter(
       (category) =>
-        selectedValue.skillIds.length === 0 ||
+        selectedValue.subcategoryIds.length === 0 ||
         selectedValue.categoryIds.includes(category.id) ||
-        category.skills.some((skill) => selectedValue.skillIds.includes(skill.id)),
+        category.skills.some((skill) => selectedValue.subcategoryIds.includes(skill.id)),
     )
     .map((category) => ({ value: category.id, label: category.title }))
 
@@ -62,7 +64,9 @@ export const SkillForm = ({
 
     updateValue({
       categoryIds,
-      skillIds: selectedValue.skillIds.filter((skillId) => availableSkillIds.has(skillId)),
+      subcategoryIds: selectedValue.subcategoryIds.filter((skillId) =>
+        availableSkillIds.has(skillId),
+      ),
     })
   }
 
@@ -70,7 +74,7 @@ export const SkillForm = ({
     const availableSkillIds = new Set<string>(skillOptions.map((option) => option.value))
     updateValue({
       categoryIds: selectedValue.categoryIds,
-      skillIds: toStringArray(nextValue).filter((skillId) => availableSkillIds.has(skillId)),
+      subcategoryIds: toStringArray(nextValue).filter((skillId) => availableSkillIds.has(skillId)),
     })
   }
 
@@ -80,7 +84,7 @@ export const SkillForm = ({
         label="Категория навыка, которому хотите научиться"
         options={categoryOptions}
         placeholder="Выберите категорию"
-        multiple
+        multiple={multiple}
         value={selectedValue.categoryIds}
         onChange={handleCategoriesChange}
       />
@@ -88,8 +92,8 @@ export const SkillForm = ({
         label={skillLabel}
         options={skillOptions}
         placeholder={skillPlaceholder}
-        multiple
-        value={selectedValue.skillIds}
+        multiple={multiple}
+        value={selectedValue.subcategoryIds}
         onChange={handleSkillsChange}
       />
     </div>

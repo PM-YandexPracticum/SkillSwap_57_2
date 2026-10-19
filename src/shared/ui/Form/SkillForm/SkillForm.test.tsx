@@ -42,7 +42,7 @@ describe('SkillForm', () => {
   it('supports keyboard selection in controlled mode', async () => {
     const user = userEvent.setup()
     const Example = () => {
-      const [value, setValue] = useState<SkillFormValue>({ categoryIds: [], skillIds: [] })
+      const [value, setValue] = useState<SkillFormValue>({ categoryIds: [], subcategoryIds: [] })
       return <SkillForm value={value} onChange={setValue} />
     }
     render(<Example />)

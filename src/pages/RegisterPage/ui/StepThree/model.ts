@@ -1,17 +1,18 @@
-import type { SkillFormValue } from '@/shared/ui/Form/SkillForm'
-
 export interface StepThreeValue {
   title: string
-  skill: SkillFormValue
+  offer: {
+    categoryId: string
+    subcategoryId: string
+  }
   description: string
   images: File[]
 }
 
 export const initialStepThreeValue: StepThreeValue = {
   title: '',
-  skill: {
-    categoryIds: [],
-    skillIds: [],
+  offer: {
+    categoryId: '',
+    subcategoryId: '',
   },
   description: '',
   images: [],

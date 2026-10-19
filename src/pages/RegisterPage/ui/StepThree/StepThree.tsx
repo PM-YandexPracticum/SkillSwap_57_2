@@ -1,7 +1,7 @@
 import type { StepThreeValue } from './model'
 import { useState, type FormEvent } from 'react'
 import { Button } from '@/shared/ui/Button'
-import { SkillForm, type SkillFormValue } from '@/shared/ui/Form/SkillForm'
+import { SkillForm } from '@/shared/ui/Form/SkillForm'
 import { ImageUpload } from '@/shared/ui/ImageUpload'
 import { Input } from '@/shared/ui/Input'
 import { Textarea } from '@/shared/ui/Textarea'
@@ -22,7 +22,7 @@ type StepThreeErrors = Partial<
 export function StepThree({ value, onChange, onBack, onContinue }: StepThreeProps) {
   const [errors, setErrors] = useState<StepThreeErrors>({})
 
-  const { title, skill, description, images } = value
+  const { title, offer, description, images } = value
 
   const update = (patch: Partial<StepThreeValue>) => {
     onChange({ ...value, ...patch })
@@ -32,16 +32,16 @@ export function StepThree({ value, onChange, onBack, onContinue }: StepThreeProp
     const nextErrors: StepThreeErrors = {}
 
     if (!title.trim()) nextErrors.title = 'Введите название навыка'
-    if (skill.categoryIds.length === 0) nextErrors.categoryIds = 'Выберите категорию навыка'
-    if (skill.skillIds.length === 0) nextErrors.skillIds = 'Выберите подкатегорию навыка'
+    if (!offer.categoryId) nextErrors.categoryIds = 'Выберите категорию навыка'
+    if (!offer.subcategoryId) nextErrors.skillIds = 'Выберите подкатегорию навыка'
     if (!description.trim()) nextErrors.description = 'Добавьте описание предложения'
     if (images.length === 0) nextErrors.images = 'Добавьте хотя бы одно изображение'
 
     return nextErrors
   }
 
-  const handleSkillChange = (nextSkill: SkillFormValue) => {
-    update({ skill: nextSkill })
+  const handleSkillChange = (offer: StepThreeValue['offer']) => {
+    update({ offer })
 
     setErrors((current) => ({
       ...current,
@@ -50,8 +50,8 @@ export function StepThree({ value, onChange, onBack, onContinue }: StepThreeProp
     }))
   }
 
-  const handleImagesChange = (nextImages: File[]) => {
-    update({ images: nextImages })
+  const handleImagesChange = (images: File[]) => {
+    update({ images })
 
     setErrors((current) => ({
       ...current,
@@ -68,14 +68,15 @@ export function StepThree({ value, onChange, onBack, onContinue }: StepThreeProp
       return
     }
 
-    const category = skills.find((item) => item.id === skill.categoryIds[0])
-    const subcategory = category?.skills.find((item) => item.id === skill.skillIds[0])
+    const category = skills.find((item) => item.id === offer.categoryId)
+    const hasCategory = Boolean(category)
+    const hasSubcategory = category?.skills.some((item) => item.id === offer.subcategoryId)
 
-    if (!category || !subcategory) {
+    if (!hasCategory || !hasSubcategory) {
       setErrors({
         ...nextErrors,
-        categoryIds: !category ? 'Выберите категорию навыка' : undefined,
-        skillIds: !subcategory ? 'Выберите подкатегорию навыка' : undefined,
+        categoryIds: !hasCategory ? 'Выберите категорию навыка' : undefined,
+        skillIds: !hasSubcategory ? 'Выберите подкатегорию навыка' : undefined,
       })
       return
     }
@@ -101,7 +102,18 @@ export function StepThree({ value, onChange, onBack, onContinue }: StepThreeProp
       />
 
       <div className={styles.skillFields}>
-        <SkillForm value={skill} onChange={handleSkillChange} />
+        <SkillForm
+          value={{
+            categoryIds: [offer.categoryId].filter(Boolean),
+            subcategoryIds: [offer.subcategoryId].filter(Boolean),
+          }}
+          onChange={(value) => {
+            handleSkillChange({
+              categoryId: value.categoryIds[0],
+              subcategoryId: value.subcategoryIds[0],
+            })
+          }}
+        />
         {errors.categoryIds && (
           <p className={styles.error} role="alert">
             {errors.categoryIds}
