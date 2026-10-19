@@ -1,5 +1,8 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { fetchSkills } from '@/entities/skill/model/skillsSlice'
+import { fetchUsers } from '@/entities/user/model/usersSlice'
+import { removeFavorite, selectFavoriteIds } from '@/features/favorites/model/favoritesSlice'
 import { Header } from '@/shared/ui/Header/Header'
 import { Footer } from '@/shared/ui/Footer/Footer'
 import { Card } from '@/shared/ui/Card'
@@ -7,11 +10,10 @@ import defaultAvatar from '@/shared/assets/default.svg'
 import { ProfileMenu, type ProfileSection } from './ui/ProfileMenu'
 import { PersonalData, type PersonalDataValue } from './ui/PersonalData'
 import styles from './ProfilePage.module.css'
-import { fetchUserById, fetchUsers } from '@/api/users'
+import { fetchUserById } from '@/api/users'
 import { fetchCities } from '@/api/cities'
-import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
-import type { User } from '@/shared/types'
 
 const sectionTitles: Record<Exclude<ProfileSection, 'personal' | 'favorites'>, string> = {
   requests: 'Заявки',
@@ -49,7 +51,13 @@ function getSkillItem(skillId: string) {
 export default function ProfilePage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const authUser = useAppSelector((state) => state.auth.user)
+  const favoriteIds = useAppSelector(selectFavoriteIds)
+  const allSkills = useAppSelector((state) => state.skills.items)
+  const skillsStatus = useAppSelector((state) => state.skills.status)
+  const allUsers = useAppSelector((state) => state.users.items)
+  const usersStatus = useAppSelector((state) => state.users.status)
   const requestedSection = searchParams.get('section') as ProfileSection | null
   const activeSection =
     requestedSection && availableSections.includes(requestedSection)
@@ -57,16 +65,18 @@ export default function ProfilePage() {
       : 'personal'
 
   const [personalData, setPersonalData] = useState<PersonalDataValue | null>(null)
-  const [profileUser, setProfileUser] = useState<User | null>(null)
-  const [favoriteUsers, setFavoriteUsers] = useState<User[]>([])
   const [loadError, setLoadError] = useState(false)
+
+  // Избранное берём из общего стора: при прямом заходе справочники могут быть пустыми.
+  useEffect(() => {
+    if (skillsStatus === 'idle') void dispatch(fetchSkills())
+    if (usersStatus === 'idle') void dispatch(fetchUsers())
+  }, [dispatch, skillsStatus, usersStatus])
 
   useEffect(() => {
     let cancelled = false
 
     setPersonalData(null)
-    setProfileUser(null)
-    setFavoriteUsers([])
     setLoadError(false)
 
     if (!authUser?.id) {
@@ -76,8 +86,8 @@ export default function ProfilePage() {
       }
     }
 
-    Promise.all([fetchUserById(authUser.id), fetchUsers(), fetchCities()])
-      .then(([user, users, cities]) => {
+    Promise.all([fetchUserById(authUser.id), fetchCities()])
+      .then(([user, cities]) => {
         if (cancelled) return
         if (!user) {
           setLoadError(true)
@@ -102,12 +112,6 @@ export default function ProfilePage() {
           avatarUrl: user.avatar || defaultAvatar,
         }
 
-        setProfileUser(user)
-        setFavoriteUsers(
-          user.likesCard
-            .map((favoriteId) => users.find((candidate) => candidate.id === favoriteId))
-            .filter((favorite): favorite is User => Boolean(favorite)),
-        )
         setPersonalData(data)
       })
       .catch(() => {
@@ -118,6 +122,28 @@ export default function ProfilePage() {
       cancelled = true
     }
   }, [authUser?.id])
+
+  /** Избранные предложения собираем по общему идентификатору — skill.id. */
+  const favoriteCards = useMemo(
+    () =>
+      favoriteIds.flatMap((skillId) => {
+        const skill = allSkills.find((item) => item.id === skillId)
+        if (!skill) return []
+
+        const author = allUsers.find((user) => user.teach.includes(skill.id))
+        if (!author) return []
+
+        return [{ skill, author }]
+      }),
+    [favoriteIds, allSkills, allUsers],
+  )
+
+  const handleRemoveFavorite = useCallback(
+    (skillId: string, isLiked: boolean) => {
+      if (!isLiked) dispatch(removeFavorite(skillId))
+    },
+    [dispatch],
+  )
 
   const renderSection = () => {
     if (activeSection === 'personal') {
@@ -135,30 +161,31 @@ export default function ProfilePage() {
     }
 
     if (activeSection === 'favorites') {
-      if (!profileUser && !loadError) {
+      const isFavoritesLoading =
+        favoriteIds.length > 0 &&
+        (skillsStatus === 'idle' ||
+          skillsStatus === 'loading' ||
+          usersStatus === 'idle' ||
+          usersStatus === 'loading')
+
+      if (isFavoritesLoading) {
         return <section className={styles.placeholder}>Загружаем избранное...</section>
       }
 
       return (
         <section className={styles.favorites}>
           <h1>Избранное</h1>
-          {favoriteUsers.length > 0 ? (
+          {favoriteCards.length > 0 ? (
             <div className={styles.favoritesGrid}>
-              {favoriteUsers.map((user) => (
+              {favoriteCards.map(({ skill, author }) => (
                 <Card
-                  key={user.id}
-                  user={user}
-                  teach={user.teach.map(getSkillItem)}
-                  learn={user.learn.map(getSkillItem)}
-                  isLiked
-                  onLikeChange={(isLiked) => {
-                    if (!isLiked) {
-                      setFavoriteUsers((current) =>
-                        current.filter((favorite) => favorite.id !== user.id),
-                      )
-                    }
-                  }}
-                  onDetailsClick={() => navigate(`/skill/${user.teach[0] ?? user.id}`)}
+                  key={skill.id}
+                  user={author}
+                  teach={author.teach.map(getSkillItem)}
+                  learn={author.learn.map(getSkillItem)}
+                  isLiked={favoriteIds.includes(skill.id)}
+                  onLikeChange={(isLiked) => handleRemoveFavorite(skill.id, isLiked)}
+                  onDetailsClick={() => navigate(`/skill/${skill.id}`)}
                 />
               ))}
             </div>
