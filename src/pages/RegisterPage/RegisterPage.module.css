@@ -1,0 +1,18 @@
+.registerPage {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
