@@ -9,11 +9,12 @@ import { Steps } from '@/shared/ui/Form/Steps'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { initialStepOneValue, StepOne, StepOneValue } from './ui/StepOne'
+import { initialStepThreeValue, StepThree, StepThreeValue } from './ui/StepThree'
 
 type StepIndex = 1 | 2 | 3
 
 export const RegisterPage: FC = () => {
-  const [currentStep, setCurrentStep] = useState<StepIndex>(1)
+  const [currentStep, setCurrentStep] = useState<StepIndex>(3)
   // 1 шаг
   const [stepOneValue, setStepOneValue] = useState<StepOneValue>(initialStepOneValue)
 
@@ -21,7 +22,7 @@ export const RegisterPage: FC = () => {
   const [stepTwoValue, setStepTwoValue] = useState<StepTwoValue>(initialStepTwoValue)
 
   // 3 шаг
-  // const [stepThreeValue, setstepThreeValue] = useState<StepThreeValue>(initialstepThreeValue)
+  const [stepThreeValue, setStepThreeValue] = useState<StepThreeValue>(initialStepThreeValue)
 
   const dispatch = useAppDispatch()
 
@@ -40,6 +41,10 @@ export const RegisterPage: FC = () => {
     setCurrentStep(3)
   }
 
+  const handleStepThreeContinue = (value: StepThreeValue) => {
+    setStepThreeValue(value)
+  }
+
   const handleStepBack = () => {
     setCurrentStep((prevStep) => (prevStep - 1) as StepIndex)
   }
@@ -53,15 +58,15 @@ export const RegisterPage: FC = () => {
         }
       : currentStep === 2
         ? {
-            title: 'Расскажите о себе',
+            title: 'Расскажите немного о себе',
             description:
-              'Заполните информацию о себе, чтобы другие участники могли узнать вас лучше',
-            illustration: authPresentation,
+              'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена',
+            illustration: authProfile,
           }
         : {
-            title: 'Последний шаг',
-            description: 'Завершите заполнение данных для регистрации в SkillSwap',
-            illustration: authProfile,
+            title: 'Укажите, чем вы готовы поделиться',
+            description: 'Так другие люди смогут увидеть ваши предложения и предложить вам обмен!',
+            illustration: authPresentation,
           }
 
   return (
@@ -86,14 +91,14 @@ export const RegisterPage: FC = () => {
             onContinue={handleStepTwoContinue}
           ></StepTwo>
         )}
-        {/* {currentStep === 3 && (
+        {currentStep === 3 && (
           <StepThree
             value={stepThreeValue}
             onChange={setStepThreeValue}
             onBack={handleStepBack}
             onContinue={handleStepThreeContinue}
           ></StepThree>
-        )} */}
+        )}
         <AuthInfoCard
           title={cardInfo.title}
           description={cardInfo.description}
