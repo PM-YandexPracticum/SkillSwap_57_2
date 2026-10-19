@@ -13,7 +13,7 @@ import { initialStepThreeValue, StepThree, StepThreeValue } from './ui/StepThree
 import { Logo } from '@/shared/ui/logo'
 import { Button } from '@/shared/ui/Button'
 import crossIcon from '@/shared/assets/images/cross.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/shared/lib/constants'
 import { RegistrationCompletion } from './ui/RegistrationCompletion'
 import { RegistrationData } from '@/features/auth/model/registerUser'
@@ -21,7 +21,9 @@ import { RegistrationData } from '@/features/auth/model/registerUser'
 type StepIndex = 1 | 2 | 3
 
 export const RegisterPage: FC = () => {
-  const [currentStep, setCurrentStep] = useState<StepIndex>(2)
+  const navigate = useNavigate()
+
+  const [currentStep, setCurrentStep] = useState<StepIndex>(1)
   // 1 шаг
   const [stepOneValue, setStepOneValue] = useState<StepOneValue>(initialStepOneValue)
 
@@ -151,6 +153,7 @@ export const RegisterPage: FC = () => {
           onEdit={handleEdit}
           onFinished={() => {
             setIsModalOpen(false)
+            navigate(ROUTES.HOME)
           }}
         />
       )}
