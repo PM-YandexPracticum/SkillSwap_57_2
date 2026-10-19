@@ -12,7 +12,7 @@ const SKILL_LABEL = 'Навык, которому хотите научитьс�
 describe('SkillForm', () => {
   it('allows skills first and limits categories to their parents', async () => {
     const user = userEvent.setup()
-    render(<SkillForm />)
+    render(<SkillForm multiple />)
     await user.click(screen.getByRole('button', { name: SKILL_LABEL }))
     const skillList = within(screen.getByRole('group', { name: SKILL_LABEL }))
     await user.click(skillList.getByRole('checkbox', { name: 'Английский' }))
@@ -26,7 +26,7 @@ describe('SkillForm', () => {
 
   it('filters skills by categories and clears skills when their category is removed', async () => {
     const user = userEvent.setup()
-    render(<SkillForm />)
+    render(<SkillForm multiple />)
     await user.click(screen.getByRole('button', { name: CATEGORY_LABEL }))
     await user.click(screen.getByRole('checkbox', { name: 'Иностранные языки' }))
     await user.click(screen.getByRole('button', { name: SKILL_LABEL }))
@@ -43,7 +43,7 @@ describe('SkillForm', () => {
     const user = userEvent.setup()
     const Example = () => {
       const [value, setValue] = useState<SkillFormValue>({ categoryIds: [], subcategoryIds: [] })
-      return <SkillForm value={value} onChange={setValue} />
+      return <SkillForm multiple value={value} onChange={setValue} />
     }
     render(<Example />)
     await user.click(screen.getByRole('button', { name: SKILL_LABEL }))
