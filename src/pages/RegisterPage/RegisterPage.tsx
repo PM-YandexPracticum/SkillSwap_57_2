@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import styles from './RegisterPage.module.css'
 import { initialStepTwoValue, StepTwo, StepTwoValue } from './ui/StepTwo'
-import { City } from '@/shared/types'
-import { fetchCities } from '@/api/cities'
 import authIdea from '@/shared/assets/images/auth-idea.svg'
 import authPresentation from '@/shared/assets/images/auth-presentation.svg'
 import authProfile from '@/shared/assets/images/auth-profile.svg'
@@ -10,16 +8,17 @@ import { AuthInfoCard } from '@/shared/ui/Form/AuthInfoCard'
 import { Steps } from '@/shared/ui/Form/Steps'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { loadCities } from '@/entities/city/model/citiesSlice'
+import { initialStepOneValue, StepOne, StepOneValue } from './ui/StepOne'
 
 type StepIndex = 1 | 2 | 3
 
 export const RegisterPage: FC = () => {
-  const [currentStep, setCurrentStep] = useState<StepIndex>(2)
+  const [currentStep, setCurrentStep] = useState<StepIndex>(1)
   // 1 шаг
-  // const [stepOneValue, setstepOneValue] = useState<StepOneValue>(initialStepOneValue)
+  const [stepOneValue, setStepOneValue] = useState<StepOneValue>(initialStepOneValue)
 
   // 2 шаг
-  const [stepTwoValue, setstepTwoValue] = useState<StepTwoValue>(initialStepTwoValue)
+  const [stepTwoValue, setStepTwoValue] = useState<StepTwoValue>(initialStepTwoValue)
 
   // 3 шаг
   // const [stepThreeValue, setstepThreeValue] = useState<StepThreeValue>(initialstepThreeValue)
@@ -32,12 +31,12 @@ export const RegisterPage: FC = () => {
     dispatch(loadCities())
   }, [])
 
-  // const handleStepOneContinue = (value:StepOneValue) => {
-  //   setstepOneValue(value);
-  //   setCurrentStep(2)
-  // }
+  const handleStepOneContinue = (value: StepOneValue) => {
+    setStepOneValue(value)
+    setCurrentStep(2)
+  }
   const handleStepTwoContinue = (value: StepTwoValue) => {
-    setstepTwoValue(value)
+    setStepTwoValue(value)
     setCurrentStep(3)
   }
 
@@ -72,18 +71,29 @@ export const RegisterPage: FC = () => {
       </div>
       <div className={styles.content}>
         {currentStep === 1 && (
-          // <StepOne></StepOne>
-          <p>Шаг 1</p>
+          <StepOne
+            value={stepOneValue}
+            onChange={setStepOneValue}
+            onContinue={handleStepOneContinue}
+          />
         )}
         {currentStep === 2 && (
           <StepTwo
             value={stepTwoValue}
             cities={cities}
-            onChange={setstepTwoValue}
+            onChange={setStepTwoValue}
             onBack={handleStepBack}
             onContinue={handleStepTwoContinue}
           ></StepTwo>
         )}
+        {/* {currentStep === 3 && (
+          <StepThree
+            value={stepThreeValue}
+            onChange={setStepThreeValue}
+            onBack={handleStepBack}
+            onContinue={handleStepThreeContinue}
+          ></StepThree>
+        )} */}
         <AuthInfoCard
           title={cardInfo.title}
           description={cardInfo.description}
