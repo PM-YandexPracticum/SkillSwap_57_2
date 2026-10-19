@@ -35,9 +35,9 @@ const citiesSlice = createSlice({
         state.loading = true
         state.error = null
       })
-      .addCase(loadCities.fulfilled, (state, acttion) => {
-        state.loading = true
-        state.items = acttion.payload
+      .addCase(loadCities.fulfilled, (state, action) => {
+        state.loading = false
+        state.items = action.payload
       })
       .addCase(loadCities.rejected, (state) => {
         state.loading = false
