@@ -1,13 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { AuthUser } from '@/shared/types'
 import { registerUser } from './registerUser'
-import {
-  clearAuthUser,
-  findMockUser,
-  getAuthUser,
-  registerMockUser,
-  saveAuthUser,
-} from './authUtils'
+import { clearAuthUser, findMockUser, getAuthUser, saveAuthUser } from './authUtils'
 
 /** Сообщение об ошибке при неверных учётных данных. */
 export const INVALID_CREDENTIALS_MESSAGE =
@@ -54,19 +48,6 @@ export const login = createAsyncThunk<AuthUser, LoginPayload, { rejectValue: str
   },
 )
 
-/** Регистрация нового пользователя. Сразу авторизует его. */
-export const register = createAsyncThunk<AuthUser, RegisterPayload, { rejectValue: string }>(
-  'auth/register',
-  async ({ name, email, password }, { rejectWithValue }) => {
-    await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY))
-
-    const user = registerMockUser({ name, email, password })
-    if (!user) return rejectWithValue(EMAIL_ALREADY_USED_MESSAGE)
-
-    return saveAuthUser(user)
-  },
-)
-
 /** Выход: завершает текущую авторизацию. */
 export const logout = createAsyncThunk('auth/logout', async () => {
   clearAuthUser()
@@ -102,18 +83,6 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.status = 'idle'
         state.error = action.payload ?? INVALID_CREDENTIALS_MESSAGE
-      })
-      .addCase(register.pending, (state) => {
-        state.status = 'loading'
-        state.error = null
-      })
-      .addCase(register.fulfilled, (state, action) => {
-        state.status = 'idle'
-        state.user = action.payload
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.status = 'idle'
-        state.error = action.payload ?? EMAIL_ALREADY_USED_MESSAGE
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null
