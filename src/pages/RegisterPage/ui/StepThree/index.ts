@@ -1,2 +1,2 @@
 export { StepThree } from './StepThree'
-export type { StepThreeProps, StepThreeValue } from './StepThree'
+export { initialStepThreeValue, type StepThreeValue } from './model'
