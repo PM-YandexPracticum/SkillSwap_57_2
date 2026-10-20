@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { User } from './types'
-import { getRegisteredItems, mergeById } from '@/shared/lib/registrationStorage'
+import { getProfileChanges, getRegisteredItems, mergeById } from '@/shared/lib/registrationStorage'
 
 interface UsersState {
   items: User[]
@@ -9,7 +9,7 @@ interface UsersState {
 }
 
 const initialState: UsersState = {
-  items: getRegisteredItems().users,
+  items: mergeById(getRegisteredItems().users, getProfileChanges()),
   status: 'idle',
   error: null,
 }
@@ -34,6 +34,9 @@ const usersSlice = createSlice({
     addRegisteredUser: (state, action: PayloadAction<User>) => {
       state.items = mergeById(state.items, [action.payload])
     },
+    updateCurrentUser: (state, action: PayloadAction<User>) => {
+      state.items = mergeById(state.items, [action.payload])
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -43,7 +46,10 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
         state.status = 'succeeded'
-        state.items = mergeById(action.payload, getRegisteredItems().users)
+        state.items = mergeById(
+          mergeById(action.payload, getRegisteredItems().users),
+          getProfileChanges(),
+        )
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed'
@@ -52,5 +58,5 @@ const usersSlice = createSlice({
   },
 })
 
-export const { addRegisteredUser } = usersSlice.actions
+export const { addRegisteredUser, updateCurrentUser } = usersSlice.actions
 export default usersSlice.reducer

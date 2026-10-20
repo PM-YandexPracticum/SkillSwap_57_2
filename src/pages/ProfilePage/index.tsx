@@ -4,11 +4,16 @@ import { Header } from '@/shared/ui/Header/Header'
 import { Footer } from '@/shared/ui/Footer/Footer'
 import defaultAvatar from '@/shared/assets/default.svg'
 import { ProfileMenu } from './ui/ProfileMenu'
-import { PersonalData, type PersonalDataValue } from './ui/PersonalData'
+import { PersonalData } from './ui/PersonalData'
 import styles from './ProfilePage.module.css'
 import { fetchUserById } from '@/api/users'
 import { fetchCities } from '@/api/cities'
-import { useAppSelector } from '@/store/hooks'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import type { City, User } from '@/shared/types'
+import { getProfileChanges, getRegisteredItems, saveProfileChanges } from '@/shared/lib/registrationStorage'
+import { updateCurrentUser } from '@/entities/user/model/usersSlice'
+import { updateAuthUser } from '@/features/auth/model/authSlice'
+import { getAuthUser } from '@/features/auth/model/authUtils'
 
 const availableSections = ['requests', 'exchanges', 'skills', 'personal'] as const
 type AvailableSection = (typeof availableSections)[number]
@@ -23,13 +28,8 @@ function isAvailableSection(value: string | null): value is AvailableSection {
   return !!value && (availableSections as readonly string[]).includes(value)
 }
 
-function formatBirthDate(value?: string) {
-  if (!value) return 'Не указана'
-  const [year, month, day] = value.split('-')
-  return year && month && day ? `${day}.${month}.${year}` : value
-}
-
 export default function ProfilePage() {
+  const dispatch = useAppDispatch()
   const [searchParams] = useSearchParams()
   const authUser = useAppSelector((state) => state.auth.user)
   const requestedSection = searchParams.get('section')
@@ -37,7 +37,8 @@ export default function ProfilePage() {
     ? requestedSection
     : 'personal'
 
-  const [personalData, setPersonalData] = useState<PersonalDataValue | null>(null)
+  const [personalData, setPersonalData] = useState<User | null>(null)
+  const [cities, setCities] = useState<City[]>([])
   const [loadError, setLoadError] = useState(false)
 
   useEffect(() => {
@@ -53,33 +54,34 @@ export default function ProfilePage() {
       }
     }
 
-    Promise.all([fetchUserById(authUser.id), fetchCities()])
-      .then(([user, cities]) => {
+    Promise.all([fetchUserById(authUser.id).catch(() => undefined), fetchCities()])
+      .then(([mockUser, loadedCities]) => {
         if (cancelled) return
+        const user = getProfileChanges().find((item) => item.id === authUser.id)
+          ?? getRegisteredItems().users.find((item) => item.id === authUser.id)
+          ?? mockUser
+          ?? (authUser.id === 'demo-user' ? {
+            id: authUser.id,
+            name: getAuthUser()?.name ?? '',
+            email: getAuthUser()?.email ?? '',
+            avatar: null,
+            aboutMe: '',
+            gender: 'unspecified' as const,
+            city: '',
+            birthDate: '',
+            createdAt: new Date().toISOString(),
+            likesCount: 0,
+            likesCard: [],
+            teach: [],
+            learn: [],
+          } : undefined)
         if (!user) {
           setLoadError(true)
           return
         }
-
-        const genderLabels = {
-          female: 'Женский',
-          male: 'Мужской',
-          unspecified: 'Не указан',
-        } as const
-
-        const cityObj = cities.find((c) => c.id === user.city)
-
-        const data: PersonalDataValue = {
-          email: user.email,
-          name: user.name,
-          birthDate: formatBirthDate(user.birthDate),
-          gender: genderLabels[user.gender] ?? 'Не указан',
-          city: cityObj?.title ?? 'Не указан',
-          aboutMe: user.aboutMe ?? 'Расскажите немного о себе',
-          avatarUrl: user.avatar || defaultAvatar,
-        }
-
-        setPersonalData(data)
+        setCities(loadedCities)
+        setPersonalData(user)
+        dispatch(updateCurrentUser(user))
       })
       .catch(() => {
         if (!cancelled) setLoadError(true)
@@ -88,11 +90,19 @@ export default function ProfilePage() {
     return () => {
       cancelled = true
     }
-  }, [authUser?.id])
+  }, [authUser?.id, dispatch])
+
+  const save = (user: User, password?: string) => {
+    if (user.id !== authUser?.id) throw new Error('Не удалось определить текущего пользователя')
+    saveProfileChanges(user, password)
+    dispatch(updateCurrentUser(user))
+    dispatch(updateAuthUser({ id: user.id, name: user.name, email: user.email }))
+    setPersonalData(user)
+  }
 
   const renderSection = () => {
     if (activeSection === 'personal') {
-      if (personalData) return <PersonalData key={authUser?.id} value={personalData} />
+      if (personalData) return <PersonalData key={authUser?.id} value={personalData} cities={cities} onSave={save} />
 
       if (loadError) {
         return (
@@ -114,7 +124,7 @@ export default function ProfilePage() {
   }
 
   const pageStyle = {
-    '--profile-avatar': `url("${personalData?.avatarUrl ?? defaultAvatar}")`,
+    '--profile-avatar': `url("${personalData?.avatar ?? defaultAvatar}")`,
   } as CSSProperties
 
   return (

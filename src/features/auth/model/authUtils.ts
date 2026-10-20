@@ -76,6 +76,22 @@ function readMockUsers(): MockUserRecord[] {
   return users
 }
 
+/** Обновляет учётные данные, сохраняя прежний пароль, если новый не задан. */
+export function updateMockUser(user: AuthUserData, password?: string): void {
+  const users = readMockUsers()
+  const email = user.email.trim().toLowerCase()
+  if (users.some((item) => item.id !== user.id && item.email.toLowerCase() === email)) {
+    throw new Error('Пользователь с таким email уже зарегистрирован')
+  }
+  const existing = users.find((item) => item.id === user.id)
+  if (!existing && !password) return
+  writeMockUsers(existing
+    ? users.map((item) => item.id === user.id
+      ? { ...item, name: user.name, email, password: password || item.password }
+      : item)
+    : [...users, { id: user.id, name: user.name, email, password: password! }])
+}
+
 /** Ищет пользователя по email и паролю. Возвращает данные без пароля. */
 export function findMockUser(email: string, password: string): AuthUserData | null {
   const normalizedEmail = email.trim().toLowerCase()

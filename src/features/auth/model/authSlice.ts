@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { AuthUser } from '@/shared/types'
 import { registerUser } from './registerUser'
 import { clearAuthUser, findMockUser, getAuthUser, saveAuthUser } from './authUtils'
@@ -56,7 +56,14 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    updateAuthUser: (state, action: PayloadAction<{ id: string; name: string; email: string }>) => {
+      if (state.user?.id === action.payload.id) {
+        state.user.name = action.payload.name
+        state.user.email = action.payload.email
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
@@ -92,4 +99,5 @@ const authSlice = createSlice({
   },
 })
 
+export const { updateAuthUser } = authSlice.actions
 export default authSlice.reducer
