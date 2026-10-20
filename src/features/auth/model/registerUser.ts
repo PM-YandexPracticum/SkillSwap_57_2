@@ -21,7 +21,7 @@ export interface RegistrationData {
     birthDate: Date | null
     gender: User['gender']
     city: City | null
-    lerningSubcategoryIds: string[]
+    learningSubcategoryIds: string[]
     aboutMe?: string
   }
   offer: Omit<Skill, 'id' | 'images'> & { images: File[] }
@@ -91,7 +91,7 @@ export const registerUser = createAsyncThunk<
           likesCard: [],
           teach: [skill.id],
           learn: [],
-          lerningSubcategoryIds: profile.lerningSubcategoryIds,
+          learningSubcategoryIds: profile.learningSubcategoryIds,
         }
         const record: RegistrationRecord = {
           user,

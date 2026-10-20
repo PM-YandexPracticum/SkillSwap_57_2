@@ -140,7 +140,7 @@ export const RegisterPage: FC = () => {
             ...stepOneValue,
             profile: {
               ...stepTwoValue,
-              lerningSubcategoryIds: stepTwoValue.likes.subcategoryIds,
+              learningSubcategoryIds: stepTwoValue.likes.subcategoryIds,
             },
             offer: {
               ...stepThreeValue,
