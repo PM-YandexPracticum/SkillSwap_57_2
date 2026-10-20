@@ -20,7 +20,7 @@ const menuItems: Array<{
 }> = [
   { id: 'requests', title: 'Заявки', icon: requestIcon, href: '/profile?section=requests' },
   { id: 'exchanges', title: 'Мои обмены', icon: exchangesIcon, href: '/profile?section=exchanges' },
-  { id: 'favorites', title: 'Избранное', icon: favoriteIcon, href: '/profile?section=favorites' },
+  { id: 'favorites', title: 'Избранное', icon: favoriteIcon, href: '/favorites' },
   { id: 'skills', title: 'Мои навыки', icon: skillsIcon, href: '/profile?section=skills' },
   { id: 'personal', title: 'Личные данные', icon: profileIcon, href: '/profile' },
 ]
