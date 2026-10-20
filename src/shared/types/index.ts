@@ -26,7 +26,7 @@ export interface User {
   // ids скилов, которым учится
   learn: string[]
   // ids подкатегорий, которым хочет учиться
-  likesSubcategoryIds?: string[]
+  lerningSubcategoryIds?: string[]
 }
 
 // ─── City ────────────────────────────────────────────────

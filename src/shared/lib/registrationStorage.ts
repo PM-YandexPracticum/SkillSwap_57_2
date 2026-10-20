@@ -26,10 +26,8 @@ function isRecord(value: unknown): value is RegistrationRecord {
     (user.avatar === null || typeof user.avatar === 'string') &&
     ['unspecified', 'male', 'female'].includes(String(user.gender)) &&
     typeof user.likesCount === 'number' &&
-    [user.teach, user.learn, user.likesCard, skill.images, value.learningCategoryIds].every(
-      isStringArray,
-    ) &&
-    (user.likesSubcategoryIds === undefined || isStringArray(user.likesSubcategoryIds)) &&
+    [user.teach, user.learn, user.likesCard, skill.images].every(isStringArray) &&
+    (user.lerningSubcategoryIds === undefined || isStringArray(user.lerningSubcategoryIds)) &&
     isStringArray(user.teach) &&
     typeof skill.id === 'string' &&
     user.teach.includes(skill.id) &&

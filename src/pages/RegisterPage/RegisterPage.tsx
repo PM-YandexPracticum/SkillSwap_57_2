@@ -16,6 +16,7 @@ import crossIcon from '@/shared/assets/images/cross.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/shared/lib/constants'
 import { RegistrationCompletion } from './ui/RegistrationCompletion'
+import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 
 type StepIndex = 1 | 2 | 3
 
@@ -85,6 +86,8 @@ export const RegisterPage: FC = () => {
             illustration: authPresentation,
           }
 
+  const selectedCategory = skills.find((s) => s.id === stepThreeValue.offer.categoryId)
+
   return (
     <>
       <header className={styles.header}>
@@ -137,12 +140,14 @@ export const RegisterPage: FC = () => {
             ...stepOneValue,
             profile: {
               ...stepTwoValue,
-              likesSubcategoryIds: stepTwoValue.likes.subcategoryIds,
+              lerningSubcategoryIds: stepTwoValue.likes.subcategoryIds,
             },
             offer: {
               ...stepThreeValue,
-              category: stepThreeValue.offer.categoryId,
-              subcategory: stepThreeValue.offer.subcategoryId,
+              category: selectedCategory!.title,
+              subcategory: selectedCategory!.skills.find(
+                (s) => s.id === stepThreeValue.offer.subcategoryId,
+              )!.title,
             },
           }}
           onEdit={handleEdit}
