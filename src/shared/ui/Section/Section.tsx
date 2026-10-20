@@ -10,11 +10,12 @@ interface SectionProps {
   title: string
   children: ReactNode[]
   showLookAllButton?: boolean
+  initialVisibleCount?: number
 }
 
-export const Section = ({ title, children, showLookAllButton = true }: SectionProps) => {
+export const Section = ({ title, children, showLookAllButton = true, initialVisibleCount }: SectionProps) => {
   const [isExpanded, setIsExpanded] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(showLookAllButton ? 3 : 9)
+  const [visibleCount, setVisibleCount] = useState(initialVisibleCount ?? (showLookAllButton ? 3 : 9))
   const [isLoading, setIsLoading] = useState(false)
 
   const loaderRef = useRef<HTMLDivElement>(null)
