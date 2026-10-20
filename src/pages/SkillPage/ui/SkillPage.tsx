@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { ComponentProps } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
@@ -24,6 +24,12 @@ import moreIcon from '@/shared/assets/images/more-square.svg'
 import shareIcon from '@/shared/assets/images/share.svg'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import styles from './SkillPage.module.css'
+import { useRequireAuth } from '@/features/auth/model/useRequireAuth'
+import { selectCurrentUser } from '@/features/auth/model/authSelectors'
+import { createRequest } from '@/features/requests/model/requestSlice'
+import { Modal } from '@/shared/ui/Modal/Modal'
+import { SuccessMessage } from '@/shared/ui/SuccessMessage'
+import done from '@/shared/assets/images/Done.svg'
 
 type SkillItems = ComponentProps<typeof SkillsList>['skills']
 
@@ -43,12 +49,15 @@ const SkillPage = () => {
   const { id } = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { requireAuth } = useRequireAuth()
 
   const skills = useAppSelector((state) => state.skills.items)
   const skillsStatus = useAppSelector((state) => state.skills.status)
   const users = useAppSelector((state) => state.users.items)
   const usersStatus = useAppSelector((state) => state.users.status)
   const cities = useAppSelector((state) => state.cities.items)
+  const currentUser = useAppSelector(selectCurrentUser)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
 
   const favoriteIds = useAppSelector(selectFavoriteIds)
 
@@ -87,7 +96,11 @@ const SkillPage = () => {
   const handleShare = () => {
     void navigator.clipboard?.writeText(window.location.href).catch(() => {})
   }
-
+  const handleExchange = () => {
+  if (!skill || !author || !currentUser) return
+  dispatch(createRequest(skill.id, currentUser.id, author.id))
+  setIsSuccessModalOpen(true)
+}
   const isSkillLoading = skillsStatus === 'idle' || skillsStatus === 'loading'
   const isAuthorLoading = usersStatus === 'idle' || usersStatus === 'loading'
 
@@ -174,7 +187,9 @@ const SkillPage = () => {
             images={skill.images}
             variant="skill"
             // TODO: создание заявки на обмен — отдельная задача, обработчик подключается позже
-            onExchange={() => {}}
+            onExchange={() => {
+              if (requireAuth()) handleExchange()
+            }}
           />
         </div>
       </div>
@@ -193,6 +208,19 @@ const SkillPage = () => {
             />
           ))}
         </CardCarousel>
+      )}
+      {isSuccessModalOpen && (
+        <Modal
+          onClose={() => setIsSuccessModalOpen(false)}
+          onOverlayClick={() => setIsSuccessModalOpen(false)}
+        >
+          <SuccessMessage
+            illustration={done}
+            title="Вы предложили обмен"
+            description="Ваша заявка отправлена"
+            onClose={() => setIsSuccessModalOpen(false)}
+          />
+        </Modal>
       )}
     </main>
   )
