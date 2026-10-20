@@ -20,11 +20,13 @@ export interface User {
   birthDate: string
   createdAt: string
   likesCount: number
-  teach: string[]
-  learn: string[]
-  /** Интересы из регистрации — ID подкатегорий, а не ID конкретных предложений. */
-  learningSubcategoryIds?: string[]
   likesCard: string[]
+  // ids скилов, которым учит (в проекте при регистрации указываем только 1)
+  teach: string[]
+  // ids скилов, которым учится
+  learn: string[]
+  // ids подкатегорий, которым хочет учиться
+  learningSubcategoryIds?: string[]
 }
 
 // ─── City ────────────────────────────────────────────────

@@ -114,8 +114,9 @@ export function StepTwo({ value, cities, onChange, onBack, onContinue }: StepTwo
       </div>
       <CityForm cities={cities} value={value.city} onChange={(city) => update({ city })} />
       <SkillForm
-        value={value.learningSkills}
-        onChange={(learningSkills) => update({ learningSkills })}
+        multiple
+        value={value.likes}
+        onChange={(likes) => update({ likes })}
         skillLabel="Подкатегория навыка, которому хотите научиться"
         skillPlaceholder="Выберите подкатегорию"
       />

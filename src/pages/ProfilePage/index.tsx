@@ -1,35 +1,27 @@
-import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { fetchSkills } from '@/entities/skill/model/skillsSlice'
-import { fetchUsers } from '@/entities/user/model/usersSlice'
-import { removeFavorite, selectFavoriteIds } from '@/features/favorites/model/favoritesSlice'
-import { resolveFavorites } from '@/features/favorites/model/resolveFavorites'
+import { useEffect, useState, type CSSProperties } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Header } from '@/shared/ui/Header/Header'
 import { Footer } from '@/shared/ui/Footer/Footer'
-import { Card } from '@/shared/ui/Card'
 import defaultAvatar from '@/shared/assets/default.svg'
-import { ProfileMenu, type ProfileSection } from './ui/ProfileMenu'
+import { ProfileMenu } from './ui/ProfileMenu'
 import { PersonalData, type PersonalDataValue } from './ui/PersonalData'
 import styles from './ProfilePage.module.css'
 import { fetchUserById } from '@/api/users'
 import { fetchCities } from '@/api/cities'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { getSkillPath } from '@/shared/lib/helpers'
-import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
+import { useAppSelector } from '@/store/hooks'
 
-const sectionTitles: Record<Exclude<ProfileSection, 'personal' | 'favorites'>, string> = {
+const availableSections = ['requests', 'exchanges', 'skills', 'personal'] as const
+type AvailableSection = (typeof availableSections)[number]
+
+const sectionTitles: Record<Exclude<AvailableSection, 'personal'>, string> = {
   requests: 'Заявки',
   exchanges: 'Мои обмены',
   skills: 'Мои навыки',
 }
 
-const availableSections: ProfileSection[] = [
-  'requests',
-  'exchanges',
-  'favorites',
-  'skills',
-  'personal',
-]
+function isAvailableSection(value: string | null): value is AvailableSection {
+  return !!value && (availableSections as readonly string[]).includes(value)
+}
 
 function formatBirthDate(value?: string) {
   if (!value) return 'Не указана'
@@ -37,43 +29,16 @@ function formatBirthDate(value?: string) {
   return year && month && day ? `${day}.${month}.${year}` : value
 }
 
-const skillItems = skills.flatMap((category) =>
-  category.skills.map((skill) => ({ ...skill, category: category.id })),
-)
-
-function getSkillItem(skillId: string) {
-  const numericId = /^skill_(\d+)$/.exec(skillId)?.[1]
-  const skill = numericId
-    ? skillItems[Number(numericId) - 1]
-    : skillItems.find((item) => item.id === skillId)
-
-  return skill ?? { id: skillId, title: skillId }
-}
-
 export default function ProfilePage() {
   const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
   const authUser = useAppSelector((state) => state.auth.user)
-  const favoriteIds = useAppSelector(selectFavoriteIds)
-  const allSkills = useAppSelector((state) => state.skills.items)
-  const skillsStatus = useAppSelector((state) => state.skills.status)
-  const allUsers = useAppSelector((state) => state.users.items)
-  const usersStatus = useAppSelector((state) => state.users.status)
-  const requestedSection = searchParams.get('section') as ProfileSection | null
-  const activeSection =
-    requestedSection && availableSections.includes(requestedSection)
-      ? requestedSection
-      : 'personal'
+  const requestedSection = searchParams.get('section')
+  const activeSection: AvailableSection = isAvailableSection(requestedSection)
+    ? requestedSection
+    : 'personal'
 
   const [personalData, setPersonalData] = useState<PersonalDataValue | null>(null)
   const [loadError, setLoadError] = useState(false)
-
-  // Избранное берём из общего стора: при прямом заходе справочники могут быть пустыми.
-  useEffect(() => {
-    if (skillsStatus === 'idle') void dispatch(fetchSkills())
-    if (usersStatus === 'idle') void dispatch(fetchUsers())
-  }, [dispatch, skillsStatus, usersStatus])
 
   useEffect(() => {
     let cancelled = false
@@ -125,19 +90,6 @@ export default function ProfilePage() {
     }
   }, [authUser?.id])
 
-  /** Избранные карточки: id пользователя, а для старых записей — id навыка. */
-  const favoriteCards = useMemo(
-    () => resolveFavorites(favoriteIds, allUsers, allSkills),
-    [favoriteIds, allSkills, allUsers],
-  )
-
-  const handleRemoveFavorite = useCallback(
-    (favoriteId: string, isLiked: boolean) => {
-      if (!isLiked) dispatch(removeFavorite(favoriteId))
-    },
-    [dispatch],
-  )
-
   const renderSection = () => {
     if (activeSection === 'personal') {
       if (personalData) return <PersonalData key={authUser?.id} value={personalData} />
@@ -151,42 +103,6 @@ export default function ProfilePage() {
       }
 
       return <section className={styles.placeholder}>Загружаем данные профиля...</section>
-    }
-
-    if (activeSection === 'favorites') {
-      const isFavoritesLoading =
-        favoriteIds.length > 0 &&
-        (skillsStatus === 'idle' ||
-          skillsStatus === 'loading' ||
-          usersStatus === 'idle' ||
-          usersStatus === 'loading')
-
-      if (isFavoritesLoading) {
-        return <section className={styles.placeholder}>Загружаем избранное...</section>
-      }
-
-      return (
-        <section className={styles.favorites}>
-          <h1>Избранное</h1>
-          {favoriteCards.length > 0 ? (
-            <div className={styles.favoritesGrid}>
-              {favoriteCards.map(({ favoriteId, skill, author }) => (
-                <Card
-                  key={favoriteId}
-                  user={author}
-                  teach={author.teach.map(getSkillItem)}
-                  learn={author.learn.map(getSkillItem)}
-                  isLiked={favoriteIds.includes(favoriteId)}
-                  onLikeChange={(isLiked) => handleRemoveFavorite(favoriteId, isLiked)}
-                  onDetailsClick={() => navigate(getSkillPath(skill.id, author.id))}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className={styles.emptyFavorites}>В избранном пока нет предложений.</p>
-          )}
-        </section>
-      )
     }
 
     return (

@@ -6,7 +6,6 @@ export interface RegistrationRecord {
   user: User
   skill: Skill
   city: City | null
-  learningCategoryIds: string[]
 }
 
 const isObject = (value: unknown): value is Record<string, unknown> =>
@@ -27,9 +26,7 @@ function isRecord(value: unknown): value is RegistrationRecord {
     (user.avatar === null || typeof user.avatar === 'string') &&
     ['unspecified', 'male', 'female'].includes(String(user.gender)) &&
     typeof user.likesCount === 'number' &&
-    [user.teach, user.learn, user.likesCard, skill.images, value.learningCategoryIds].every(
-      isStringArray,
-    ) &&
+    [user.teach, user.learn, user.likesCard, skill.images].every(isStringArray) &&
     (user.learningSubcategoryIds === undefined || isStringArray(user.learningSubcategoryIds)) &&
     isStringArray(user.teach) &&
     typeof skill.id === 'string' &&

@@ -1,9 +1,9 @@
 .form {
   display: flex;
   flex-direction: column;
+   min-width: 0;
   gap: 24px;
   width: 100%;
-  max-width: 556px;
   padding: 103.5px 60px;
   border-radius: 12px;
   background: #fff;

@@ -37,7 +37,7 @@ describe('StepTwo', () => {
       birthDate: new Date(2000, 0, 2),
       gender: 'male',
       city,
-      learningSkills: { categoryIds: ['languages'], skillIds: ['english', 'french'] },
+      likes: { categoryIds: ['languages'], subcategoryIds: ['english', 'french'] },
     }
     const view = renderStep(value)
     fireEvent.click(screen.getByRole('button', { name: 'Назад' }))

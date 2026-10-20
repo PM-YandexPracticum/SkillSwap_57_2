@@ -1,5 +1,4 @@
 import type { City } from '@/shared/types'
-import type { SkillFormValue } from '@/shared/ui/Form/SkillForm'
 
 export interface StepTwoValue {
   avatar: File | null
@@ -7,7 +6,7 @@ export interface StepTwoValue {
   birthDate: Date | null
   gender: 'unspecified' | 'male' | 'female'
   city: City | null
-  learningSkills: SkillFormValue
+  likes: { categoryIds: string[]; subcategoryIds: string[] }
 }
 
 export const initialStepTwoValue: StepTwoValue = {
@@ -16,5 +15,5 @@ export const initialStepTwoValue: StepTwoValue = {
   birthDate: null,
   gender: 'unspecified',
   city: null,
-  learningSkills: { categoryIds: [], skillIds: [] },
+  likes: { categoryIds: [], subcategoryIds: [] },
 }
