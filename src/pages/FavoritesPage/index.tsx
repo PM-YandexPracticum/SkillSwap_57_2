@@ -6,7 +6,9 @@ import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
 import { removeFavorite, selectFavoriteIds } from '@/features/favorites/model/favoritesSlice'
+import { resolveFavorites } from '@/features/favorites/model/resolveFavorites'
 import { ROUTES } from '@/shared/lib/constants'
+import { getSkillPath } from '@/shared/lib/helpers'
 import type { Skill, User } from '@/shared/types'
 import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
@@ -21,8 +23,6 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import styles from './FavoritesPage.module.css'
 
 type SkillItems = ComponentProps<typeof SkillsList>['skills']
-
-const getSkillPath = (skillId: string) => `/skill/${skillId}`
 
 const toSkillItems = (skillIds: string[], skills: Skill[]): SkillItems =>
   skillIds.flatMap((skillId) => {
@@ -102,16 +102,7 @@ const FavoritesPage = () => {
   }, [cities.length, dispatch, skillsStatus, usersStatus])
 
   const favoriteCards = useMemo(
-    () =>
-      favoriteIds.flatMap((skillId) => {
-        const skill = skills.find((item) => item.id === skillId)
-        if (!skill) return []
-
-        const author = users.find((user) => user.teach.includes(skill.id))
-        if (!author) return []
-
-        return [{ skill, author }]
-      }),
+    () => resolveFavorites(favoriteIds, users, skills),
     [favoriteIds, skills, users],
   )
 
@@ -136,8 +127,8 @@ const FavoritesPage = () => {
   const isFilteredEmpty = hasFavorites && !isDataLoading && visibleCards.length === 0
 
   const handleRemove = useCallback(
-    (skillId: string, isLiked: boolean) => {
-      if (!isLiked) dispatch(removeFavorite(skillId))
+    (favoriteId: string, isLiked: boolean) => {
+      if (!isLiked) dispatch(removeFavorite(favoriteId))
     },
     [dispatch],
   )
@@ -168,15 +159,15 @@ const FavoritesPage = () => {
               <p className={styles.message}>Ничего не найдено по выбранным фильтрам.</p>
             ) : (
               <div className={styles.grid}>
-                {visibleCards.map(({ skill, author }) => (
+                {visibleCards.map(({ favoriteId, skill, author }) => (
                   <Card
-                    key={skill.id}
+                    key={favoriteId}
                     user={author}
                     teach={toSkillItems(author.teach, skills)}
                     learn={toSkillItems(author.learn, skills)}
                     isLiked
-                    onLikeChange={(isLiked) => handleRemove(skill.id, isLiked)}
-                    onDetailsClick={() => navigate(getSkillPath(skill.id))}
+                    onLikeChange={(isLiked) => handleRemove(favoriteId, isLiked)}
+                    onDetailsClick={() => navigate(getSkillPath(skill.id, author.id))}
                   />
                 ))}
               </div>

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
 import { removeFavorite, selectFavoriteIds } from '@/features/favorites/model/favoritesSlice'
+import { resolveFavorites } from '@/features/favorites/model/resolveFavorites'
 import { Header } from '@/shared/ui/Header/Header'
 import { Footer } from '@/shared/ui/Footer/Footer'
 import { Card } from '@/shared/ui/Card'
@@ -13,6 +14,7 @@ import styles from './ProfilePage.module.css'
 import { fetchUserById } from '@/api/users'
 import { fetchCities } from '@/api/cities'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { getSkillPath } from '@/shared/lib/helpers'
 import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 
 const sectionTitles: Record<Exclude<ProfileSection, 'personal' | 'favorites'>, string> = {
@@ -123,24 +125,15 @@ export default function ProfilePage() {
     }
   }, [authUser?.id])
 
-  /** Избранные предложения собираем по общему идентификатору — skill.id. */
+  /** Избранные карточки: id пользователя, а для старых записей — id навыка. */
   const favoriteCards = useMemo(
-    () =>
-      favoriteIds.flatMap((skillId) => {
-        const skill = allSkills.find((item) => item.id === skillId)
-        if (!skill) return []
-
-        const author = allUsers.find((user) => user.teach.includes(skill.id))
-        if (!author) return []
-
-        return [{ skill, author }]
-      }),
+    () => resolveFavorites(favoriteIds, allUsers, allSkills),
     [favoriteIds, allSkills, allUsers],
   )
 
   const handleRemoveFavorite = useCallback(
-    (skillId: string, isLiked: boolean) => {
-      if (!isLiked) dispatch(removeFavorite(skillId))
+    (favoriteId: string, isLiked: boolean) => {
+      if (!isLiked) dispatch(removeFavorite(favoriteId))
     },
     [dispatch],
   )
@@ -177,15 +170,15 @@ export default function ProfilePage() {
           <h1>Избранное</h1>
           {favoriteCards.length > 0 ? (
             <div className={styles.favoritesGrid}>
-              {favoriteCards.map(({ skill, author }) => (
+              {favoriteCards.map(({ favoriteId, skill, author }) => (
                 <Card
-                  key={skill.id}
+                  key={favoriteId}
                   user={author}
                   teach={author.teach.map(getSkillItem)}
                   learn={author.learn.map(getSkillItem)}
-                  isLiked={favoriteIds.includes(skill.id)}
-                  onLikeChange={(isLiked) => handleRemoveFavorite(skill.id, isLiked)}
-                  onDetailsClick={() => navigate(`/skill/${skill.id}`)}
+                  isLiked={favoriteIds.includes(favoriteId)}
+                  onLikeChange={(isLiked) => handleRemoveFavorite(favoriteId, isLiked)}
+                  onDetailsClick={() => navigate(getSkillPath(skill.id, author.id))}
                 />
               ))}
             </div>
