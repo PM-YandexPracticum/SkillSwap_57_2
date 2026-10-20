@@ -1,12 +1,15 @@
 import { Footer } from '@/shared/ui/Footer/Footer'
 import { Header } from '@/shared/ui/Header/Header'
 import { Outlet } from 'react-router-dom'
+import styles from './MainLayout.module.css'
 
 export function MainLayout() {
   return (
-    <div>
+    <div className={styles.page}>
       <Header />
-      <Outlet />
+      <div className={styles.content}>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   )

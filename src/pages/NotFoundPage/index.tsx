@@ -11,19 +11,19 @@ export default function NotFoundPage() {
   const navigate = useNavigate()
 
   return (
-    <>
+    <div className={styles.page}>
       <Header />
       <main className={styles.main}>
         <div className={styles.content}>
           <img
             src={notFoundImage}
-            alt='Ошибка 404'
+            alt="Ошибка 404"
             width={460}
             height={304}
             className={styles.illustration}
           />
           <div className={styles.text}>
-            <Title size='H2' className={styles.title}>
+            <Title size="H2" className={styles.title}>
               Страница не найдена
             </Title>
             <p className={styles.description}>
@@ -32,7 +32,7 @@ export default function NotFoundPage() {
             </p>
           </div>
           <div className={styles.buttons}>
-            <Button variant='secondary' className={styles.button}>
+            <Button variant="secondary" className={styles.button}>
               Сообщить об ошибке
             </Button>
             <Button className={styles.button} onClick={() => navigate(ROUTES.HOME)}>
@@ -42,6 +42,6 @@ export default function NotFoundPage() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   )
 }
