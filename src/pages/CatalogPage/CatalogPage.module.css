@@ -13,8 +13,23 @@
 .content {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
   gap: 64px;
   min-width: 0;
+}
+
+.searchResults {
+  margin: 0;
+  font-family: var(--font-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: #253017;
 }
 
 .message {

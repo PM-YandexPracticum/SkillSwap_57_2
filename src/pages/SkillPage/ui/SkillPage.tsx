@@ -62,13 +62,13 @@ const SkillPage = () => {
 
   const skill = useMemo(() => skills.find((item) => item.id === id), [id, skills])
 
-  // Один навык могут преподавать несколько человек: автора берём из ссылки,
-  // иначе показываем первого, кто этот навык преподаёт.
+  // Один навык могут преподавать несколько человек: автора берём из ссылки.
+  // Если author указан явно, другого преподавателя не подставляем.
   const author = useMemo(() => {
     if (!skill) return undefined
 
     const authors = users.filter((user) => user.teach.includes(skill.id))
-    return authors.find((user) => user.id === authorId) ?? authors[0]
+    return authorId ? authors.find((user) => user.id === authorId) : authors[0]
   }, [authorId, skill, users])
 
   const similarCards = useMemo(() => {
@@ -89,8 +89,12 @@ const SkillPage = () => {
     [dispatch],
   )
 
-  // Карточка в избранном — это автор, поэтому лайк привязан к id пользователя.
-  const favoriteId = author?.id ?? skill?.id ?? ''
+  // Карточка в избранном — это автор, поэтому лайк привязан только к id пользователя.
+  const favoriteId = author?.id
+  const isFavorite = favoriteId ? favoriteIds.includes(favoriteId) : false
+  const handleFavoriteChange = (isLiked: boolean) => {
+    if (favoriteId) toggleFavorite(favoriteId, isLiked)
+  }
 
   const handleShare = () => {
     void navigator.clipboard?.writeText(window.location.href).catch(() => {})
@@ -131,6 +135,22 @@ const SkillPage = () => {
     )
   }
 
+  // author указан явно, но этот пользователь не преподаёт навык:
+  // другого автора не подставляем, предложение считаем ненайденным.
+  if (authorId && !author) {
+    return (
+      <main className={styles.page}>
+        <Title size="H2">Предложение не найдено</Title>
+        <p className={styles.message}>
+          Возможно, автор больше не преподаёт этот навык или ссылка устарела.
+        </p>
+        <Link className={styles.link} to={ROUTES.HOME}>
+          Вернуться в каталог
+        </Link>
+      </main>
+    )
+  }
+
   return (
     <main className={styles.page}>
       <div className={styles.content}>
@@ -154,11 +174,13 @@ const SkillPage = () => {
 
         <div className={styles.skillColumn}>
           <div className={styles.toolbar}>
-            <LikeButton
-              checked={favoriteIds.includes(favoriteId)}
-              onChange={(event) => toggleFavorite(favoriteId, event.target.checked)}
-              aria-label="Добавить в избранное"
-            />
+            {favoriteId && (
+              <LikeButton
+                checked={isFavorite}
+                onChange={(event) => handleFavoriteChange(event.target.checked)}
+                aria-label="Добавить в избранное"
+              />
+            )}
 
             <button
               className={styles.iconButton}

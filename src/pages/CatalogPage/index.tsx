@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
-import { selectCurrentUser, selectIsAuthenticated } from '@/features/auth/model/authSelectors'
+import { selectCurrentUser } from '@/features/auth/model/authSelectors'
 import {
   addFavorite,
   removeFavorite,
@@ -20,9 +20,8 @@ import { Section } from '@/shared/ui/Section'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   buildCatalogCards,
+  findExactMatches,
   matchesCatalogCard,
-  shuffleCards,
-  sortByMatch,
   toSkillItems,
 } from './model/catalog'
 import type { CatalogCard } from './model/catalog'
@@ -44,7 +43,6 @@ export default function CatalogPage() {
   const { searchValue } = useSearchQuery()
   const favoriteIds = useAppSelector(selectFavoriteIds)
   const authUser = useAppSelector(selectCurrentUser)
-  const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const users = useAppSelector((state) => state.users.items)
   const usersStatus = useAppSelector((state) => state.users.status)
   const skills = useAppSelector((state) => state.skills.items)
@@ -81,17 +79,18 @@ export default function CatalogPage() {
     [visibleCards],
   )
 
-  // Для рекомендаций сопоставляем навыки и интересы с профилем залогиненного пользователя.
+  // «Точные совпадения» — взаимный обмен навыками с текущим пользователем.
   const currentUser = useMemo(() => {
     if (!authUser) return null
     return users.find((user) => user.id === authUser.id || user.email === authUser.email) ?? null
   }, [authUser, users])
 
-  const recommendedCards = useMemo(
-    () =>
-      isAuthenticated ? sortByMatch(visibleCards, currentUser, skills) : shuffleCards(visibleCards),
-    [currentUser, isAuthenticated, skills, visibleCards],
+  const exactMatchCards = useMemo(
+    () => findExactMatches(visibleCards, currentUser, skills),
+    [currentUser, skills, visibleCards],
   )
+
+  const isSearchActive = searchValue.trim().length > 0
 
   // В избранном храним id карточки — id пользователя: один навык могут преподавать
   // несколько человек, поэтому id навыка не позволяет восстановить нужного автора.
@@ -134,17 +133,33 @@ export default function CatalogPage() {
           <p className={styles.message} role="alert">
             Не удалось загрузить каталог. Попробуйте обновить страницу.
           </p>
-        ) : visibleCards.length === 0 ? (
-          <p className={styles.message}>Ничего не найдено по выбранным фильтрам.</p>
         ) : (
           <>
-            <Section title="Популярное">{popularCards.map(renderCard)}</Section>
+            {isSearchActive && (
+              <p className={styles.searchResults} aria-live="polite">
+                Найдено карточек: {visibleCards.length}
+              </p>
+            )}
 
-            <Section title="Новое">{newCards.map(renderCard)}</Section>
+            {visibleCards.length === 0 ? (
+              <p className={styles.message}>
+                {isSearchActive
+                  ? 'Ничего не найдено по запросу и выбранным фильтрам.'
+                  : 'Ничего не найдено по выбранным фильтрам.'}
+              </p>
+            ) : (
+              <div className={styles.sections}>
+                <Section title="Популярное">{popularCards.map(renderCard)}</Section>
 
-            <Section title="Рекомендуем" showLookAllButton={false}>
-              {recommendedCards.map(renderCard)}
-            </Section>
+                <Section title="Новое">{newCards.map(renderCard)}</Section>
+
+                {exactMatchCards.length > 0 && (
+                  <Section title="Рекомендуем" showLookAllButton={false}>
+                    {exactMatchCards.map(renderCard)}
+                  </Section>
+                )}
+              </div>
+            )}
           </>
         )}
       </div>

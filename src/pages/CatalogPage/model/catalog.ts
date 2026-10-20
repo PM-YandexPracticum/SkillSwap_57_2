@@ -101,57 +101,40 @@ export const matchesCatalogCard = (card: CatalogCard, filters: FiltersValue): bo
   })
 }
 
-const getMatchScore = (
-  card: CatalogCard,
-  currentUser: User,
-  currentSubcategoryIds: string[],
-): number => {
-  const currentSkillIds = new Set([...currentUser.teach, ...currentUser.learn])
-  const currentInterests = new Set(currentUser.learningSubcategoryIds ?? [])
+/**
+ * Интересы пользователя — подкатегории, которым он хочет научиться:
+ * из регистрации (learningSubcategoryIds) и из выбранных навыков (learn).
+ */
+export const getInterestSubcategoryIds = (user: User, skills: Skill[]): string[] =>
+  Array.from(
+    new Set([...(user.learningSubcategoryIds ?? []), ...toSubcategoryIds(user.learn, skills)]),
+  )
 
-  const candidateSkillIds = [...card.user.teach, ...card.user.learn]
-  const candidateSubcategoryIds = [...card.teachSkillIds, ...card.learnSkillIds]
-  const candidateInterests = card.user.learningSubcategoryIds ?? []
-
-  const skillOverlap = candidateSkillIds.filter((id) => currentSkillIds.has(id)).length
-  const interestOverlap = candidateSubcategoryIds.filter((id) => currentInterests.has(id)).length
-  const mutualInterestOverlap = candidateInterests.filter((id) =>
-    currentSubcategoryIds.includes(id),
-  ).length
-
-  return skillOverlap * 3 + interestOverlap * 2 + mutualInterestOverlap
-}
-
-/** Сортировка по совпадению навыков и интересов: от наибольшего к наименьшему. */
-export const sortByMatch = (
+/**
+ * «Точное совпадение» — взаимный обмен:
+ * другой пользователь может научить тому, чему я хочу научиться,
+ * а я могу научить тому, что интересует его.
+ */
+export const findExactMatches = (
   cards: CatalogCard[],
   currentUser: User | null,
   skills: Skill[],
 ): CatalogCard[] => {
-  if (!currentUser) return [...cards]
+  if (!currentUser) return []
 
-  const currentSubcategoryIds = toSubcategoryIds(
-    [...currentUser.teach, ...currentUser.learn],
-    skills,
-  )
+  const myInterests = getInterestSubcategoryIds(currentUser, skills)
+  const myTeach = toSubcategoryIds(currentUser.teach, skills)
 
-  return [...cards].sort(
-    (first, second) =>
-      getMatchScore(second, currentUser, currentSubcategoryIds) -
-      getMatchScore(first, currentUser, currentSubcategoryIds),
-  )
-}
+  if (myInterests.length === 0 || myTeach.length === 0) return []
 
-/** Перемешивание Фишера — Йетса для гостей. */
-export const shuffleCards = (cards: CatalogCard[]): CatalogCard[] => {
-  const result = [...cards]
+  return cards.filter((card) => {
+    if (card.id === currentUser.id) return false
 
-  for (let index = result.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1))
-    const currentCard = result[index]
-    result[index] = result[randomIndex]
-    result[randomIndex] = currentCard
-  }
+    const candidateInterests = getInterestSubcategoryIds(card.user, skills)
 
-  return result
+    const canTeachMe = card.teachSkillIds.some((id) => myInterests.includes(id))
+    const canLearnFromMe = myTeach.some((id) => candidateInterests.includes(id))
+
+    return canTeachMe && canLearnFromMe
+  })
 }
