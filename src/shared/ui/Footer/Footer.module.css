@@ -61,6 +61,13 @@
   overflow-wrap: anywhere;
 }
 
+.skillsButton {
+  padding: 0;
+  color: inherit;
+  text-align: left;
+  letter-spacing: inherit;
+}
+
 @media (width <= 1220px) {
   .logoWrapper {
     margin-right: 20px;

@@ -1,8 +1,13 @@
 import styles from './Footer.module.css'
 import { Logo } from '../logo'
 import { Link } from 'react-router-dom'
+import { useCallback, useState } from 'react'
+import { FooterSkillsModal } from './FooterSkillsModal'
 
 export const Footer = () => {
+  const [skillsOpen, setSkillsOpen] = useState(false)
+  const closeSkills = useCallback(() => setSkillsOpen(false), [])
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -22,7 +27,15 @@ export const Footer = () => {
               <Link to="/">Политика конфиденциальности</Link>
             </li>
             <li className={styles.listElem}>
-              <Link to="/">Все навыки</Link>
+              <button
+                type="button"
+                className={styles.skillsButton}
+                aria-haspopup="dialog"
+                aria-expanded={skillsOpen}
+                onClick={() => setSkillsOpen(true)}
+              >
+                Все навыки
+              </button>
             </li>
             <li className={styles.listElem}>
               <Link to="/">Блог</Link>
@@ -33,6 +46,7 @@ export const Footer = () => {
           </ul>
         </nav>
       </div>
+      {skillsOpen && <FooterSkillsModal onClose={closeSkills} />}
     </footer>
   )
 }
