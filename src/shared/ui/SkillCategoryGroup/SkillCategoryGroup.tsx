@@ -12,9 +12,16 @@ export interface SkillCategoryGroupProps {
   color: string
   title: string
   skillArray: readonly Skill[]
+  linked?: boolean
 }
 
-export const SkillCategoryGroup = ({ icon, color, title, skillArray }: SkillCategoryGroupProps) => {
+export const SkillCategoryGroup = ({
+  icon,
+  color,
+  title,
+  skillArray,
+  linked = true,
+}: SkillCategoryGroupProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.iconRound} style={{ backgroundColor: color }}>
@@ -25,7 +32,7 @@ export const SkillCategoryGroup = ({ icon, color, title, skillArray }: SkillCate
         <ul className={styles.skillList}>
           {skillArray.map((item) => (
             <li key={item.id} className={styles.skill}>
-              <Link to={item.id}>{item.title}</Link>
+              {linked ? <Link to={item.id}>{item.title}</Link> : item.title}
             </li>
           ))}
         </ul>
