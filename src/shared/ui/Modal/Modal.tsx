@@ -6,10 +6,9 @@ interface ModalProps {
   children: ReactNode
   onClose: () => void
   onOverlayClick?: () => void
-  ariaLabel?: string
 }
 
-export function Modal({ children, onClose, onOverlayClick, ariaLabel }: ModalProps) {
+export function Modal({ children, onClose, onOverlayClick }: ModalProps) {
   useEffect(() => {
     document.body.style.overflow = 'hidden'
 
@@ -35,7 +34,7 @@ export function Modal({ children, onClose, onOverlayClick, ariaLabel }: ModalPro
 
   return (
     <div className={styles.overlay} onClick={handleOverlayClick}>
-      <div className={styles.modal} role="dialog" aria-modal="true" aria-label={ariaLabel}>
+      <div className={styles.modal} role="dialog" aria-modal="true">
         {children}
       </div>
     </div>

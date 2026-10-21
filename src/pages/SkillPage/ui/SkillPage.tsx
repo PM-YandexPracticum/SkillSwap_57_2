@@ -18,6 +18,7 @@ import { LikeButton } from '@/shared/ui/LikeButton'
 import { Person } from '@/shared/ui/Person'
 import { SkillDetails } from '@/shared/ui/SkillDetails'
 import { SkillsList } from '@/shared/ui/SkillsList'
+import SkillCategoryGroupList from '@/shared/ui/SkillCategoryGroupList/SkillCategoryGroupList'
 import { skills as skillCategories } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 import { Title } from '@/shared/ui/Title'
 import moreIcon from '@/shared/assets/images/more-square.svg'
@@ -39,7 +40,7 @@ const toSkillItems = (skillIds: string[], skills: Skill[]): SkillItems =>
     return [{ id: skill.id, title: skill.title, category: categoryId }]
   })
 
-const SkillPage = () => {
+const SkillOfferPage = () => {
   const { id } = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -194,6 +195,25 @@ const SkillPage = () => {
           ))}
         </CardCarousel>
       )}
+    </main>
+  )
+}
+
+const SkillPage = () => {
+  const { id } = useParams<{ id: string }>()
+
+  useEffect(() => {
+    if (!id) window.scrollTo(0, 0)
+  }, [id])
+
+  if (id) return <SkillOfferPage />
+
+  return (
+    <main className={styles.page} aria-labelledby="all-skills-title">
+      <Title size="H1" id="all-skills-title">
+        Все навыки
+      </Title>
+      <SkillCategoryGroupList className={styles.categories} linked={false} />
     </main>
   )
 }
