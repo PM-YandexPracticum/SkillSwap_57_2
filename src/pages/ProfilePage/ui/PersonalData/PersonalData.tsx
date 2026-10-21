@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import 'react-datepicker/dist/react-datepicker.css'
 import '@/shared/ui/DatePicker/DatePicker.css'
 import { Avatar } from '@/shared/ui/Avatar'
@@ -24,6 +24,8 @@ export interface PersonalDataValue {
 
 interface PersonalDataProps {
   value: PersonalDataValue
+  onSave: (value: Pick<PersonalDataValue, 'email' | 'name' | 'aboutMe'>) => void
+  onAvatarChange: (avatarUrl: string) => void
 }
 
 const genderOptions = [
@@ -37,15 +39,65 @@ const cityOptions = [
   { value: 'saint-petersburg', label: 'Санкт-Петербург' },
 ]
 
-export function PersonalData({ value }: PersonalDataProps) {
+export function PersonalData({ value, onSave, onAvatarChange }: PersonalDataProps) {
+  const avatarInputRef = useRef<HTMLInputElement>(null)
   const [email, setEmail] = useState(value.email)
   const [name, setName] = useState(value.name)
   const [aboutMe, setAboutMe] = useState(value.aboutMe)
   const [isSaved, setIsSaved] = useState(false)
+  const [avatarError, setAvatarError] = useState<string | null>(null)
+  const [isAvatarUpdated, setIsAvatarUpdated] = useState(false)
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    onSave({ email: email.trim(), name: name.trim(), aboutMe: aboutMe.trim() })
     setIsSaved(true)
+  }
+
+  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    setAvatarError(null)
+    setIsAvatarUpdated(false)
+
+    if (!file) return
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      setAvatarError('Можно загружать только изображения JPEG или PNG')
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setAvatarError('Размер изображения не должен превышать 2 МБ')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onerror = () => setAvatarError('Не удалось прочитать изображение')
+    reader.onload = () => {
+      if (typeof reader.result !== 'string') return
+
+      const image = new Image()
+      image.onerror = () => setAvatarError('Не удалось обработать изображение')
+      image.onload = () => {
+        const maxSize = 512
+        const scale = Math.min(1, maxSize / Math.max(image.width, image.height))
+        const canvas = document.createElement('canvas')
+        canvas.width = Math.round(image.width * scale)
+        canvas.height = Math.round(image.height * scale)
+
+        const context = canvas.getContext('2d')
+        if (!context) {
+          setAvatarError('Не удалось обработать изображение')
+          return
+        }
+
+        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        const avatarUrl = canvas.toDataURL('image/jpeg', 0.82)
+        onAvatarChange(avatarUrl)
+        setIsAvatarUpdated(true)
+      }
+      image.src = reader.result
+    }
+    reader.readAsDataURL(file)
   }
 
   return (
@@ -115,9 +167,28 @@ export function PersonalData({ value }: PersonalDataProps) {
           alt={`Аватар пользователя ${value.name}`}
           size="big"
         />
-        <button className={styles.avatarButton} type="button" aria-label="Изменить аватар">
+        <button
+          className={styles.avatarButton}
+          type="button"
+          aria-label="Изменить аватар"
+          title="Выбрать новый аватар"
+          onClick={() => avatarInputRef.current?.click()}
+        >
           <img src={galleryEditIcon} alt="" aria-hidden="true" />
         </button>
+        <input
+          id="profile-avatar-input"
+          ref={avatarInputRef}
+          className={styles.visuallyHidden}
+          type="file"
+          accept="image/jpeg,image/png"
+          onChange={handleAvatarChange}
+          aria-label="Выбрать новый аватар"
+        />
+        {avatarError && <p className={styles.avatarError} role="alert">{avatarError}</p>}
+        {isAvatarUpdated && !avatarError && (
+          <p className={styles.avatarSuccess} role="status">Аватар обновлён</p>
+        )}
       </div>
     </section>
   )
