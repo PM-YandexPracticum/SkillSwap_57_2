@@ -1,3 +1,14 @@
+/**
+ * Ссылка на страницу навыка.
+ * authorId нужен, когда один навык преподают несколько человек:
+ * без него страница покажет первого автора из списка.
+ */
+export function getSkillPath(skillId: string, authorId?: string): string {
+  return authorId
+    ? `/skill/${skillId}?author=${encodeURIComponent(authorId)}`
+    : `/skill/${skillId}`
+}
+
 /** Форматирует дату в читаемый вид */
 export function formatDate(dateString: string): string {
   return new Intl.DateTimeFormat('ru-RU', {

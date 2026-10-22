@@ -2,9 +2,15 @@ import { SkillCategoryGroup } from '@/shared/ui/SkillCategoryGroup/SkillCategory
 import styles from './SkillCategoryGroupList.module.css'
 import { skills } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 
-function SkillCategoryGroupList() {
+function SkillCategoryGroupList({
+  className,
+  linked = true,
+}: {
+  className?: string
+  linked?: boolean
+}) {
   return (
-    <div className={styles.grid}>
+    <div className={[styles.grid, className].filter(Boolean).join(' ')}>
       {skills.map((category) => (
         <SkillCategoryGroup
           key={category.id}
@@ -12,6 +18,7 @@ function SkillCategoryGroupList() {
           color={category.color}
           title={category.title}
           skillArray={category.skills}
+          linked={linked}
         />
       ))}
     </div>

@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { ComponentProps } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
@@ -11,14 +9,15 @@ import {
   selectFavoriteIds,
 } from '@/features/favorites/model/favoritesSlice'
 import { ROUTES } from '@/shared/lib/constants'
-import type { Skill } from '@/shared/types'
+import { getSkillPath } from '@/shared/lib/helpers'
+import { getInterestSkillItems, toSkillItems } from '@/shared/lib/subcategories'
 import { Card } from '@/shared/ui/Card'
 import { CardCarousel } from '@/shared/ui/CardCarousel'
 import { LikeButton } from '@/shared/ui/LikeButton'
 import { Person } from '@/shared/ui/Person'
 import { SkillDetails } from '@/shared/ui/SkillDetails'
 import { SkillsList } from '@/shared/ui/SkillsList'
-import { skills as skillCategories } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
+import SkillCategoryGroupList from '@/shared/ui/SkillCategoryGroupList/SkillCategoryGroupList'
 import { Title } from '@/shared/ui/Title'
 import moreIcon from '@/shared/assets/images/more-square.svg'
 import shareIcon from '@/shared/assets/images/share.svg'
@@ -31,21 +30,7 @@ import { Modal } from '@/shared/ui/Modal/Modal'
 import { SuccessMessage } from '@/shared/ui/SuccessMessage'
 import notificationHug from '@/shared/assets/images/notification-hug.svg'
 
-type SkillItems = ComponentProps<typeof SkillsList>['skills']
-
-const getSkillPath = (skillId: string) => `/skill/${skillId}`
-
-/** ID навыков пользователя превращаем в теги: категория нужна для цвета тега. */
-const toSkillItems = (skillIds: string[], skills: Skill[]): SkillItems =>
-  skillIds.flatMap((skillId) => {
-    const skill = skills.find((item) => item.id === skillId)
-    if (!skill) return []
-
-    const categoryId = skillCategories.find((category) => category.title === skill.category)?.id
-    return [{ id: skill.id, title: skill.title, category: categoryId }]
-  })
-
-const SkillPage = () => {
+const SkillOfferPage = () => {
   const { id } = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
   const authorId = searchParams.get('author')
@@ -72,11 +57,12 @@ const SkillPage = () => {
 
   const skill = useMemo(() => skills.find((item) => item.id === id), [id, skills])
 
+  // Один навык могут преподавать несколько человек: автора берём из ссылки.
+  // Если author указан явно, другого преподавателя не подставляем.
   const author = useMemo(() => {
     if (!skill) return undefined
 
     const authors = users.filter((user) => user.teach.includes(skill.id))
-
     return authorId ? authors.find((user) => user.id === authorId) : authors[0]
   }, [authorId, skill, users])
 
@@ -92,11 +78,18 @@ const SkillPage = () => {
   }, [skill, skills, users])
 
   const toggleFavorite = useCallback(
-    (skillId: string, isLiked: boolean) => {
-      dispatch(isLiked ? addFavorite(skillId) : removeFavorite(skillId))
+    (cardId: string, isLiked: boolean) => {
+      dispatch(isLiked ? addFavorite(cardId) : removeFavorite(cardId))
     },
     [dispatch],
   )
+
+  // Карточка в избранном — это автор, поэтому лайк привязан только к id пользователя.
+  const favoriteId = author?.id
+  const isFavorite = favoriteId ? favoriteIds.includes(favoriteId) : false
+  const handleFavoriteChange = (isLiked: boolean) => {
+    if (favoriteId) toggleFavorite(favoriteId, isLiked)
+  }
 
   const handleShare = () => {
     void navigator.clipboard?.writeText(window.location.href).catch(() => {})
@@ -142,6 +135,8 @@ const SkillPage = () => {
     )
   }
 
+  // author указан явно, но этот пользователь не преподаёт навык:
+  // другого автора не подставляем, предложение считаем ненайденным.
   if (authorId && !author) {
     return (
       <main className={styles.page}>
@@ -170,7 +165,10 @@ const SkillPage = () => {
               </section>
 
               <SkillsList title="Может научить:" skills={toSkillItems(author.teach, skills)} />
-              <SkillsList title="Хочет научиться:" skills={toSkillItems(author.learn, skills)} />
+              <SkillsList
+                title="Хочет научиться:"
+                skills={getInterestSkillItems(author, skills)}
+              />
             </>
           ) : (
             <p className={styles.message}>Автор не найден</p>
@@ -179,11 +177,13 @@ const SkillPage = () => {
 
         <div className={styles.skillColumn}>
           <div className={styles.toolbar}>
-            <LikeButton
-              checked={favoriteIds.includes(skill.id)}
-              onChange={(event) => toggleFavorite(skill.id, event.target.checked)}
-              aria-label="Добавить в избранное"
-            />
+            {favoriteId && (
+              <LikeButton
+                checked={isFavorite}
+                onChange={(event) => handleFavoriteChange(event.target.checked)}
+                aria-label="Добавить в избранное"
+              />
+            )}
 
             <button
               className={styles.iconButton}
@@ -221,10 +221,10 @@ const SkillPage = () => {
               key={similarSkill.id}
               user={cardUser}
               teach={toSkillItems(cardUser.teach, skills)}
-              learn={toSkillItems(cardUser.learn, skills)}
-              isLiked={favoriteIds.includes(similarSkill.id)}
-              onLikeChange={(isLiked) => toggleFavorite(similarSkill.id, isLiked)}
-              onDetailsClick={() => navigate(getSkillPath(similarSkill.id))}
+              learn={getInterestSkillItems(cardUser, skills)}
+              isLiked={favoriteIds.includes(cardUser.id)}
+              onLikeChange={(isLiked) => toggleFavorite(cardUser.id, isLiked)}
+              onDetailsClick={() => navigate(getSkillPath(similarSkill.id, cardUser.id))}
             />
           ))}
         </CardCarousel>
@@ -243,6 +243,25 @@ const SkillPage = () => {
           />
         </Modal>
       )}
+    </main>
+  )
+}
+
+const SkillPage = () => {
+  const { id } = useParams<{ id: string }>()
+
+  useEffect(() => {
+    if (!id) window.scrollTo(0, 0)
+  }, [id])
+
+  if (id) return <SkillOfferPage />
+
+  return (
+    <main className={styles.page} aria-labelledby="all-skills-title">
+      <Title size="H1" id="all-skills-title">
+        Все навыки
+      </Title>
+      <SkillCategoryGroupList className={styles.categories} linked={false} />
     </main>
   )
 }

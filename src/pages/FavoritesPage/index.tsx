@@ -1,58 +1,29 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import type { ComponentProps } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
 import { removeFavorite, selectFavoriteIds } from '@/features/favorites/model/favoritesSlice'
+import { resolveFavorites } from '@/features/favorites/model/resolveFavorites'
 import { ROUTES } from '@/shared/lib/constants'
-import type { Skill, User } from '@/shared/types'
+import { getSkillPath } from '@/shared/lib/helpers'
+import {
+  getInterestSkillItems,
+  getInterestSubcategoryIds,
+  toSkillItems,
+  toSubcategoryIds,
+} from '@/shared/lib/subcategories'
+import type { User } from '@/shared/types'
 import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
 import { FiltersPanel } from '@/shared/ui/FiltersPanel'
 import type { FiltersValue } from '@/shared/ui/FiltersPanel'
 import { Footer } from '@/shared/ui/Footer/Footer'
 import { Header } from '@/shared/ui/Header/Header'
-import { skills as skillCategories } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
-import { SkillsList } from '@/shared/ui/SkillsList'
 import { Title } from '@/shared/ui/Title'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import styles from './FavoritesPage.module.css'
-
-type SkillItems = ComponentProps<typeof SkillsList>['skills']
-
-const getSkillPath = (skillId: string) => `/skill/${skillId}`
-
-const toSkillItems = (skillIds: string[], skills: Skill[]): SkillItems =>
-  skillIds.flatMap((skillId) => {
-    const skill = skills.find((item) => item.id === skillId)
-    if (!skill) return []
-
-    const categoryId = skillCategories.find((category) => category.title === skill.category)?.id
-    return [{ id: skill.id, title: skill.title, category: categoryId }]
-  })
-
-/** Соответствие «название подкатегории → её ID»: нужно для сопоставления с фильтром навыков. */
-const SUBCATEGORY_IDS = new Map<string, string>()
-for (const category of skillCategories) {
-  for (const skill of category.skills) {
-    SUBCATEGORY_IDS.set(skill.title, skill.id)
-  }
-}
-
-/**
- * В фильтре навыков лежат ID подкатегорий (music, english),
- * а у пользователя — ID конкретных предложений (skill_1).
- */
-const toSubcategoryIds = (skillIds: string[], skills: Skill[]): string[] =>
-  skillIds.flatMap((skillId) => {
-    const skill = skills.find((item) => item.id === skillId)
-    if (!skill) return []
-
-    const subcategoryId = SUBCATEGORY_IDS.get(skill.subcategory)
-    return subcategoryId ? [subcategoryId] : []
-  })
 
 /**
  * Карточка проходит, если набор навыков подходит хотя бы под одно направление:
@@ -102,16 +73,7 @@ const FavoritesPage = () => {
   }, [cities.length, dispatch, skillsStatus, usersStatus])
 
   const favoriteCards = useMemo(
-    () =>
-      favoriteIds.flatMap((skillId) => {
-        const skill = skills.find((item) => item.id === skillId)
-        if (!skill) return []
-
-        const author = users.find((user) => user.teach.includes(skill.id))
-        if (!author) return []
-
-        return [{ skill, author }]
-      }),
+    () => resolveFavorites(favoriteIds, users, skills),
     [favoriteIds, skills, users],
   )
 
@@ -127,7 +89,7 @@ const FavoritesPage = () => {
       favoriteCards.filter(
         ({ author }) =>
           matchesDirection('teach', toSubcategoryIds(author.teach, skills), author, filters) ||
-          matchesDirection('learn', toSubcategoryIds(author.learn, skills), author, filters),
+          matchesDirection('learn', getInterestSubcategoryIds(author, skills), author, filters),
       ),
     [favoriteCards, filters, skills],
   )
@@ -136,8 +98,8 @@ const FavoritesPage = () => {
   const isFilteredEmpty = hasFavorites && !isDataLoading && visibleCards.length === 0
 
   const handleRemove = useCallback(
-    (skillId: string, isLiked: boolean) => {
-      if (!isLiked) dispatch(removeFavorite(skillId))
+    (favoriteId: string, isLiked: boolean) => {
+      if (!isLiked) dispatch(removeFavorite(favoriteId))
     },
     [dispatch],
   )
@@ -168,15 +130,15 @@ const FavoritesPage = () => {
               <p className={styles.message}>Ничего не найдено по выбранным фильтрам.</p>
             ) : (
               <div className={styles.grid}>
-                {visibleCards.map(({ skill, author }) => (
+                {visibleCards.map(({ favoriteId, skill, author }) => (
                   <Card
-                    key={skill.id}
+                    key={favoriteId}
                     user={author}
                     teach={toSkillItems(author.teach, skills)}
-                    learn={toSkillItems(author.learn, skills)}
+                    learn={getInterestSkillItems(author, skills)}
                     isLiked
-                    onLikeChange={(isLiked) => handleRemove(skill.id, isLiked)}
-                    onDetailsClick={() => navigate(getSkillPath(skill.id))}
+                    onLikeChange={(isLiked) => handleRemove(favoriteId, isLiked)}
+                    onDetailsClick={() => navigate(getSkillPath(skill.id, author.id))}
                   />
                 ))}
               </div>

@@ -87,27 +87,8 @@
   padding: 0;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: #253017;
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  cursor: pointer;
-}
-
 .userName {
   white-space: nowrap;
-}
-
-.logout {
-  margin-left: 20px;
-  flex-shrink: 0;
 }
 
 .skillsModal {
@@ -195,4 +176,35 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.userMenu {
+  position: relative;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 20px);
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 260px;
+  padding: 40px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid #b2b9a9;
+  border-radius: 12px;
+}
+
+.dropdownItem {
+  display: flex;
+  gap: 8px;
+  width: 100%;
 }

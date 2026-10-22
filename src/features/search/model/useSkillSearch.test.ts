@@ -42,7 +42,6 @@ describe('useSkillSearch', () => {
     act(() => vi.advanceTimersByTime(300))
     expect(result.current.count).toBe(0)
     act(() => result.current.setQuery('   '))
-    act(() => vi.advanceTimersByTime(300))
     expect(result.current.filteredSkills).toEqual(skills)
   })
 
