@@ -14,7 +14,7 @@ import { LikeButton } from '../LikeButton/LikeButton'
 import { Avatar } from '../Avatar/Avatar'
 import searchIcon from '../../assets/images/search.svg'
 import styles from './Header.module.scss'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useClickOutside } from '@/shared/hooks/useClickOutside'
 import logoutIcon from '@/shared/assets/images/logout.svg'
 import { Title } from '../Title'
@@ -32,6 +32,7 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
   const dispatch = useAppDispatch()
 
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
 
   const notifications = useAppSelector((state) => state.notifications.items)
 
@@ -47,6 +48,13 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const user = useAppSelector(selectCurrentUser)
 
+  const userId = user?.id
+
+  useEffect(() => {
+    setIsNotificationsOpen(false)
+    setIsUserMenuOpen(false)
+  }, [userId])
+
   // В auth-состоянии хранятся только id/имя/email, поэтому аватар ищем в профиле
   // пользователя (users), сопоставляя запись по id или email.
   const avatarUrl = useAppSelector((state) => {
@@ -59,7 +67,6 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
 
   const userName = user?.name ?? DEFAULT_USER_NAME
 
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const userMenuRef = useRef<HTMLDivElement>(null)
 
   const closeUserMenu = () => {

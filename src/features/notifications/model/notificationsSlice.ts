@@ -1,5 +1,7 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { login, logout, setUserFromStorage } from '@/features/auth/model/authSlice'
+import { registerUser } from '@/features/auth/model/registerUser'
 
 interface ExchangeNotification {
   id: string
@@ -45,9 +47,30 @@ const notificationsSlice = createSlice({
         notification.isRead = true
       }
     },
+
+    clearNotifications(state) {
+      state.items = []
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(logout.fulfilled, (state) => {
+        state.items = []
+      })
+      .addCase(login.fulfilled, (state) => {
+        state.items = []
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.items = []
+      })
+      .addCase(setUserFromStorage, (state) => {
+        state.items = []
+      })
   },
 })
 
-export const { addExchangeNotification, markNotificationAsRead } = notificationsSlice.actions
+export const { addExchangeNotification, markNotificationAsRead, clearNotifications } =
+  notificationsSlice.actions
 
 export default notificationsSlice.reducer
