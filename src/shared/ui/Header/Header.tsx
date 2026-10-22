@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logout } from '@/features/auth/model/authSlice'
 import { selectCurrentUser, selectIsAuthenticated } from '@/features/auth/model/authSelectors'
