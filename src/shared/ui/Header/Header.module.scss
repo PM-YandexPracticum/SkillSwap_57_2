@@ -87,28 +87,9 @@
   padding: 0;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: #253017;
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  cursor: pointer;
-}
-
 .userName {
   white-space: nowrap;
 }
-
-// .logout {
-//   margin-left: 20px;
-//   flex-shrink: 0;
-// }
 
 .skillsModal {
   box-sizing: border-box;
@@ -135,6 +116,7 @@
 .profile {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 
@@ -157,15 +139,4 @@
   display: flex;
   gap: 8px;
   width: 100%;
-
 }
-
-// .dropdownItem:hover {
-//   background-color: #f3f4ef;
-// }
-
-// .dropdownItem:focus-visible,
-// .profile:focus-visible {
-//   outline: 2px solid #657747;
-//   outline-offset: 2px;
-// }
