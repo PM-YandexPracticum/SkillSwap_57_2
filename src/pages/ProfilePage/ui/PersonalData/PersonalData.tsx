@@ -35,9 +35,29 @@ function readAvatar(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
     reader.onerror = () => reject(new Error('Не удалось прочитать изображение'))
-    reader.onload = () => typeof reader.result === 'string'
-      ? resolve(reader.result)
-      : reject(new Error('Не удалось прочитать изображение'))
+    reader.onload = () => {
+      if (typeof reader.result !== 'string') {
+        reject(new Error('Не удалось прочитать изображение'))
+        return
+      }
+      const image = new Image()
+      image.onerror = () => reject(new Error('Не удалось обработать изображение'))
+      image.onload = () => {
+        const maxSize = 512
+        const scale = Math.min(1, maxSize / Math.max(image.width, image.height))
+        const canvas = document.createElement('canvas')
+        canvas.width = Math.round(image.width * scale)
+        canvas.height = Math.round(image.height * scale)
+        const context = canvas.getContext('2d')
+        if (!context) {
+          reject(new Error('Не удалось обработать изображение'))
+          return
+        }
+        context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        resolve(canvas.toDataURL('image/jpeg', 0.82))
+      }
+      image.src = reader.result
+    }
     reader.readAsDataURL(file)
   })
 }

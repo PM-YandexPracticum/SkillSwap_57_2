@@ -60,7 +60,7 @@ export function SkillDetails(props: SkillDetailsProps) {
               </Button>
             </>
           ) : (
-            <Button variant="secondary" onClick={props.onExchange}>
+            <Button variant="primary" onClick={props.onExchange}>
               Предложить обмен
             </Button>
           )}

@@ -13,6 +13,10 @@ import { LikeButton } from '../LikeButton/LikeButton'
 import { Avatar } from '../Avatar/Avatar'
 import searchIcon from '../../assets/images/search.svg'
 import styles from './Header.module.scss'
+import { useRef, useState } from 'react'
+import { useClickOutside } from '@/shared/hooks/useClickOutside'
+import logoutIcon from '@/shared/assets/images/logout.svg'
+import { Title } from '../Title'
 
 interface HeaderProps {
   searchValue?: string
@@ -42,7 +46,22 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
 
   const userName = user?.name ?? DEFAULT_USER_NAME
 
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+  const userMenuRef = useRef<HTMLDivElement>(null)
+
+  const closeUserMenu = () => {
+    setIsUserMenuOpen(false)
+  }
+
+  useClickOutside(userMenuRef, closeUserMenu)
+
+  const handleProfileClick = () => {
+    closeUserMenu()
+    navigate(ROUTES.PROFILE)
+  }
+
   const handleLogout = () => {
+    closeUserMenu()
     void dispatch(logout())
   }
 
@@ -97,24 +116,34 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
                   aria-label="Избранное"
                 />
 
-                <button
-                  className={styles.profile}
-                  type="button"
-                  aria-label="Личный кабинет"
-                  onClick={() => navigate(ROUTES.PROFILE)}
-                >
-                  <span className={styles.userName}>{userName}</span>
-                  <Avatar src={avatarUrl} alt={`Аватар пользователя ${userName}`} size="small" />
-                </button>
+                <div className={styles.userMenu} ref={userMenuRef}>
+                  <button
+                    className={styles.profile}
+                    type="button"
+                    onClick={() => setIsUserMenuOpen((isMenuOpen) => !isMenuOpen)}
+                  >
+                    <span>{userName}</span>
 
-                <Button
-                  variant="secondary"
-                  className={styles.logout}
-                  aria-label="Выйти из аккаунта"
-                  onClick={handleLogout}
-                >
-                  Выйти
-                </Button>
+                    <Avatar src={avatarUrl} alt="" size="small" />
+                  </button>
+
+                  {isUserMenuOpen && (
+                    <div className={styles.dropdown}>
+                      <button
+                        className={styles.dropdownItem}
+                        type="button"
+                        onClick={handleProfileClick}
+                      >
+                        <Title size="H4">Личный кабинет</Title>
+                      </button>
+
+                      <button className={styles.dropdownItem} type="button" onClick={handleLogout}>
+                        <Title size="H4">Выйти из аккаунта</Title>
+                        <img className={styles.postfix} src={logoutIcon} alt="выйти из аккаунта" />
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>

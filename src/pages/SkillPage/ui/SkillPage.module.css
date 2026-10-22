@@ -16,6 +16,12 @@
   align-items: start;
 }
 
+.categories {
+  padding: 60px;
+  background: #fff;
+  border-radius: 12px;
+}
+
 .author {
   display: flex;
   flex-direction: column;
@@ -107,9 +113,13 @@
 }
 
 @media (width <= 768px) {
+  .categories {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 24px;
+  }
+
   .page {
     gap: 48px;
     padding: 24px 20px 60px;
   }
 }
-
