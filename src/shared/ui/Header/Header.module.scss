@@ -126,3 +126,73 @@
   font-weight: 500;
   line-height: 32px;
 }
+
+.notifications {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.notificationsDropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  right: 0;
+  z-index: 100;
+  width: 340px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid #e4e8df;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+
+.notificationsTitle {
+  margin: 0 0 16px;
+  color: #253017;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.notificationsEmpty {
+  margin: 0;
+  color: #69735d;
+  font-size: 14px;
+}
+
+.notificationsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notificationItem {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f7f9f5;
+
+  p {
+    margin: 0 0 12px;
+    color: #253017;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.notificationLink {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #508327;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

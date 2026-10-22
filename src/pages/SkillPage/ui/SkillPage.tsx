@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { ComponentProps } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
@@ -26,10 +26,10 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import styles from './SkillPage.module.css'
 import { useRequireAuth } from '@/features/auth/model/useRequireAuth'
 import { selectCurrentUser } from '@/features/auth/model/authSelectors'
-import { createRequest } from '@/features/requests/model/requestSlice'
+import { addExchangeNotification } from '@/features/notifications/model/notificationsSlice'
 import { Modal } from '@/shared/ui/Modal/Modal'
 import { SuccessMessage } from '@/shared/ui/SuccessMessage'
-import done from '@/shared/assets/images/Done.svg'
+import notificationHug from '@/shared/assets/images/notification-hug.svg'
 
 type SkillItems = ComponentProps<typeof SkillsList>['skills']
 
@@ -47,6 +47,8 @@ const toSkillItems = (skillIds: string[], skills: Skill[]): SkillItems =>
 
 const SkillPage = () => {
   const { id } = useParams<{ id: string }>()
+  const [searchParams] = useSearchParams()
+  const authorId = searchParams.get('author')
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { requireAuth } = useRequireAuth()
@@ -70,10 +72,13 @@ const SkillPage = () => {
 
   const skill = useMemo(() => skills.find((item) => item.id === id), [id, skills])
 
-  const author = useMemo(
-    () => (skill ? users.find((user) => user.teach.includes(skill.id)) : undefined),
-    [skill, users],
-  )
+  const author = useMemo(() => {
+    if (!skill) return undefined
+
+    const authors = users.filter((user) => user.teach.includes(skill.id))
+
+    return authorId ? authors.find((user) => user.id === authorId) : authors[0]
+  }, [authorId, skill, users])
 
   const similarCards = useMemo(() => {
     if (!skill) return []
@@ -97,10 +102,11 @@ const SkillPage = () => {
     void navigator.clipboard?.writeText(window.location.href).catch(() => {})
   }
   const handleExchange = () => {
-  if (!skill || !author || !currentUser) return
-  dispatch(createRequest(skill.id, currentUser.id, author.id))
-  setIsSuccessModalOpen(true)
-}
+    if (!skill || !author || !currentUser) return
+
+    dispatch(addExchangeNotification(skill.id, author.id, author.name))
+    setIsSuccessModalOpen(true)
+  }
   const isSkillLoading = skillsStatus === 'idle' || skillsStatus === 'loading'
   const isAuthorLoading = usersStatus === 'idle' || usersStatus === 'loading'
 
@@ -129,6 +135,20 @@ const SkillPage = () => {
       <main className={styles.page}>
         <Title size="H2">Навык не найден</Title>
         <p className={styles.message}>Возможно, предложение удалили или ссылка устарела.</p>
+        <Link className={styles.link} to={ROUTES.HOME}>
+          Вернуться в каталог
+        </Link>
+      </main>
+    )
+  }
+
+  if (authorId && !author) {
+    return (
+      <main className={styles.page}>
+        <Title size="H2">Предложение не найдено</Title>
+        <p className={styles.message}>
+          Возможно, автор больше не преподаёт этот навык или ссылка устарела.
+        </p>
         <Link className={styles.link} to={ROUTES.HOME}>
           Вернуться в каталог
         </Link>
@@ -215,9 +235,10 @@ const SkillPage = () => {
           onOverlayClick={() => setIsSuccessModalOpen(false)}
         >
           <SuccessMessage
-            illustration={done}
+            variant="exchange"
+            illustration={notificationHug}
             title="Вы предложили обмен"
-            description="Ваша заявка отправлена"
+            description="Теперь дождитесь подтверждения. Вам придёт уведомление"
             onClose={() => setIsSuccessModalOpen(false)}
           />
         </Modal>

@@ -5,8 +5,7 @@ import skillsReducer from '@/entities/skill/model/skillsSlice'
 import authReducer from '@/features/auth/model/authSlice'
 import citiesReducer from '@/entities/city/model/citiesSlice'
 import favoritesReducer, { saveFavorites } from '@/features/favorites/model/favoritesSlice'
-import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
-import requestReducer from '@/features/requests/model/requestSlice'
+import notificationsReducer from '@/features/notifications/model/notificationsSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,23 +15,17 @@ export const store = configureStore({
     skillFilter: skillFilterReducer,
     cities: citiesReducer,
     favorites: favoritesReducer,
-    requests: requestReducer,
+    notifications: notificationsReducer,
   },
 })
 
 let previousFavoriteIds = store.getState().favorites.ids
-let previousRequests = store.getState().requests.items
 
 store.subscribe(() => {
   const currentFavoriteIds = store.getState().favorites.ids
   if (currentFavoriteIds !== previousFavoriteIds) {
     previousFavoriteIds = currentFavoriteIds
     saveFavorites(currentFavoriteIds)
-  }
-  const currentRequests = store.getState().requests.items
-  if (currentRequests !== previousRequests) {
-    previousRequests = currentRequests
-    localStorage.setItem(LOCAL_STORAGE_KEYS.REQUESTS, JSON.stringify(currentRequests))
   }
 })
 

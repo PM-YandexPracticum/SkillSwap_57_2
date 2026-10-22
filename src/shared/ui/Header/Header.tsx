@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { logout } from '@/features/auth/model/authSlice'
 import { selectCurrentUser, selectIsAuthenticated } from '@/features/auth/model/authSelectors'
@@ -9,6 +10,7 @@ import { NavMenu } from '../NavMenu/NavMenu'
 import { Input } from '../Input/Input'
 import { ThemeButton } from '../ThemeButton/ThemeButton'
 import { NotifyButton } from '../NotifyButton/NotifyButton'
+import { markNotificationAsRead } from '@/features/notifications/model/notificationsSlice'
 import { LikeButton } from '../LikeButton/LikeButton'
 import { Avatar } from '../Avatar/Avatar'
 import searchIcon from '../../assets/images/search.svg'
@@ -25,6 +27,18 @@ const DEFAULT_USER_NAME = 'Имя пользователя'
 export function Header({ searchValue, onSearchChange }: HeaderProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+
+  const notifications = useAppSelector((state) => state.notifications.items)
+
+  const hasNotifications = notifications.some((notification) => !notification.isRead)
+
+  const handleNotificationClick = (notificationId: string, skillId: string, authorId: string) => {
+    dispatch(markNotificationAsRead(notificationId))
+    setIsNotificationsOpen(false)
+    navigate(`/skill/${skillId}?author=${authorId}`)
+  }
 
   // Данные авторизации берём из стора через общие селекторы.
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -87,7 +101,47 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
               </div>
             ) : (
               <div className={styles.userActions}>
-                <NotifyButton hasNotifications={false} />
+                <div className={styles.notifications}>
+                  <NotifyButton
+                    hasNotifications={hasNotifications}
+                    onClick={() => setIsNotificationsOpen((prev) => !prev)}
+                  />
+
+                  {isNotificationsOpen && (
+                    <div className={styles.notificationsDropdown}>
+                      <h3 className={styles.notificationsTitle}>Уведомления</h3>
+
+                      {notifications.length === 0 ? (
+                        <p className={styles.notificationsEmpty}>У вас пока нет уведомлений</p>
+                      ) : (
+                        <ul className={styles.notificationsList}>
+                          {notifications.map((notification) => (
+                            <li key={notification.id} className={styles.notificationItem}>
+                              <p>
+                                Вы предложили обмен пользователю{' '}
+                                <strong>{notification.authorName}</strong>
+                              </p>
+
+                              <button
+                                type="button"
+                                className={styles.notificationLink}
+                                onClick={() =>
+                                  handleNotificationClick(
+                                    notification.id,
+                                    notification.skillId,
+                                    notification.authorId,
+                                  )
+                                }
+                              >
+                                Перейти
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 <LikeButton
                   checked={false}
