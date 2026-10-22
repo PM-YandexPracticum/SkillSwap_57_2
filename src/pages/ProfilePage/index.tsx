@@ -5,16 +5,30 @@ import { Footer } from "@/shared/ui/Footer/Footer";
 import { Card } from "@/shared/ui/Card";
 import defaultAvatar from "@/shared/assets/default.svg";
 import { fetchSkills } from "@/api/skills";
-import { fetchUsers } from "@/entities/user/model/usersSlice";
+import {
+  addRegisteredUser,
+  fetchUsers,
+} from "@/entities/user/model/usersSlice";
 import { selectCurrentUser } from "@/features/auth/model/authSelectors";
+import { login } from "@/features/auth/model/authSlice";
+import {
+  MOCK_USERS_KEY,
+  saveAuthUser,
+} from "@/features/auth/model/authUtils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   getRegisteredItems,
   mergeById,
+  readRegistrations,
+  REGISTRATIONS_KEY,
 } from "@/shared/lib/registrationStorage";
 import type { Skill, User, City } from "@/shared/types";
 import { ProfileMenu, type ProfileSection } from "./ui/ProfileMenu";
-import { PersonalData, type PersonalDataValue } from "./ui/PersonalData";
+import {
+  PersonalData,
+  type PersonalDataSubmitValue,
+  type PersonalDataValue,
+} from "./ui/PersonalData";
 import styles from "./ProfilePage.module.css";
 
 const PROFILE_OVERRIDES_KEY = "skillswap_profile_overrides";
@@ -35,18 +49,6 @@ const availableSections: ProfileSection[] = [
   "skills",
   "personal",
 ];
-
-const genderLabels = {
-  female: "Женский",
-  male: "Мужской",
-  unspecified: "Не указан",
-} as const;
-
-function formatBirthDate(value?: string) {
-  if (!value) return "Не указана";
-  const [year, month, day] = value.split("-");
-  return year && month && day ? `${day}.${month}.${year}` : value;
-}
 
 function getSkillItem(skillId: string, skills: Skill[]) {
   return (
@@ -156,18 +158,21 @@ export default function ProfilePage() {
   const personalData = useMemo<PersonalDataValue | null>(() => {
     if (!profileUser) return null;
 
-    const city = cities.find((item) => item.id === profileUser.city);
-
     return {
       email: profileUser.email,
       name: profileUser.name,
-      birthDate: formatBirthDate(profileUser.birthDate),
-      gender: genderLabels[profileUser.gender],
-      city: city?.title ?? "Не указан",
-      aboutMe: profileUser.aboutMe || "Расскажите немного о себе",
+      birthDate: profileUser.birthDate,
+      gender: profileUser.gender,
+      city: profileUser.city,
+      aboutMe: profileUser.aboutMe || "",
       avatarUrl: profileUser.avatar || defaultAvatar,
     };
-  }, [cities, profileUser]);
+  }, [profileUser]);
+
+  const cityOptions = useMemo(
+    () => cities.map((city) => ({ value: city.id, label: city.title })),
+    [cities],
+  );
 
   const favoriteUsers = useMemo(
     () =>
@@ -195,23 +200,92 @@ export default function ProfilePage() {
     saveProfileOverride(profileUser.id, { likesCard });
   }
 
-  function updateProfile(changes: Partial<User>) {
+  function saveUpdatedRegistration(updatedUser: User) {
+    try {
+      const registrations = readRegistrations();
+      const index = registrations.findIndex(
+        (record) => record.user.id === updatedUser.id,
+      );
+      if (index < 0) return;
+
+      registrations[index] = {
+        ...registrations[index],
+        user: updatedUser,
+      };
+      localStorage.setItem(REGISTRATIONS_KEY, JSON.stringify(registrations));
+    } catch {
+      // Изменения мок-пользователя сохраняются через profileOverrides.
+    }
+  }
+
+  function saveUpdatedCredentials(updatedUser: User, newPassword?: string) {
+    try {
+      const raw = localStorage.getItem(MOCK_USERS_KEY);
+      const parsed: unknown = raw ? JSON.parse(raw) : [];
+      const credentials = Array.isArray(parsed)
+        ? (parsed as Array<{
+            id: string;
+            name: string;
+            email: string;
+            password: string;
+          }>)
+        : [];
+      const index = credentials.findIndex((item) => item.id === updatedUser.id);
+
+      if (index >= 0) {
+        credentials[index] = {
+          ...credentials[index],
+          name: updatedUser.name,
+          email: updatedUser.email,
+          ...(newPassword ? { password: newPassword } : {}),
+        };
+      } else if (newPassword || updatedUser.id === "user_6") {
+        credentials.push({
+          id: updatedUser.id,
+          name: updatedUser.name,
+          email: updatedUser.email,
+          password: newPassword ?? "Skillswap123",
+        });
+      }
+
+      localStorage.setItem(MOCK_USERS_KEY, JSON.stringify(credentials));
+    } catch {
+      // Ошибка хранилища не должна блокировать сохранение формы в Redux.
+    }
+  }
+
+  function updateProfile(changes: Partial<User>, newPassword?: string) {
     if (!profileUser) return;
 
+    const updatedUser = { ...profileUser, ...changes };
+    dispatch(addRegisteredUser(updatedUser));
     setProfileOverrides((current) => ({
       ...current,
-      [profileUser.id]: {
-        ...(current[profileUser.id] ?? {}),
+      [updatedUser.id]: {
+        ...(current[updatedUser.id] ?? {}),
         ...changes,
       },
     }));
-    saveProfileOverride(profileUser.id, changes);
+    saveProfileOverride(updatedUser.id, changes);
+    saveUpdatedRegistration(updatedUser);
+    saveUpdatedCredentials(updatedUser, newPassword);
+
+    const updatedAuthUser = saveAuthUser({
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+    });
+    dispatch(
+      login.fulfilled(updatedAuthUser, "profile-update", {
+        email: updatedUser.email,
+        password: "",
+      }),
+    );
   }
 
-  function handlePersonalDataSave(
-    value: Pick<PersonalDataValue, "email" | "name" | "aboutMe">,
-  ) {
-    updateProfile(value);
+  function handlePersonalDataSave(value: PersonalDataSubmitValue) {
+    const { newPassword, ...changes } = value;
+    updateProfile(changes, newPassword);
   }
 
   function handleAvatarChange(avatarUrl: string) {
@@ -226,6 +300,7 @@ export default function ProfilePage() {
           <PersonalData
             key={profileUser?.id ?? "personal-data"}
             value={personalData}
+            cityOptions={cityOptions}
             onSave={handlePersonalDataSave}
             onAvatarChange={handleAvatarChange}
           />
@@ -313,7 +388,7 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.page} style={pageStyle}>
-      <Header />
+      <Header/>
       <main className={styles.main}>
         <div className={styles.content}>
           <ProfileMenu activeSection={activeSection} />

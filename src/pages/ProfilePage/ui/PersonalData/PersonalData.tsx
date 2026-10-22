@@ -3,7 +3,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 import '@/shared/ui/DatePicker/DatePicker.css'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
-import { CustomDatePicker } from '@/shared/ui/DatePicker/CustomDatePicker'
 import { Input } from '@/shared/ui/Input'
 import { Select } from '@/shared/ui/Select'
 import { Textarea } from '@/shared/ui/Textarea'
@@ -15,16 +14,27 @@ import styles from './PersonalData.module.css'
 export interface PersonalDataValue {
   email: string
   name: string
-  birthDate: string
-  gender: string
-  city: string
+  birthDate: string // YYYY-MM-DD
+  gender: 'unspecified' | 'male' | 'female'
+  city: string // id города
   aboutMe: string
   avatarUrl?: string
 }
 
+export interface PersonalDataSubmitValue {
+  email: string
+  name: string
+  birthDate: string
+  gender: 'unspecified' | 'male' | 'female'
+  city: string
+  aboutMe: string
+  newPassword?: string
+}
+
 interface PersonalDataProps {
   value: PersonalDataValue
-  onSave: (value: Pick<PersonalDataValue, 'email' | 'name' | 'aboutMe'>) => void
+  cityOptions: { value: string; label: string }[]
+  onSave: (value: PersonalDataSubmitValue) => void
   onAvatarChange: (avatarUrl: string) => void
 }
 
@@ -34,24 +44,55 @@ const genderOptions = [
   { value: 'unspecified', label: 'Не указан' },
 ]
 
-const cityOptions = [
-  { value: 'moscow', label: 'Москва' },
-  { value: 'saint-petersburg', label: 'Санкт-Петербург' },
-]
-
-export function PersonalData({ value, onSave, onAvatarChange }: PersonalDataProps) {
+export function PersonalData({ value, cityOptions, onSave, onAvatarChange }: PersonalDataProps) {
   const avatarInputRef = useRef<HTMLInputElement>(null)
   const [email, setEmail] = useState(value.email)
   const [name, setName] = useState(value.name)
+  const [birthDate, setBirthDate] = useState(value.birthDate)
+  const [gender, setGender] = useState<'unspecified' | 'male' | 'female'>(value.gender)
+  const [city, setCity] = useState(value.city)
   const [aboutMe, setAboutMe] = useState(value.aboutMe)
+  const [newPassword, setNewPassword] = useState('')
+  const [passwordError, setPasswordError] = useState<string | null>(null)
+  const [showPasswordField, setShowPasswordField] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const [avatarError, setAvatarError] = useState<string | null>(null)
   const [isAvatarUpdated, setIsAvatarUpdated] = useState(false)
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    onSave({ email: email.trim(), name: name.trim(), aboutMe: aboutMe.trim() })
+    setPasswordError(null)
+
+    if (showPasswordField && newPassword.trim() !== '') {
+      if (newPassword.length < 8) {
+        setPasswordError('Пароль должен содержать не менее 8 знаков')
+        return
+      }
+      const hasLower = /[a-zа-яё]/.test(newPassword)
+      const hasUpper = /[A-ZА-ЯЁ]/.test(newPassword)
+      const hasDigit = /\d/.test(newPassword)
+      if (!(hasLower && hasUpper && hasDigit)) {
+        setPasswordError('Пароль должен содержать цифры, строчные и заглавные буквы')
+        return
+      }
+    }
+
+    const submitValue: PersonalDataSubmitValue = {
+      email: email.trim(),
+      name: name.trim(),
+      aboutMe: aboutMe.trim(),
+      birthDate,
+      gender,
+      city,
+    }
+    if (newPassword.trim() !== '') {
+      submitValue.newPassword = newPassword
+    }
+
+    onSave(submitValue)
     setIsSaved(true)
+    setNewPassword('')
+    setShowPasswordField(false)
   }
 
   const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +141,13 @@ export function PersonalData({ value, onSave, onAvatarChange }: PersonalDataProp
     reader.readAsDataURL(file)
   }
 
+  const handleTextChange =
+    (setter: (value: string) => void) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setter(event.target.value)
+      setIsSaved(false)
+    }
+
   return (
     <section className={styles.section} aria-labelledby="personal-data-title">
       <h1 id="personal-data-title" className={styles.visuallyHidden}>Личные данные</h1>
@@ -109,16 +157,43 @@ export function PersonalData({ value, onSave, onAvatarChange }: PersonalDataProp
           type="email"
           label="Почта"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={handleTextChange(setEmail)}
           endIcon={<img src={editIcon} alt="" />}
           onEndIconClick={() => undefined}
         />
-        <button className={styles.passwordLink} type="button">Изменить пароль</button>
+
+        {!showPasswordField && (
+          <button
+            className={styles.passwordLink}
+            type="button"
+            onClick={() => {
+              setShowPasswordField(true)
+              setPasswordError(null)
+            }}
+          >
+            Изменить пароль
+          </button>
+        )}
+
+        {showPasswordField && (
+          <Input
+            type="password"
+            label="Новый пароль"
+            value={newPassword}
+            onChange={(e) => {
+              setNewPassword(e.target.value)
+              setPasswordError(null)
+              setIsSaved(false)
+            }}
+            hint="Оставьте поле пустым, если не хотите менять пароль"
+            error={passwordError || undefined}
+          />
+        )}
 
         <Input
           label="Имя"
           value={name}
-          onChange={(event) => setName(event.target.value)}
+          onChange={handleTextChange(setName)}
           endIcon={<img src={editIcon} alt="" />}
           onEndIconClick={() => undefined}
         />
@@ -127,33 +202,86 @@ export function PersonalData({ value, onSave, onAvatarChange }: PersonalDataProp
           <div className={styles.dateField}>
             <span className={styles.fieldLabel}>Дата рождения</span>
             <div className={styles.dateControl}>
-              <span>{value.birthDate}</span>
+              <span>{birthDate.split('-').reverse().join('.')}</span>
               <img src={calendarIcon} alt="" aria-hidden="true" />
-              <div className={styles.datePickerOverlay} aria-label="Выбрать дату рождения">
-                <CustomDatePicker />
-              </div>
+              <input
+                type="date"
+                aria-label="Выбрать дату рождения"
+                className={styles.datePickerOverlay}
+                style={{ opacity: 0, cursor: 'pointer' }}
+                value={birthDate}
+                max={new Date().toISOString().slice(0, 10)}
+                onChange={(e) => {
+                  setBirthDate(e.target.value)
+                  setIsSaved(false)
+                }}
+              />
             </div>
           </div>
 
-          <Select
-            label="Пол"
-            options={genderOptions}
-            placeholder={value.gender}
-            width={200}
-          />
+          <div style={{ position: 'relative', width: 200 }}>
+            <Select
+              label="Пол"
+              options={genderOptions}
+              placeholder={genderOptions.find(o => o.value === gender)?.label || ''}
+              width={200}
+            />
+            <select
+              aria-label="Пол"
+              value={gender}
+              onChange={(e) => {
+                setGender(e.target.value as 'unspecified' | 'male' | 'female')
+                setIsSaved(false)
+              }}
+              style={{
+                position: 'absolute',
+                top: 28,
+                height: 48,
+                width: 200,
+                opacity: 0,
+                cursor: 'pointer',
+              }}
+            >
+              {genderOptions.map(({ value, label }) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <Select
-          label="Город"
-          options={cityOptions}
-          placeholder={value.city}
-          width={422}
-        />
+        <div style={{ position: 'relative', width: 422 }}>
+          <Select
+            label="Город"
+            options={cityOptions}
+            placeholder={cityOptions.find(o => o.value === city)?.label || ''}
+            width={422}
+          />
+          <select
+            aria-label="Город"
+            value={city}
+            onChange={(e) => {
+              setCity(e.target.value)
+              setIsSaved(false)
+            }}
+            style={{
+              position: 'absolute',
+              top: 28,
+              height: 48,
+              width: 422,
+              opacity: 0,
+              cursor: 'pointer',
+            }}
+          >
+            {cityOptions.map(({ value, label }) => (
+              <option key={value} value={value}>{label}</option>
+            ))}
+          </select>
+        </div>
 
         <Textarea
           label="О себе"
           value={aboutMe}
-          onChange={(event) => setAboutMe(event.target.value)}
+          onChange={handleTextChange(setAboutMe)}
           showPostfix
         />
 
