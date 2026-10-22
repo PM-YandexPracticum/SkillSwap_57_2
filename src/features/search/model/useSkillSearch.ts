@@ -13,12 +13,13 @@ export function useSkillSearch<T extends { title: string }>(
   const [internalQuery, setInternalQuery] = useState('')
   const query = externalQuery ?? internalQuery
   const debouncedQuery = useDebounce(query)
-  const normalizedQuery = debouncedQuery.trim().toLocaleLowerCase('ru-RU')
+  // После очистки поля сразу возвращаем все карточки, не ожидая таймера поиска.
+  const normalizedQuery = (query.trim() ? debouncedQuery : '').trim().toLocaleLowerCase('ru-RU')
   const filteredSkills = useMemo(
     () =>
       skills.filter((skill) => skill.title.toLocaleLowerCase('ru-RU').includes(normalizedQuery)),
     [skills, normalizedQuery],
   )
 
-  return { query, setQuery: setInternalQuery, filteredSkills, count: filteredSkills.length }
+  return { query, setQuery: setInternalQuery, normalizedQuery, filteredSkills, count: filteredSkills.length }
 }

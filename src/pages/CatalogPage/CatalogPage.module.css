@@ -24,12 +24,17 @@
   min-width: 0;
 }
 
-.searchResults {
-  margin: 0;
-  font-family: var(--font-base);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
-  color: #253017;
+.results {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .message {

@@ -24,22 +24,26 @@ export interface FiltersValue {
 }
 
 export interface FiltersPanelProps {
+  value?: FiltersValue;
   onChange?: (filters: FiltersValue) => void;
 }
 
-const DIRECTION_OPTIONS: RadioOption<SkillDirection>[] = [
+export const DIRECTION_OPTIONS: RadioOption<SkillDirection>[] = [
   { label: "Всё", value: "all" },
   { label: "Хочу научиться", value: "learn" },
   { label: "Могу научить", value: "teach" },
 ];
 
-export function FiltersPanel({ onChange }: FiltersPanelProps) {
+export function FiltersPanel({ value, onChange }: FiltersPanelProps) {
   const dispatch = useAppDispatch();
   const selectedSkillIds = useAppSelector(selectSelectedSkillIds);
-  const [direction, setDirection] = useState<SkillDirection>("all");
-  const [gender, setGender] = useState<GenderValue>("any");
-  const [cityIds, setCityIds] = useState<string[]>([]);
+  const [localDirection, setLocalDirection] = useState<SkillDirection>("all");
+  const [localGender, setLocalGender] = useState<GenderValue>("any");
+  const [localCityIds, setLocalCityIds] = useState<string[]>([]);
   const [cityFilterKey, setCityFilterKey] = useState(0);
+  const direction = value?.direction ?? localDirection;
+  const gender = value?.gender ?? localGender;
+  const cityIds = value?.cityIds ?? localCityIds;
 
   const selectedCount = useMemo(
     () =>
@@ -56,13 +60,21 @@ export function FiltersPanel({ onChange }: FiltersPanelProps) {
   );
 
   useEffect(() => {
-    onChange?.(filters);
-  }, [filters, onChange]);
+    if (!value || selectedSkillIds !== value.skillIds) onChange?.(filters);
+  }, [filters, onChange, selectedSkillIds, value]);
+
+  const change = (patch: Partial<FiltersValue>) => {
+    if (!value) {
+      if (patch.direction !== undefined) setLocalDirection(patch.direction);
+      if (patch.gender !== undefined) setLocalGender(patch.gender);
+      if (patch.cityIds !== undefined) setLocalCityIds(patch.cityIds);
+    } else {
+      onChange?.({ ...filters, ...patch });
+    }
+  };
 
   const clearFilters = () => {
-    setDirection("all");
-    setGender("any");
-    setCityIds([]);
+    change({ direction: "all", gender: "any", cityIds: [] });
     setCityFilterKey((key) => key + 1);
     dispatch(clearSkillFilter());
   };
@@ -88,13 +100,14 @@ export function FiltersPanel({ onChange }: FiltersPanelProps) {
           name="skill-direction"
           options={DIRECTION_OPTIONS}
           value={direction}
-          onChange={setDirection}
+          onChange={(next) => change({ direction: next })}
         />
         <SkillFilter />
-        <GenderFilter value={gender} onChange={setGender} />
+        <GenderFilter value={gender} onChange={(next) => change({ gender: next })} />
         <CityFilter
           key={cityFilterKey}
-          onChange={(selectedCityIds) => setCityIds(selectedCityIds)}
+          selectedCityIds={value ? cityIds : undefined}
+          onChange={(selectedCityIds) => change({ cityIds: selectedCityIds })}
         />
       </div>
     </aside>
