@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { AuthUser } from '@/shared/types'
 import { registerUser } from './registerUser'
-import { clearAuthUser, findMockUser, getAuthUser, saveAuthUser } from './authUtils'
+import { clearAuthUser, findMockUser, saveAuthUser } from './authUtils'
 
 /** Сообщение об ошибке при неверных учётных данных. */
 export const INVALID_CREDENTIALS_MESSAGE =
@@ -27,7 +27,7 @@ export interface AuthState {
 
 // Авторизация восстанавливается из localStorage при загрузке приложения.
 const initialState: AuthState = {
-  user: getAuthUser(),
+  user: null,
   status: 'idle',
   error: null,
 }
@@ -56,7 +56,14 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserFromStorage: (state, action: PayloadAction<AuthState['user']>) => {
+      state.user = action.payload
+    },
+    clearAuthError: (state) => {
+      state.error = null
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
@@ -91,5 +98,7 @@ const authSlice = createSlice({
       })
   },
 })
+
+export const { setUserFromStorage, clearAuthError } = authSlice.actions
 
 export default authSlice.reducer

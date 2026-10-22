@@ -1,44 +1,20 @@
 import type { ComponentProps } from 'react'
 
+import {
+  getInterestSkillItems,
+  getInterestSubcategoryIds,
+  toSkillItems,
+  toSubcategoryIds,
+} from '@/shared/lib/subcategories'
 import type { Skill, User } from '@/shared/types'
 import type { FiltersValue } from '@/shared/ui/FiltersPanel'
 import type { FilterableCatalogItem } from '@/shared/ui/FiltersPanel/matchesFilters'
 import { matchesFilters } from '@/shared/ui/FiltersPanel/matchesFilters'
-import { skills as skillCategories } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
 import type { SkillsList } from '@/shared/ui/SkillsList'
 
 export type SkillItems = ComponentProps<typeof SkillsList>['skills']
 
-/** Соответствие «название подкатегории → её ID»: в фильтре навыков лежат ID подкатегорий. */
-const SUBCATEGORY_IDS = new Map<string, string>()
-for (const category of skillCategories) {
-  for (const skill of category.skills) {
-    SUBCATEGORY_IDS.set(skill.title, skill.id)
-  }
-}
-
-/** ID навыков пользователя превращаем в теги: категория нужна для цвета тега. */
-export const toSkillItems = (skillIds: string[], skills: Skill[]): SkillItems =>
-  skillIds.flatMap((skillId) => {
-    const skill = skills.find((item) => item.id === skillId)
-    if (!skill) return []
-
-    const categoryId = skillCategories.find((category) => category.title === skill.category)?.id
-    return [{ id: skill.id, title: skill.title, category: categoryId }]
-  })
-
-/**
- * У пользователя хранятся ID конкретных предложений (skill_1),
- * а в фильтре навыков — ID подкатегорий (music, english).
- */
-export const toSubcategoryIds = (skillIds: string[], skills: Skill[]): string[] =>
-  skillIds.flatMap((skillId) => {
-    const skill = skills.find((item) => item.id === skillId)
-    if (!skill) return []
-
-    const subcategoryId = SUBCATEGORY_IDS.get(skill.subcategory)
-    return subcategoryId ? [subcategoryId] : []
-  })
+export { getInterestSkillItems, getInterestSubcategoryIds, toSkillItems, toSubcategoryIds }
 
 export interface CatalogCard {
   /** id пользователя: карточка уникальна и не повторяется в секциях. */
@@ -72,7 +48,8 @@ export const buildCatalogCards = (users: User[], skills: Skill[]): CatalogCard[]
         user,
         skill,
         teachSkillIds: toSubcategoryIds(user.teach, skills),
-        learnSkillIds: toSubcategoryIds(user.learn, skills),
+        // Интересы берём из обоих источников: learningSubcategoryIds и learn.
+        learnSkillIds: getInterestSubcategoryIds(user, skills),
       },
     ]
   })
@@ -101,48 +78,36 @@ export const matchesCatalogCard = (card: CatalogCard, filters: FiltersValue): bo
   })
 }
 
-const getMatchScore = (
-  card: CatalogCard,
-  currentUser: User,
-  currentSubcategoryIds: string[],
-): number => {
-  const currentSkillIds = new Set([...currentUser.teach, ...currentUser.learn])
-  const currentInterests = new Set(currentUser.learningSubcategoryIds ?? [])
-
-  const candidateSkillIds = [...card.user.teach, ...card.user.learn]
-  const candidateSubcategoryIds = [...card.teachSkillIds, ...card.learnSkillIds]
-  const candidateInterests = card.user.learningSubcategoryIds ?? []
-
-  const skillOverlap = candidateSkillIds.filter((id) => currentSkillIds.has(id)).length
-  const interestOverlap = candidateSubcategoryIds.filter((id) => currentInterests.has(id)).length
-  const mutualInterestOverlap = candidateInterests.filter((id) =>
-    currentSubcategoryIds.includes(id),
-  ).length
-
-  return skillOverlap * 3 + interestOverlap * 2 + mutualInterestOverlap
-}
-
-/** Сортировка по совпадению навыков и интересов: от наибольшего к наименьшему. */
-export const sortByMatch = (
+/**
+ * «Точное совпадение» — взаимный обмен:
+ * другой пользователь может научить тому, чему я хочу научиться,
+ * а я могу научить тому, что интересует его.
+ */
+export const findExactMatches = (
   cards: CatalogCard[],
   currentUser: User | null,
   skills: Skill[],
 ): CatalogCard[] => {
-  if (!currentUser) return [...cards]
+  if (!currentUser) return []
 
-  const currentSubcategoryIds = toSubcategoryIds(
-    [...currentUser.teach, ...currentUser.learn],
-    skills,
-  )
+  const myInterests = getInterestSubcategoryIds(currentUser, skills)
+  const myTeach = toSubcategoryIds(currentUser.teach, skills)
 
-  return [...cards].sort(
-    (first, second) =>
-      getMatchScore(second, currentUser, currentSubcategoryIds) -
-      getMatchScore(first, currentUser, currentSubcategoryIds),
-  )
+  if (myInterests.length === 0 || myTeach.length === 0) return []
+
+  return cards.filter((card) => {
+    if (card.id === currentUser.id) return false
+
+    const candidateInterests = getInterestSubcategoryIds(card.user, skills)
+
+    const canTeachMe = card.teachSkillIds.some((id) => myInterests.includes(id))
+    const canLearnFromMe = myTeach.some((id) => candidateInterests.includes(id))
+
+    return canTeachMe && canLearnFromMe
+  })
 }
 
-/** Перемешивание Фишера — Йетса для гостей. */
+/** Перемешивание Фишера — Йетса: порядок рекомендаций для гостя. */
 export const shuffleCards = (cards: CatalogCard[]): CatalogCard[] => {
   const result = [...cards]
 
@@ -154,4 +119,33 @@ export const shuffleCards = (cards: CatalogCard[]): CatalogCard[] => {
   }
 
   return result
+}
+
+/**
+ * Рекомендации: гостю показываем перемешанные карточки, авторизованному —
+ * отсортированные по интересам. Взаимные совпадения идут первыми,
+ * но их отсутствие не оставляет секцию пустой.
+ */
+export const getRecommendedCards = (
+  cards: CatalogCard[],
+  currentUser: User | null,
+  skills: Skill[],
+): CatalogCard[] => {
+  if (!currentUser) return shuffleCards(cards)
+
+  const exactMatchIds = new Set(findExactMatches(cards, currentUser, skills).map((card) => card.id))
+  const myInterests = getInterestSubcategoryIds(currentUser, skills)
+
+  const interestScore = (card: CatalogCard) =>
+    card.teachSkillIds.filter((id) => myInterests.includes(id)).length
+
+  return [...cards].sort((first, second) => {
+    const byExactMatch = Number(exactMatchIds.has(second.id)) - Number(exactMatchIds.has(first.id))
+    if (byExactMatch !== 0) return byExactMatch
+
+    const byInterest = interestScore(second) - interestScore(first)
+    if (byInterest !== 0) return byInterest
+
+    return second.user.likesCount - first.user.likesCount
+  })
 }

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
-import { selectCurrentUser, selectIsAuthenticated } from '@/features/auth/model/authSelectors'
+import { selectCurrentUser } from '@/features/auth/model/authSelectors'
 import {
   addFavorite,
   removeFavorite,
@@ -22,9 +22,9 @@ import { Section } from '@/shared/ui/Section'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   buildCatalogCards,
+  getInterestSkillItems,
+  getRecommendedCards,
   matchesCatalogCard,
-  shuffleCards,
-  sortByMatch,
   toSkillItems,
 } from './model/catalog'
 import type { CatalogCard } from './model/catalog'
@@ -47,7 +47,6 @@ export default function CatalogPage() {
   const { searchValue } = useSearchQuery()
   const favoriteIds = useAppSelector(selectFavoriteIds)
   const authUser = useAppSelector(selectCurrentUser)
-  const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const users = useAppSelector((state) => state.users.items)
   const usersStatus = useAppSelector((state) => state.users.status)
   const skills = useAppSelector((state) => state.skills.items)
@@ -109,9 +108,8 @@ export default function CatalogPage() {
   }, [authUser, users])
 
   const recommendedCards = useMemo(
-    () =>
-      isAuthenticated ? sortByMatch(visibleCards, currentUser, skills) : shuffleCards(visibleCards),
-    [currentUser, isAuthenticated, skills, visibleCards],
+    () => getRecommendedCards(visibleCards, currentUser, skills),
+    [currentUser, skills, visibleCards],
   )
 
   // В избранном храним id карточки — id пользователя: один навык могут преподавать
@@ -128,7 +126,7 @@ export default function CatalogPage() {
       key={card.id}
       user={card.user}
       teach={toSkillItems(card.user.teach, skills)}
-      learn={toSkillItems(card.user.learn, skills)}
+      learn={getInterestSkillItems(card.user, skills)}
       isLiked={favoriteIds.includes(card.id)}
       onLikeChange={(isLiked) => toggleFavorite(card.id, isLiked)}
       onDetailsClick={() => navigate(getSkillPath(card.skill.id, card.user.id))}
@@ -179,7 +177,7 @@ export default function CatalogPage() {
         ) : visibleCards.length === 0 ? (
           <p className={styles.message}>Ничего не найдено</p>
         ) : (
-          <>
+          <div className={styles.sections}>
             <Section title="Популярное">{popularCards.map(renderCard)}</Section>
 
             <Section title="Новое">{newCards.map(renderCard)}</Section>
@@ -187,7 +185,7 @@ export default function CatalogPage() {
             <Section title="Рекомендуем" showLookAllButton={false}>
               {recommendedCards.map(renderCard)}
             </Section>
-          </>
+          </div>
         )}
       </div>
     </main>
