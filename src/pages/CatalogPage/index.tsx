@@ -20,7 +20,8 @@ import { Section } from '@/shared/ui/Section'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   buildCatalogCards,
-  findExactMatches,
+  getInterestSkillItems,
+  getRecommendedCards,
   matchesCatalogCard,
   toSkillItems,
 } from './model/catalog'
@@ -79,14 +80,15 @@ export default function CatalogPage() {
     [visibleCards],
   )
 
-  // «Точные совпадения» — взаимный обмен навыками с текущим пользователем.
+  // «Рекомендуем»: гостю — перемешанные карточки, авторизованному — по интересам.
+  // Взаимные совпадения поднимаются наверх, но секция живёт и без них.
   const currentUser = useMemo(() => {
     if (!authUser) return null
     return users.find((user) => user.id === authUser.id || user.email === authUser.email) ?? null
   }, [authUser, users])
 
-  const exactMatchCards = useMemo(
-    () => findExactMatches(visibleCards, currentUser, skills),
+  const recommendedCards = useMemo(
+    () => getRecommendedCards(visibleCards, currentUser, skills),
     [currentUser, skills, visibleCards],
   )
 
@@ -106,7 +108,7 @@ export default function CatalogPage() {
       key={card.id}
       user={card.user}
       teach={toSkillItems(card.user.teach, skills)}
-      learn={toSkillItems(card.user.learn, skills)}
+      learn={getInterestSkillItems(card.user, skills)}
       isLiked={favoriteIds.includes(card.id)}
       onLikeChange={(isLiked) => toggleFavorite(card.id, isLiked)}
       onDetailsClick={() => navigate(getSkillPath(card.skill.id, card.user.id))}
@@ -153,11 +155,9 @@ export default function CatalogPage() {
 
                 <Section title="Новое">{newCards.map(renderCard)}</Section>
 
-                {exactMatchCards.length > 0 && (
-                  <Section title="Рекомендуем" showLookAllButton={false}>
-                    {exactMatchCards.map(renderCard)}
-                  </Section>
-                )}
+                <Section title="Рекомендуем" showLookAllButton={false}>
+                  {recommendedCards.map(renderCard)}
+                </Section>
               </div>
             )}
           </>

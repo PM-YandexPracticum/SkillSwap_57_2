@@ -126,9 +126,7 @@ export default function ProfilePage() {
           {renderSection()}
         </div>
       </main>
-      <div className={styles.footer}>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }

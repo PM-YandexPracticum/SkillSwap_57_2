@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo } from 'react'
-import type { ComponentProps } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { loadCities } from '@/entities/city/model/citiesSlice'
@@ -12,33 +11,21 @@ import {
 } from '@/features/favorites/model/favoritesSlice'
 import { ROUTES } from '@/shared/lib/constants'
 import { getSkillPath } from '@/shared/lib/helpers'
-import type { Skill } from '@/shared/types'
+import { getInterestSkillItems, toSkillItems } from '@/shared/lib/subcategories'
 import { Card } from '@/shared/ui/Card'
 import { CardCarousel } from '@/shared/ui/CardCarousel'
 import { LikeButton } from '@/shared/ui/LikeButton'
 import { Person } from '@/shared/ui/Person'
 import { SkillDetails } from '@/shared/ui/SkillDetails'
 import { SkillsList } from '@/shared/ui/SkillsList'
-import { skills as skillCategories } from '@/shared/ui/SkillCategoryGroupList/model/SkillGroupList'
+import SkillCategoryGroupList from '@/shared/ui/SkillCategoryGroupList/SkillCategoryGroupList'
 import { Title } from '@/shared/ui/Title'
 import moreIcon from '@/shared/assets/images/more-square.svg'
 import shareIcon from '@/shared/assets/images/share.svg'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import styles from './SkillPage.module.css'
 
-type SkillItems = ComponentProps<typeof SkillsList>['skills']
-
-/** ID навыков пользователя превращаем в теги: категория нужна для цвета тега. */
-const toSkillItems = (skillIds: string[], skills: Skill[]): SkillItems =>
-  skillIds.flatMap((skillId) => {
-    const skill = skills.find((item) => item.id === skillId)
-    if (!skill) return []
-
-    const categoryId = skillCategories.find((category) => category.title === skill.category)?.id
-    return [{ id: skill.id, title: skill.title, category: categoryId }]
-  })
-
-const SkillPage = () => {
+const SkillOfferPage = () => {
   const { id } = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
   const authorId = searchParams.get('author')
@@ -165,7 +152,10 @@ const SkillPage = () => {
               </section>
 
               <SkillsList title="Может научить:" skills={toSkillItems(author.teach, skills)} />
-              <SkillsList title="Хочет научиться:" skills={toSkillItems(author.learn, skills)} />
+              <SkillsList
+                title="Хочет научиться:"
+                skills={getInterestSkillItems(author, skills)}
+              />
             </>
           ) : (
             <p className={styles.message}>Автор не найден</p>
@@ -216,7 +206,7 @@ const SkillPage = () => {
               key={similarSkill.id}
               user={cardUser}
               teach={toSkillItems(cardUser.teach, skills)}
-              learn={toSkillItems(cardUser.learn, skills)}
+              learn={getInterestSkillItems(cardUser, skills)}
               isLiked={favoriteIds.includes(cardUser.id)}
               onLikeChange={(isLiked) => toggleFavorite(cardUser.id, isLiked)}
               onDetailsClick={() => navigate(getSkillPath(similarSkill.id, cardUser.id))}
@@ -224,6 +214,25 @@ const SkillPage = () => {
           ))}
         </CardCarousel>
       )}
+    </main>
+  )
+}
+
+const SkillPage = () => {
+  const { id } = useParams<{ id: string }>()
+
+  useEffect(() => {
+    if (!id) window.scrollTo(0, 0)
+  }, [id])
+
+  if (id) return <SkillOfferPage />
+
+  return (
+    <main className={styles.page} aria-labelledby="all-skills-title">
+      <Title size="H1" id="all-skills-title">
+        Все навыки
+      </Title>
+      <SkillCategoryGroupList className={styles.categories} linked={false} />
     </main>
   )
 }

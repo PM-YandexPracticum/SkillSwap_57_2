@@ -21,6 +21,7 @@ export function AppRouter() {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path={ROUTES.HOME} element={<CatalogPage />} />
+            <Route path={ROUTES.SKILLS} element={<SkillPage />} />
             <Route path={ROUTES.SKILL} element={<SkillPage />} />
           </Route>
           <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
