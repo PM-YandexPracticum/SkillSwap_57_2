@@ -2,9 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import { skillFilterReducer } from '@/shared/ui/FilterPanel/SkillFilter/model/skillFilterSlice'
 import usersReducer from '@/entities/user/model/usersSlice'
 import skillsReducer from '@/entities/skill/model/skillsSlice'
-import authReducer from '@/features/auth/model/authSlice'
+import authReducer, { setUserFromStorage } from '@/features/auth/model/authSlice'
 import citiesReducer from '@/entities/city/model/citiesSlice'
-import favoritesReducer, { saveFavorites } from '@/features/favorites/model/favoritesSlice'
+import favoritesReducer from '@/features/favorites/model/favoritesSlice'
+import notificationsReducer from '@/features/notifications/model/notificationsSlice'
+import { localStorageMiddleware } from './middleware'
+import { getAuthUser } from '@/features/auth/model/authUtils'
 
 export const store = configureStore({
   reducer: {
@@ -14,18 +17,15 @@ export const store = configureStore({
     skillFilter: skillFilterReducer,
     cities: citiesReducer,
     favorites: favoritesReducer,
+    notifications: notificationsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(localStorageMiddleware.middleware),
 })
 
-let previousFavoriteIds = store.getState().favorites.ids
-store.subscribe(() => {
-  const currentFavoriteIds = store.getState().favorites.ids
-  if (currentFavoriteIds !== previousFavoriteIds) {
-    previousFavoriteIds = currentFavoriteIds
-    saveFavorites(currentFavoriteIds)
-  }
-})
+// запускаем логику чтения пользователя из хранилища после создания store,
+// чтобы запустились middlewares для favorites
+store.dispatch(setUserFromStorage(getAuthUser()))
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
-

@@ -119,6 +119,27 @@
   height: 28px;
 }
 
+.avatarButton:focus-visible {
+  outline: 3px solid #508d2c;
+  outline-offset: 3px;
+}
+
+.avatarError {
+  margin: 12px 0 0;
+  color: #b3261e;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.avatarSuccess {
+  margin: 12px 0 0;
+  color: #508d2c;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+}
+
 .saveButton {
   width: 100%;
   margin-top: 14px;

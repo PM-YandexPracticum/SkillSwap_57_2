@@ -11,6 +11,7 @@ interface City {
 
 export interface CityFilterProps {
   defaultSelectedCityIds?: string[]
+  selectedCityIds?: string[]
   onChange?: (selectedCityIds: string[], selectedCount: number) => void
 }
 
@@ -18,12 +19,14 @@ const COLLAPSED_CITY_COUNT = 5
 
 export function CityFilter({
   defaultSelectedCityIds = [],
+  selectedCityIds: controlledCityIds,
   onChange,
 }: CityFilterProps) {
   const [cities, setCities] = useState<City[]>([])
-  const [selectedCityIds, setSelectedCityIds] = useState(
+  const [localCityIds, setLocalCityIds] = useState(
     () => new Set(defaultSelectedCityIds),
   )
+  const selectedCityIds = controlledCityIds ? new Set(controlledCityIds) : localCityIds
   const [isExpanded, setIsExpanded] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -60,18 +63,11 @@ export function CityFilter({
   )
 
   const toggleCity = (cityId: string) => {
-    setSelectedCityIds((currentSelectedIds) => {
-      const nextSelectedIds = new Set(currentSelectedIds)
-
-      if (nextSelectedIds.has(cityId)) {
-        nextSelectedIds.delete(cityId)
-      } else {
-        nextSelectedIds.add(cityId)
-      }
-
-      onChange?.([...nextSelectedIds], nextSelectedIds.size)
-      return nextSelectedIds
-    })
+    const nextSelectedIds = new Set(selectedCityIds)
+    if (nextSelectedIds.has(cityId)) nextSelectedIds.delete(cityId)
+    else nextSelectedIds.add(cityId)
+    if (!controlledCityIds) setLocalCityIds(nextSelectedIds)
+    onChange?.([...nextSelectedIds], nextSelectedIds.size)
   }
 
   return (

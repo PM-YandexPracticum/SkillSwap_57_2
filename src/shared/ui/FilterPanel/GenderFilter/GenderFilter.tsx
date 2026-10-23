@@ -5,7 +5,7 @@ import styles from './GenderFilter.module.css'
 
 export type GenderValue = 'any' | 'male' | 'female'
 
-const GENDER_OPTIONS: RadioOption<GenderValue>[] = [
+export const GENDER_OPTIONS: RadioOption<GenderValue>[] = [
   { label: 'Не имеет значения', value: 'any' },
   { label: 'Мужской', value: 'male' },
   { label: 'Женский', value: 'female' },

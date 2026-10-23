@@ -9,10 +9,15 @@ import { NavMenu } from '../NavMenu/NavMenu'
 import { Input } from '../Input/Input'
 import { ThemeButton } from '../ThemeButton/ThemeButton'
 import { NotifyButton } from '../NotifyButton/NotifyButton'
+import { markNotificationAsRead } from '@/features/notifications/model/notificationsSlice'
 import { LikeButton } from '../LikeButton/LikeButton'
 import { Avatar } from '../Avatar/Avatar'
 import searchIcon from '../../assets/images/search.svg'
 import styles from './Header.module.scss'
+import { useEffect, useRef, useState } from 'react'
+import { useClickOutside } from '@/shared/hooks/useClickOutside'
+import logoutIcon from '@/shared/assets/images/logout.svg'
+import { Title } from '../Title'
 
 interface HeaderProps {
   searchValue?: string
@@ -26,9 +31,29 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+
+  const notifications = useAppSelector((state) => state.notifications.items)
+
+  const hasNotifications = notifications.some((notification) => !notification.isRead)
+
+  const handleNotificationClick = (notificationId: string, skillId: string, authorId: string) => {
+    dispatch(markNotificationAsRead(notificationId))
+    setIsNotificationsOpen(false)
+    navigate(`/skill/${skillId}?author=${authorId}`)
+  }
+
   // Данные авторизации берём из стора через общие селекторы.
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const user = useAppSelector(selectCurrentUser)
+
+  const userId = user?.id
+
+  useEffect(() => {
+    setIsNotificationsOpen(false)
+    setIsUserMenuOpen(false)
+  }, [userId])
 
   // В auth-состоянии хранятся только id/имя/email, поэтому аватар ищем в профиле
   // пользователя (users), сопоставляя запись по id или email.
@@ -42,7 +67,21 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
 
   const userName = user?.name ?? DEFAULT_USER_NAME
 
+  const userMenuRef = useRef<HTMLDivElement>(null)
+
+  const closeUserMenu = () => {
+    setIsUserMenuOpen(false)
+  }
+
+  useClickOutside(userMenuRef, closeUserMenu)
+
+  const handleProfileClick = () => {
+    closeUserMenu()
+    navigate(ROUTES.PROFILE)
+  }
+
   const handleLogout = () => {
+    closeUserMenu()
     void dispatch(logout())
   }
 
@@ -87,7 +126,47 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
               </div>
             ) : (
               <div className={styles.userActions}>
-                <NotifyButton hasNotifications={false} />
+                <div className={styles.notifications}>
+                  <NotifyButton
+                    hasNotifications={hasNotifications}
+                    onClick={() => setIsNotificationsOpen((prev) => !prev)}
+                  />
+
+                  {isNotificationsOpen && (
+                    <div className={styles.notificationsDropdown}>
+                      <h3 className={styles.notificationsTitle}>Уведомления</h3>
+
+                      {notifications.length === 0 ? (
+                        <p className={styles.notificationsEmpty}>У вас пока нет уведомлений</p>
+                      ) : (
+                        <ul className={styles.notificationsList}>
+                          {notifications.map((notification) => (
+                            <li key={notification.id} className={styles.notificationItem}>
+                              <p>
+                                Вы предложили обмен пользователю{' '}
+                                <strong>{notification.authorName}</strong>
+                              </p>
+
+                              <button
+                                type="button"
+                                className={styles.notificationLink}
+                                onClick={() =>
+                                  handleNotificationClick(
+                                    notification.id,
+                                    notification.skillId,
+                                    notification.authorId,
+                                  )
+                                }
+                              >
+                                Перейти
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </div>
 
                 <LikeButton
                   checked={false}
@@ -97,24 +176,34 @@ export function Header({ searchValue, onSearchChange }: HeaderProps) {
                   aria-label="Избранное"
                 />
 
-                <button
-                  className={styles.profile}
-                  type="button"
-                  aria-label="Личный кабинет"
-                  onClick={() => navigate(ROUTES.PROFILE)}
-                >
-                  <span className={styles.userName}>{userName}</span>
-                  <Avatar src={avatarUrl} alt={`Аватар пользователя ${userName}`} size="small" />
-                </button>
+                <div className={styles.userMenu} ref={userMenuRef}>
+                  <button
+                    className={styles.profile}
+                    type="button"
+                    onClick={() => setIsUserMenuOpen((isMenuOpen) => !isMenuOpen)}
+                  >
+                    <span>{userName}</span>
 
-                <Button
-                  variant="secondary"
-                  className={styles.logout}
-                  aria-label="Выйти из аккаунта"
-                  onClick={handleLogout}
-                >
-                  Выйти
-                </Button>
+                    <Avatar src={avatarUrl} alt="" size="small" />
+                  </button>
+
+                  {isUserMenuOpen && (
+                    <div className={styles.dropdown}>
+                      <button
+                        className={styles.dropdownItem}
+                        type="button"
+                        onClick={handleProfileClick}
+                      >
+                        <Title size="H4">Личный кабинет</Title>
+                      </button>
+
+                      <button className={styles.dropdownItem} type="button" onClick={handleLogout}>
+                        <Title size="H4">Выйти из аккаунта</Title>
+                        <img className={styles.postfix} src={logoutIcon} alt="выйти из аккаунта" />
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
