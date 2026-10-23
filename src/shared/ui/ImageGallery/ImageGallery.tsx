@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import ReactImageGallery, { type ImageGalleryRef } from 'react-image-gallery'
 
 import ChevronRight from '@/shared/assets/images/chevron-right.svg'
+import { galleryImageUrl } from '@/shared/lib/galleryImageUrl'
 
 import 'react-image-gallery/styles/image-gallery.css'
 import styles from './ImageGallery.module.scss'
@@ -18,8 +19,9 @@ export function ImageGallery({ images, showArrows = true }: ImageGalleryProps) {
   const hiddenCount = Math.max(images.length - 4, 0)
 
   const items = images.map((src, index) => ({
-    original: src,
+    original: galleryImageUrl(src, 800),
     originalAlt: `Фото навыка ${index + 1}`,
+    loading: index === 0 ? ('eager' as const) : ('lazy' as const),
   }))
 
   if (images.length === 0) return null
@@ -38,9 +40,17 @@ export function ImageGallery({ images, showArrows = true }: ImageGalleryProps) {
           showNav={showArrows && images.length > 1}
           autoPlay={false}
           infinite
+          lazyLoad
           slideDuration={300}
           renderItem={(item) => (
-            <img className={styles.mainImage} src={item.original} alt={item.originalAlt} />
+            <img
+              className={styles.mainImage}
+              src={item.original}
+              alt={item.originalAlt}
+              loading={item.loading}
+              decoding="async"
+              fetchPriority={item.loading === 'eager' ? 'high' : 'auto'}
+            />
           )}
           renderLeftNav={(onClick, disabled) => (
             <button
@@ -83,7 +93,7 @@ export function ImageGallery({ images, showArrows = true }: ImageGalleryProps) {
                   galleryRef.current?.slideToIndex(imageIndex)
                 }}
               >
-                <img src={src} alt="" />
+                <img src={galleryImageUrl(src, 200)} alt="" decoding="async" />
 
                 {showCount && (
                   <span className={styles.moreImages} aria-hidden="true">
