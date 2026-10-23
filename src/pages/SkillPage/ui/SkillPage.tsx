@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-
 import { loadCities } from '@/entities/city/model/citiesSlice'
 import { fetchSkills } from '@/entities/skill/model/skillsSlice'
 import { fetchUsers } from '@/entities/user/model/usersSlice'
@@ -24,6 +23,12 @@ import moreIcon from '@/shared/assets/images/more-square.svg'
 import shareIcon from '@/shared/assets/images/share.svg'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import styles from './SkillPage.module.css'
+import { useRequireAuth } from '@/features/auth/model/useRequireAuth'
+import { selectCurrentUser } from '@/features/auth/model/authSelectors'
+import { addExchangeNotification } from '@/features/notifications/model/notificationsSlice'
+import { Modal } from '@/shared/ui/Modal/Modal'
+import { SuccessMessage } from '@/shared/ui/SuccessMessage'
+import notificationHug from '@/shared/assets/images/notification-hug.svg'
 
 const SkillOfferPage = () => {
   const { id } = useParams<{ id: string }>()
@@ -31,12 +36,15 @@ const SkillOfferPage = () => {
   const authorId = searchParams.get('author')
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { requireAuth } = useRequireAuth()
 
   const skills = useAppSelector((state) => state.skills.items)
   const skillsStatus = useAppSelector((state) => state.skills.status)
   const users = useAppSelector((state) => state.users.items)
   const usersStatus = useAppSelector((state) => state.users.status)
   const cities = useAppSelector((state) => state.cities.items)
+  const currentUser = useAppSelector(selectCurrentUser)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
 
   const favoriteIds = useAppSelector(selectFavoriteIds)
 
@@ -86,7 +94,12 @@ const SkillOfferPage = () => {
   const handleShare = () => {
     void navigator.clipboard?.writeText(window.location.href).catch(() => {})
   }
+  const handleExchange = () => {
+    if (!skill || !author || !currentUser) return
 
+    dispatch(addExchangeNotification(skill.id, author.id, author.name))
+    setIsSuccessModalOpen(true)
+  }
   const isSkillLoading = skillsStatus === 'idle' || skillsStatus === 'loading'
   const isAuthorLoading = usersStatus === 'idle' || usersStatus === 'loading'
 
@@ -194,7 +207,9 @@ const SkillOfferPage = () => {
             images={skill.images}
             variant="skill"
             // TODO: создание заявки на обмен — отдельная задача, обработчик подключается позже
-            onExchange={() => {}}
+            onExchange={() => {
+              if (requireAuth()) handleExchange()
+            }}
           />
         </div>
       </div>
@@ -213,6 +228,20 @@ const SkillOfferPage = () => {
             />
           ))}
         </CardCarousel>
+      )}
+      {isSuccessModalOpen && (
+        <Modal
+          onClose={() => setIsSuccessModalOpen(false)}
+          onOverlayClick={() => setIsSuccessModalOpen(false)}
+        >
+          <SuccessMessage
+            variant="exchange"
+            illustration={notificationHug}
+            title="Вы предложили обмен"
+            description="Теперь дождитесь подтверждения. Вам придёт уведомление"
+            onClose={() => setIsSuccessModalOpen(false)}
+          />
+        </Modal>
       )}
     </main>
   )

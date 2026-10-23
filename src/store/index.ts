@@ -5,6 +5,7 @@ import skillsReducer from '@/entities/skill/model/skillsSlice'
 import authReducer, { setUserFromStorage } from '@/features/auth/model/authSlice'
 import citiesReducer from '@/entities/city/model/citiesSlice'
 import favoritesReducer from '@/features/favorites/model/favoritesSlice'
+import notificationsReducer from '@/features/notifications/model/notificationsSlice'
 import { localStorageMiddleware } from './middleware'
 import { getAuthUser } from '@/features/auth/model/authUtils'
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     skillFilter: skillFilterReducer,
     cities: citiesReducer,
     favorites: favoritesReducer,
+    notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(localStorageMiddleware.middleware),
