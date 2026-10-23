@@ -88,6 +88,7 @@ const SkillOfferPage = () => {
   const favoriteId = author?.id
   const isFavorite = favoriteId ? favoriteIds.includes(favoriteId) : false
   const handleFavoriteChange = (isLiked: boolean) => {
+    if (!requireAuth()) return
     if (favoriteId) toggleFavorite(favoriteId, isLiked)
   }
 
@@ -165,10 +166,7 @@ const SkillOfferPage = () => {
               </section>
 
               <SkillsList title="Может научить:" skills={toSkillItems(author.teach, skills)} />
-              <SkillsList
-                title="Хочет научиться:"
-                skills={getInterestSkillItems(author, skills)}
-              />
+              <SkillsList title="Хочет научиться:" skills={getInterestSkillItems(author, skills)} />
             </>
           ) : (
             <p className={styles.message}>Автор не найден</p>
@@ -223,7 +221,9 @@ const SkillOfferPage = () => {
               teach={toSkillItems(cardUser.teach, skills)}
               learn={getInterestSkillItems(cardUser, skills)}
               isLiked={favoriteIds.includes(cardUser.id)}
-              onLikeChange={(isLiked) => toggleFavorite(cardUser.id, isLiked)}
+              onLikeChange={(isLiked) => {
+                if (requireAuth()) toggleFavorite(cardUser.id, isLiked)
+              }}
               onDetailsClick={() => navigate(getSkillPath(similarSkill.id, cardUser.id))}
             />
           ))}
