@@ -12,6 +12,7 @@ import {
 } from '@/features/favorites/model/favoritesSlice'
 import { useSearchQuery } from '@/features/search/model/searchQueryContext'
 import { useSkillSearch } from '@/features/search/model/useSkillSearch'
+import { useRequireAuth } from '@/features/auth/model/useRequireAuth'
 import { getSkillPath } from '@/shared/lib/helpers'
 import { AddFilterButton } from '@/shared/ui/AddFilterButton'
 import { Card } from '@/shared/ui/Card'
@@ -41,6 +42,7 @@ const INITIAL_FILTERS: FiltersValue = {
 export default function CatalogPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { requireAuth } = useRequireAuth()
 
   const [filters, setFilters] = useState<FiltersValue>(INITIAL_FILTERS)
 
@@ -65,10 +67,13 @@ export default function CatalogPage() {
   const { filteredSkills: searchedCards, normalizedQuery } = useSkillSearch(cards, searchValue)
 
   const visibleCards = useMemo(
-    () => [...new Map(
-      searchedCards.filter((card) => matchesCatalogCard(card, filters))
-        .map((card) => [card.id, card]),
-    ).values()],
+    () => [
+      ...new Map(
+        searchedCards
+          .filter((card) => matchesCatalogCard(card, filters))
+          .map((card) => [card.id, card]),
+      ).values(),
+    ],
     [filters, searchedCards],
   )
   const isFiltering = searchValue.trim().length > 0 || hasActiveFilters(filters)
@@ -116,9 +121,10 @@ export default function CatalogPage() {
   // несколько человек, поэтому id навыка не позволяет восстановить нужного автора.
   const toggleFavorite = useCallback(
     (cardId: string, isLiked: boolean) => {
+      if (!requireAuth()) return
       dispatch(isLiked ? addFavorite(cardId) : removeFavorite(cardId))
     },
-    [dispatch],
+    [dispatch, requireAuth],
   )
 
   const renderCard = (card: CatalogCard) => (
@@ -168,8 +174,12 @@ export default function CatalogPage() {
                 ))}
               </div>
             )}
-            <Section key={resultKey} title={`Подходящие предложения: ${visibleCards.length}`}
-              showLookAllButton={false} initialVisibleCount={6}>
+            <Section
+              key={resultKey}
+              title={`Подходящие предложения: ${visibleCards.length}`}
+              showLookAllButton={false}
+              initialVisibleCount={6}
+            >
               {visibleCards.map(renderCard)}
             </Section>
             {visibleCards.length === 0 && <p className={styles.message}>Ничего не найдено</p>}
